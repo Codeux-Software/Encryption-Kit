@@ -42,6 +42,8 @@
 //
 // Please see DH1080-License.txt for further information.
 
+#define DH1080RequiredKeyLength             135
+
 @interface DH1080Base : NSObject
 - (void)initalizeKeyExchange; // Do not call.
 
