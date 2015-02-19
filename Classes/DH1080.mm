@@ -74,6 +74,8 @@
 {
 	NSData *publicKeyData = [[self keyExchanger] base64Decode:publicKey];
 
+#define DH1080RequiredKeyLength             135
+
 	if ([publicKeyData length] < DH1080RequiredKeyLength ||
 		[publicKeyData length] > DH1080RequiredKeyLength)
 	{
@@ -88,6 +90,8 @@
 	if ([secretString length] <= 0) {
 		return nil;
 	}
+
+#undef DH1080RequiredKeyLength 
 
 	return secretString;
 }
