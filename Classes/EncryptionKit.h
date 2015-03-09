@@ -29,3 +29,6 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+#include <EncryptionKit/BlowfishEncryption.h>
+#include <EncryptionKit/BlowfishEncryptionKeyExchange.h>

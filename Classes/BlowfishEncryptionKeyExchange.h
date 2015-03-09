@@ -29,3 +29,8 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+@interface EKBlowfishEncryptionKeyExchange : NSObject
+- (NSString *)generatePublicKey;
+- (NSString *)secretKeyFromPublicKey:(NSString *)publicKey;
+@end

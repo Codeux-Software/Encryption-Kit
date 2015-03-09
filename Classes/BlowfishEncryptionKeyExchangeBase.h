@@ -29,3 +29,35 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+/* A portion of this source file contains copyrighted work derived from one or more
+ 3rd party, open source projects. The use of this work is hereby acknowledged. */
+
+// Copyright (c) 2005-2013 Mathias Karlsson
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// Please see DH1080-License.txt for further information.
+
+#define EKBlowfishEncryptionKeyExchangeRequiredKeyLength             135
+
+@interface EKBlowfishEncryptionKeyExchangeBase : NSObject
+- (void)initalizeKeyExchange; // Do not call.
+
+- (void)computeKey;
+- (void)setKeyForComputation:(NSData *)publicKey;
+
+- (void)resetStatus;
+- (void)resetPublicInformation;
+
+- (NSString *)secretStringValue;
+
+- (NSData *)rawPublicKey;
+- (NSString *)publicKeyValue:(NSData *)publicInput;
+
+- (NSString *)base64Encode:(NSData *)input;
+- (NSData *)base64Decode:(NSString *)input;
+@end

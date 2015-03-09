@@ -1,7 +1,7 @@
 /* *********************************************************************
 
         Copyright (c) 2010 - 2015 Codeux Software, LLC
-   Please see Acknowledgements.pdf for additional information.
+     Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
@@ -30,5 +30,16 @@
 
  *********************************************************************** */
 
-#include <BlowfishEncryption/Encryption.h>
-#include <BlowfishEncryption/DH1080.h>
+typedef enum EKBlowfishEncryptionModeOfOperation : NSInteger {
+	EKBlowfishEncryptionNoneModeOfOperation		= -1,				// Does nothing, just returns original
+	EKBlowfishEncryptionDefaultModeOfOperation	= 0,				// Defualt goes to ECB
+	EKBlowfishEncryptionECBModeOfOperation		= 1,
+	EKBlowfishEncryptionCBCModeOfOperation		= 2
+} EKBlowfishEncryptionModeOfOperation;
+
+@interface EKBlowfishEncryption : NSObject
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(EKBlowfishEncryptionModeOfOperation)mode thatFitsWithinBounds:(NSInteger)maximumLength;
+
++ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local;
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
+@end

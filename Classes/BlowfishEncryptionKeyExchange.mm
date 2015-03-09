@@ -29,3 +29,67 @@
  SUCH DAMAGE.
 
  *********************************************************************** */
+
+#import "BlowfishEncryptionKeyExchange.h"
+#import "BlowfishEncryptionKeyExchangeBase.h"
+
+@interface EKBlowfishEncryptionKeyExchange ()
+@property (nonatomic, strong) EKBlowfishEncryptionKeyExchangeBase *keyExchanger;
+@end
+
+@implementation EKBlowfishEncryptionKeyExchange
+
+#pragma mark -
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		self.keyExchanger = [EKBlowfishEncryptionKeyExchangeBase new];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)dealloc
+{
+	self.keyExchanger = nil;
+}
+
+#pragma mark -
+
+- (NSString *)generatePublicKey
+{
+	NSData *publicKeyRaw = [[self keyExchanger] rawPublicKey];
+	
+    if ([publicKeyRaw length] >= 1) {
+        return [[self keyExchanger] publicKeyValue:publicKeyRaw];
+    }
+	
+	return nil;
+}
+
+- (NSString *)secretKeyFromPublicKey:(NSString *)publicKey
+{
+	NSData *publicKeyData = [[self keyExchanger] base64Decode:publicKey];
+
+	if ([publicKeyData length] < EKBlowfishEncryptionKeyExchangeRequiredKeyLength ||
+		[publicKeyData length] > EKBlowfishEncryptionKeyExchangeRequiredKeyLength)
+	{
+		return nil;
+	}
+	
+	[[self keyExchanger] setKeyForComputation:publicKeyData];
+	[[self keyExchanger] computeKey];
+
+	NSString *secretString = [[self keyExchanger] secretStringValue];
+
+	if ([secretString length] <= 0) {
+		return nil;
+	}
+
+	return secretString;
+}
+
+@end

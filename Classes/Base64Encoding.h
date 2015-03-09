@@ -1,7 +1,7 @@
 /* *********************************************************************
 
         Copyright (c) 2010 - 2015 Codeux Software, LLC
-   Please see Acknowledgements.pdf for additional information.
+     Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
