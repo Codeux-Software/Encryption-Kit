@@ -1,23 +1,20 @@
 #!/bin/bash
 
-cd "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
+set -e
 
-curl -O "http://www.openssl.org/source/openssl-${LIBRARY_OPENSSL_VERSION}.tar.gz"
+pushd "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
+
+curl -LO "http://www.openssl.org/source/openssl-${LIBRARY_OPENSSL_VERSION}.tar.gz" --retry 5
 
 tar -xvzf "./openssl-${LIBRARY_OPENSSL_VERSION}.tar.gz"
 
 mv "./openssl-${LIBRARY_OPENSSL_VERSION}" "./openssl-source"
 
 cd "./openssl-source"
-./Configure darwin64-${LIBRARY_ARCHITECTURE_TO_BUILD}-cc no-ssl2 no-ssl3
+
+./Configure darwin64-x86_64-cc no-ssl2 no-ssl3 no-shared --prefix="${SHARED_RESULT_ROOT_LOCATION}" 
+
 make
+make install
 
-if [ ! -d "${LIBRARY_BUILD_RESULT_INCLUDE_LOCAITON}" ]; then
-	BUILT_PRODUCT_INCLUDE_LOCATION="${LIBRARY_WORKING_DIRECTORY_LOCATION}openssl-source/include/openssl"
-
-	cp -RL "${BUILT_PRODUCT_INCLUDE_LOCATION}" "${LIBRARY_BUILD_RESULT_INCLUDE_LOCAITON}"
-fi
-
-BUILT_PRODUCT_LIBRARY_ORIGINAL_LOCATION="${LIBRARY_WORKING_DIRECTORY_LOCATION}openssl-source/libcrypto.a"
-
-cp "${BUILT_PRODUCT_LIBRARY_ORIGINAL_LOCATION}" "${LIBRARY_BUILD_RESULT_LIBRARY_LOCATION}"
+popd

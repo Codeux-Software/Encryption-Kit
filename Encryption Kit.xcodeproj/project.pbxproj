@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C1912441AAF4238006B8BE5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912401AAF4238006B8BE5 /* libcrypto.a */; };
+		4C1912451AAF4238006B8BE5 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912411AAF4238006B8BE5 /* libgcrypt.a */; };
+		4C1912461AAF4238006B8BE5 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912421AAF4238006B8BE5 /* libgpg-error.a */; };
+		4C1912471AAF4238006B8BE5 /* libotr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912431AAF4238006B8BE5 /* libotr.a */; };
 		4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */; };
 		4C500F3C16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */; };
@@ -19,7 +23,6 @@
 		4C69906F1A9105FC00FB41B9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C69906A1A91017100FB41B9 /* LICENSE */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishEncryptionBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishEncryptionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */; };
-		4CB3E5001AAE5CE6001E79CE /* openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB3E4FF1AAE5CE6001E79CE /* openssl.a */; };
 		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; };
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8EAE619802FC000DE9846 /* NSDataHelper.h */; };
@@ -29,6 +32,10 @@
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4C1912401AAF4238006B8BE5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libcrypto.a"; sourceTree = "<group>"; };
+		4C1912411AAF4238006B8BE5 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<group>"; };
+		4C1912421AAF4238006B8BE5 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgpg-error.a"; sourceTree = "<group>"; };
+		4C1912431AAF4238006B8BE5 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<group>"; };
 		4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryption.m; sourceTree = "<group>"; };
 		4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchangeBase.h; sourceTree = "<group>"; };
@@ -44,8 +51,6 @@
 		4C69906A1A91017100FB41B9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryptionBase.m; sourceTree = "<group>"; };
-		4CB3E4FE1AAE5C74001E79CE /* openssl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = openssl; path = "../../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/includes/openssl"; sourceTree = "<group>"; };
-		4CB3E4FF1AAE5CE6001E79CE /* openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = openssl.a; path = "/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/openssl.a"; sourceTree = "<absolute>"; };
 		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; usesTabs = 0; };
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CE8EAE619802FC000DE9846 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
@@ -59,7 +64,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CB3E5001AAE5CE6001E79CE /* openssl.a in Frameworks */,
+				4C1912451AAF4238006B8BE5 /* libgcrypt.a in Frameworks */,
+				4C1912441AAF4238006B8BE5 /* libcrypto.a in Frameworks */,
+				4C1912461AAF4238006B8BE5 /* libgpg-error.a in Frameworks */,
+				4C1912471AAF4238006B8BE5 /* libotr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +133,6 @@
 		4C1AD69F12DF617E00B4AD56 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4CB3E4FD1AAE5C51001E79CE /* Headers */,
 				4C1AD6AF12DF618E00B4AD56 /* Framework */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 			);
@@ -144,7 +151,10 @@
 		4C1AD6FC12DF624600B4AD56 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4CB3E4FF1AAE5CE6001E79CE /* openssl.a */,
+				4C1912401AAF4238006B8BE5 /* libcrypto.a */,
+				4C1912411AAF4238006B8BE5 /* libgcrypt.a */,
+				4C1912421AAF4238006B8BE5 /* libgpg-error.a */,
+				4C1912431AAF4238006B8BE5 /* libotr.a */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -177,14 +187,6 @@
 				4CE8EAE719802FC000DE9846 /* NSDataHelper.m */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		4CB3E4FD1AAE5C51001E79CE /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				4CB3E4FE1AAE5C74001E79CE /* openssl */,
-			);
-			name = Headers;
 			sourceTree = "<group>";
 		};
 		4CB3E5011AAE5D36001E79CE /* Weak Resources */ = {
@@ -304,11 +306,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				HEADER_SEARCH_PATHS = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/includes/**";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib",
-				);
+				HEADER_SEARCH_PATHS = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/include/**";
+				LIBRARY_SEARCH_PATHS = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib";
 			};
 			name = Release;
 		};

@@ -40,7 +40,7 @@
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// Please see DH1080-License.txt for further information.
+// Please see LICENSE-GPLv2 for further information.
 
 #import "BlowfishEncryptionKeyExchangeBase.h"
 
