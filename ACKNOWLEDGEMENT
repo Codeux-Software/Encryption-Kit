@@ -7,6 +7,9 @@
 |                                                                       |
 |-----------------------------------------------------------------------|
 
+Classes/BlowfishEncryptionKeyExchange.mm
+Classes/BlowfishEncryptionKeyExchange.h
+
 // Copyright (c) 2005-2013 Mathias Karlsson
 //
 // This program is free software; you can redistribute it and/or
@@ -17,6 +20,9 @@
 // Please see LICENSE-GPLv2 for further information.
 
 |-----------------------------------------------------------------------|
+
+Classes/BlowfishEncryptionKeyExchangeBase.mm
+Classes/BlowfishEncryptionKeyExchangeBase.h
 
 /*
 Copyright (c) 2010 Samuel Lidén Borell <samuel@slbdata.se>
@@ -42,10 +48,45 @@ THE SOFTWARE.
 
 |-----------------------------------------------------------------------|
 
+Classes/NSDataHelper.m
+Classes/NSDataHelper.m
+
 // Author: Oleg Andreev <oleganza@gmail.com>
 // May 28, 2011
 // Do What The Fuck You Want Public License <http://www.wtfpl.net>
 // https://gist.github.com/oleganza/997155
+
+|-----------------------------------------------------------------------|
+
+Classes/OTRKit.m
+Classes/OTRKit.h
+Classes/OTRTLV.m
+Classes/OTRTLV.v
+
+Software License Agreement (LGPLv2.1+ / MPL 2.0)
+Copyright (c) 2014, Chris Ballinger <chris@chatsecure.org>. All rights reserved.
+
+# LGPLv2.1+
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+# MPL 2.0
+
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 |-----------------------------------------------------------------------|
 |                                                                       |
@@ -64,5 +105,3 @@ libgcrypt:     Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2006, 2007, 2008, 2
 libotr:        Copyright 2004, 2005, 2007, 2008 Ian Goldberg, Chris Alexander, Nikita Borisov <otr@cypherpunks.ca>
 
 For licensing information related to these copyrighted works, see the file: LICENSE-GPLv2.1
-
-|-----------------------------------------------------------------------|

@@ -15,6 +15,10 @@
 		4C19124B1AAF48FE006B8BE5 /* LICENSE-GPLv2.1 in Resources */ = {isa = PBXBuildFile; fileRef = 4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */; };
 		4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */; };
+		4C4DDA7C1AAF6D5C00AB43DC /* OTRKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C4DDA7D1AAF6D5C00AB43DC /* OTRKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4DDA791AAF6D5C00AB43DC /* OTRKit.m */; };
+		4C4DDA7E1AAF6D5C00AB43DC /* OTRTLV.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4DDA7A1AAF6D5C00AB43DC /* OTRTLV.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C4DDA7F1AAF6D5C00AB43DC /* OTRTLV.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4DDA7B1AAF6D5C00AB43DC /* OTRTLV.m */; };
 		4C500F3C16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */; };
 		4C500F3D16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F3B16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm */; };
 		4C500F4116C06C79001692AF /* BlowfishEncryptionKeyExchange.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3F16C06C79001692AF /* BlowfishEncryptionKeyExchange.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,7 +32,6 @@
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8EAE619802FC000DE9846 /* NSDataHelper.h */; };
 		4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8EAE719802FC000DE9846 /* NSDataHelper.m */; };
-		4CEC815D133F13140026DFAE /* EncryptionKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC815C133F13140026DFAE /* EncryptionKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,10 @@
 		4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = "LICENSE-GPLv2.1"; sourceTree = "<group>"; };
 		4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryption.m; sourceTree = "<group>"; };
+		4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKit.h; sourceTree = "<group>"; };
+		4C4DDA791AAF6D5C00AB43DC /* OTRKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKit.m; sourceTree = "<group>"; };
+		4C4DDA7A1AAF6D5C00AB43DC /* OTRTLV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRTLV.h; sourceTree = "<group>"; };
+		4C4DDA7B1AAF6D5C00AB43DC /* OTRTLV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRTLV.m; sourceTree = "<group>"; };
 		4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchangeBase.h; sourceTree = "<group>"; };
 		4C500F3B16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlowfishEncryptionKeyExchangeBase.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C500F3F16C06C79001692AF /* BlowfishEncryptionKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchange.h; sourceTree = "<group>"; };
@@ -57,7 +64,6 @@
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CE8EAE619802FC000DE9846 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		4CE8EAE719802FC000DE9846 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
-		4CEC815C133F13140026DFAE /* EncryptionKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncryptionKit.h; path = Classes/EncryptionKit.h; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -126,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */,
-				4CEC815C133F13140026DFAE /* EncryptionKit.h */,
 			);
 			name = "Other Sources";
 			path = ..;
@@ -144,8 +149,9 @@
 		4C1AD6AF12DF618E00B4AD56 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				4CB3E5011AAE5D36001E79CE /* Weak Resources */,
 				4C8455A816C18FDE00AD9203 /* Core */,
+				4C4DDA771AAF6D4600AB43DC /* Off the Record Messaging */,
+				4CB3E5011AAE5D36001E79CE /* Weak Resources */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -159,6 +165,17 @@
 				4C1912431AAF4238006B8BE5 /* libotr.a */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		4C4DDA771AAF6D4600AB43DC /* Off the Record Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */,
+				4C4DDA791AAF6D5C00AB43DC /* OTRKit.m */,
+				4C4DDA7A1AAF6D5C00AB43DC /* OTRTLV.h */,
+				4C4DDA7B1AAF6D5C00AB43DC /* OTRTLV.m */,
+			);
+			name = "Off the Record Messaging";
 			sourceTree = "<group>";
 		};
 		4C6990651A91016300FB41B9 /* Build Configuration */ = {
@@ -214,9 +231,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CEC815D133F13140026DFAE /* EncryptionKit.h in Headers */,
 				4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */,
 				4C500F4116C06C79001692AF /* BlowfishEncryptionKeyExchange.h in Headers */,
+				4C4DDA7E1AAF6D5C00AB43DC /* OTRTLV.h in Headers */,
+				4C4DDA7C1AAF6D5C00AB43DC /* OTRKit.h in Headers */,
 				4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */,
 				4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */,
 				4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */,
@@ -253,7 +271,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Encryption Kit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -295,10 +313,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */,
+				4C4DDA7D1AAF6D5C00AB43DC /* OTRKit.m in Sources */,
 				4C7FC88516C05C7A00B912A5 /* BlowfishEncryptionBase.m in Sources */,
 				4C500F3D16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm in Sources */,
 				4C500F4216C06C79001692AF /* BlowfishEncryptionKeyExchange.mm in Sources */,
 				4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */,
+				4C4DDA7F1AAF6D5C00AB43DC /* OTRTLV.m in Sources */,
 				4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
