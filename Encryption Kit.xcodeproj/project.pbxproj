@@ -11,6 +11,8 @@
 		4C1912451AAF4238006B8BE5 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912411AAF4238006B8BE5 /* libgcrypt.a */; };
 		4C1912461AAF4238006B8BE5 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912421AAF4238006B8BE5 /* libgpg-error.a */; };
 		4C1912471AAF4238006B8BE5 /* libotr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912431AAF4238006B8BE5 /* libotr.a */; };
+		4C19124A1AAF48FE006B8BE5 /* LICENSE-GPLv2 in Resources */ = {isa = PBXBuildFile; fileRef = 4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */; };
+		4C19124B1AAF48FE006B8BE5 /* LICENSE-GPLv2.1 in Resources */ = {isa = PBXBuildFile; fileRef = 4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */; };
 		4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */; };
 		4C500F3C16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */; };
@@ -19,7 +21,6 @@
 		4C500F4216C06C79001692AF /* BlowfishEncryptionKeyExchange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F4016C06C79001692AF /* BlowfishEncryptionKeyExchange.mm */; };
 		4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */; };
 		4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */; };
-		4C69906E1A9105FC00FB41B9 /* DH1080-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C6990691A91017100FB41B9 /* DH1080-License.txt */; };
 		4C69906F1A9105FC00FB41B9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C69906A1A91017100FB41B9 /* LICENSE */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishEncryptionBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishEncryptionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */; };
@@ -36,6 +37,8 @@
 		4C1912411AAF4238006B8BE5 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<group>"; };
 		4C1912421AAF4238006B8BE5 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgpg-error.a"; sourceTree = "<group>"; };
 		4C1912431AAF4238006B8BE5 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<group>"; };
+		4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2"; sourceTree = "<group>"; };
+		4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = "LICENSE-GPLv2.1"; sourceTree = "<group>"; };
 		4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryption.m; sourceTree = "<group>"; };
 		4C500F3A16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchangeBase.h; sourceTree = "<group>"; };
@@ -47,7 +50,6 @@
 		4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Build Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C6990671A91016300FB41B9 /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Entitlements.entitlements; sourceTree = "<group>"; };
 		4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT; sourceTree = "<group>"; };
-		4C6990691A91017100FB41B9 /* DH1080-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "DH1080-License.txt"; sourceTree = "<group>"; };
 		4C69906A1A91017100FB41B9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryptionBase.m; sourceTree = "<group>"; };
@@ -172,8 +174,9 @@
 			isa = PBXGroup;
 			children = (
 				4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */,
-				4C6990691A91017100FB41B9 /* DH1080-License.txt */,
 				4C69906A1A91017100FB41B9 /* LICENSE */,
+				4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */,
+				4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */,
 			);
 			name = Documents;
 			sourceTree = "<group>";
@@ -278,7 +281,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */,
-				4C69906E1A9105FC00FB41B9 /* DH1080-License.txt in Resources */,
+				4C19124B1AAF48FE006B8BE5 /* LICENSE-GPLv2.1 in Resources */,
+				4C19124A1AAF48FE006B8BE5 /* LICENSE-GPLv2 in Resources */,
 				4C69906F1A9105FC00FB41B9 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
