@@ -98,7 +98,7 @@ extern NSString * const kOTRKitTrustKey;
  *
  *  @param otrKit      reference to shared instance
  *  @param message     message to be sent over the network. may contain ciphertext.
- *  @param recipient   intended recipient of the message
+ *  @param username   intended recipient of the message
  *  @param accountName your local account name
  *  @param protocol    protocol for account name such as "xmpp"
  *  @param tag optional tag to attached to message. Only used locally.
@@ -140,7 +140,7 @@ extern NSString * const kOTRKitTrustKey;
  *  @param decodedMessage plaintext message to display to the user. May be nil if other party is sending raw TLVs without messages attached.
  *  @param wasEncrypted whether or not the original message sent to decodeMessage: was encrypted or plaintext. This is just a check of the original message for a "?OTR" prefix.
  *  @param tlvs        OTRTLV values that may be present.
- *  @param sender      buddy who sent the message
+ *  @param username      buddy who sent the message
  *  @param accountName your local account name
  *  @param protocol    protocol for account name such as "xmpp"
  *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
@@ -174,7 +174,7 @@ updateMessageState:(OTRKitMessageState)messageState
  *  is called synchronously on the callback queue so be careful.
  *
  *  @param otrKit      reference to shared instance
- *  @param recipient   intended recipient of the message
+ *  @param username   intended recipient of the message
  *  @param accountName your local account name
  *  @param protocol    protocol for account name such as "xmpp"
  *
@@ -338,7 +338,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  * then injects the encoded data via the injectMessage: delegate method.
  * @param message The message to be encoded
  * @param tlvs Array of OTRTLVs, the data length of each TLV must be smaller than UINT16_MAX or it will be ignored.
- * @param recipient The intended recipient of the message
+ * @param username The intended recipient of the message
  * @param accountName Your account name
  * @param protocol the protocol of accountName, such as @"xmpp"
  *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
@@ -354,7 +354,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  All messages should be sent through here before being processed by your program.
  *
  *  @param message     Encoded or plaintext incoming message
- *  @param sender      account name of buddy who sent the message
+ *  @param username      account name of buddy who sent the message
  *  @param accountName your account name
  *  @param protocol    the protocol of accountName, such as @"xmpp"
  *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
@@ -379,7 +379,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Shortcut for injecting a "?OTR?" message.
  *
- *  @param recipient   name of buddy you'd like to start OTR conversation
+ *  @param username   name of buddy you'd like to start OTR conversation
  *  @param accountName your account name
  *  @param protocol    the protocol of accountName, such as @"xmpp"
  */
@@ -391,7 +391,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  Disable encryption and inform buddy you no longer wish to communicate
  *  privately.
  *
- *  @param recipient   name of buddy you'd like to end OTR conversation
+ *  @param username   name of buddy you'd like to end OTR conversation
  *  @param accountName your account name
  *  @param protocol    the protocol of accountName, such as @"xmpp"
  */
@@ -567,7 +567,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param accountName your account name
  *  @param protocol    the protocol of accountName, such as @"xmpp"
  *
- *  @param completoin Whether or not buddy has any previously verified fingerprints.
+ *  @param completion Whether or not buddy has any previously verified fingerprints.
  */
 - (void)hasVerifiedFingerprintsForUsername:(NSString *)username
 							   accountName:(NSString *)accountName

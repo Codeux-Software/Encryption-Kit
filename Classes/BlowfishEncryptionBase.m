@@ -143,7 +143,7 @@ static const signed char fish_unbase64[256] = {
 	return base64Length;
 }
 
-+ (BOOL)walkBlowfishCipherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData **)outputHandler
++ (BOOL)walkBlowfishCipherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData * __autoreleasing *)outputHandler
 {
 	/* Define basic context. */
 	size_t _bytesLeft = inputSize;

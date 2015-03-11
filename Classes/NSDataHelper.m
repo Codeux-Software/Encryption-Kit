@@ -49,9 +49,9 @@
 	[self replaceAllOccurrencesOfData:[NSData dataWithBytes:"\x00" length:1] withBytes:NULL length:0]; // NULL character
 }
 
-- (void)replaceAllOccurrencesOfData:(NSData *)needle withBytes:(const void *)replacementBytes length:(NSUInteger)replacementLength;
+- (void)replaceAllOccurrencesOfData:(NSData *)needle withBytes:(const void *)replacementBytes length:(NSUInteger)replacementLength
 {
-	NSInteger start = 0;
+	NSUInteger start = 0;
 	
 	while (1 == 1) {
 		if (start >= [self length]) {

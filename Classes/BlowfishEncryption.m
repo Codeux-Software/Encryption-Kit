@@ -35,7 +35,7 @@
 
 @implementation EKBlowfishEncryption
 
-+ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(EKBlowfishEncryptionModeOfOperation)mode thatFitsWithinBounds:(NSInteger)maximumLength;
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(EKBlowfishEncryptionModeOfOperation)mode thatFitsWithinBounds:(NSInteger)maximumLength
 {
 	if (mode == EKBlowfishEncryptionNoneModeOfOperation) {
 		return maximumLength;
