@@ -49,5 +49,5 @@ do
 
 	deleteOldAndCreateDirectory "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
 
-	./Libraries/build_${LIBRARY_TO_BUILD}.sh
+	"${PROJECT_DIR}/Build Dependencies/Libraries/build_${LIBRARY_TO_BUILD}.sh"
 done
