@@ -7,14 +7,15 @@ export LIBRARY_GPG_ERROR_VERSION="1.18"
 export LIBRARY_GCRYPT_VERSION="1.6.3"
 export LIBRARY_OTR_VERSION="4.1.0"
 
-export LIBRARIES_TO_BUILD=()
-
-LIBRARIES_TO_BUILD+=("openssl")
-LIBRARIES_TO_BUILD+=("libgpg-error")
-LIBRARIES_TO_BUILD+=("libgcrypt")
-LIBRARIES_TO_BUILD+=("libotr")
+export LIBRARIES_TO_BUILD="openssl libgpg-error libgcrypt libotr"
 
 export ROOT_DIRECTORY="/private/tmp/com.codeux.frameworks.encryptionKit/"
+
+if [ -d "${ROOT_DIRECTORY}" ]; then
+	echo "Built contents directory already exists. Exiting..."
+
+	exit;
+fi 
 
 export SHARED_RESULT_ROOT_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/"
 export SHARED_RESULT_BINARY_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/bin"
