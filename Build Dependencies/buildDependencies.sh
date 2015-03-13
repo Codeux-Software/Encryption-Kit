@@ -47,6 +47,8 @@ for LIBRARY_TO_BUILD in ${LIBRARIES_TO_BUILD[@]}
 do
 	export LIBRARY_WORKING_DIRECTORY_LOCATION="${WORKING_DIRECTORY}${LIBRARY_TO_BUILD}/"
 
+	export COMMAND_MODE=unix2003
+
 	deleteOldAndCreateDirectory "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
 
 	"./Build Dependencies/Libraries/build_${LIBRARY_TO_BUILD}.sh"
