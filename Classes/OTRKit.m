@@ -58,7 +58,7 @@ NSString * const kOTRKitTrustKey		= @"kOTRKitTrustKey";
 /**
  *  Defaults to main queue. All delegate and block callbacks will be done on this queue.
  */
-@property (nonatomic) dispatch_queue_t internalQueue;
+@property (nonatomic, strong) dispatch_queue_t internalQueue;
 @property (nonatomic, strong) NSTimer *pollTimer;
 @property (nonatomic) OtrlUserState userState;
 @property (nonatomic, strong) NSMutableDictionary *protocolMaxSize;
@@ -630,6 +630,14 @@ static OtrlMessageAppOps ui_ops = {
 	otrl_userstate_free(self.userState);
 
 	self.userState = NULL;
+
+	if (self.callbackQueue) {
+		self.callbackQueue = NULL;
+	}
+
+	if (self.internalQueue) {
+		self.internalQueue = NULL;
+	}
 }
 
 - (instancetype)init

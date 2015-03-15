@@ -284,7 +284,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Defaults to main queue. All delegate and block callbacks will be done on this queue.
  */
-@property (nonatomic) dispatch_queue_t callbackQueue;
+@property (nonatomic, strong) dispatch_queue_t callbackQueue;
 
 /**
  * By default uses `OTRKitPolicyDefault`
