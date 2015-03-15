@@ -643,7 +643,7 @@ static OtrlMessageAppOps ui_ops = {
 
 		self.internalQueue = dispatch_queue_create("OTRKit Internal Queue", DISPATCH_QUEUE_SERIAL);
 
-		dispatch_sync([self internalQueue], ^{
+		[self performInternalQueueSyncOperation:^{
 			OTRL_INIT;
 
 			NSDictionary *protocolDefaults = @{@"prpl-msn":   @(1409),
@@ -657,7 +657,7 @@ static OtrlMessageAppOps ui_ops = {
 			self.protocolMaxSize = [NSMutableDictionary dictionaryWithDictionary:protocolDefaults];
 
 			self.userState = otrl_userstate_create();
-		});
+		}];
 	}
 
 	return self;
@@ -676,7 +676,7 @@ static OtrlMessageAppOps ui_ops = {
 
 - (void)readLibotrConfiguration
 {
-	dispatch_async([self internalQueue], ^{
+	[self performInternalQueueAsyncOperation:^{
 		NSString *path1 = [self privateKeyPath];
 
 		FILE *privf = fopen([path1 UTF8String], "rb");
@@ -710,7 +710,7 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		fclose(tagf);
-	});
+	}];
 }
 
 - (NSString *)documentsDirectory
@@ -739,14 +739,14 @@ static OtrlMessageAppOps ui_ops = {
 
 - (void)setMaximumProtocolSize:(int)maxSize forProtocol:(NSString *)protocol
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		[self protocolMaxSize][protocol] = @(maxSize);
-	});
+	}];
 }
 
 - (void)messagePoll:(NSTimer *)timer
 {
-	dispatch_async([self internalQueue], ^{
+	[self performInternalQueueAsyncOperation:^{
 		if ([self userState]) {
 			otrl_message_poll(_userState, &ui_ops, NULL);
 		} else {
@@ -754,7 +754,7 @@ static OtrlMessageAppOps ui_ops = {
 				[timer invalidate];
 			});
 		}
-	});
+	}];
 }
 
 #pragma mark Initialization
@@ -765,7 +765,7 @@ static OtrlMessageAppOps ui_ops = {
 			 protocol:(NSString *)protocol
 				  tag:(id)tag
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueAsyncOperation:^{
 		if ([message length] <= 0 || [sender length] <= 0 || [accountName length] <= 0 || [protocol length] <= 0) {
 			return;
 		}
@@ -840,7 +840,7 @@ static OtrlMessageAppOps ui_ops = {
 		if (otr_tlvs) {
 			otrl_tlv_free(otr_tlvs);
 		}
-	});
+	}];
 }
 
 - (void)encodeMessage:(NSString *)messageToBeEncoded
@@ -850,7 +850,7 @@ static OtrlMessageAppOps ui_ops = {
 			 protocol:(NSString *)protocol
 				  tag:(id)tag
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueAsyncOperation:^{
 		gcry_error_t err;
 
 		char *newMessage = NULL;
@@ -908,7 +908,7 @@ static OtrlMessageAppOps ui_ops = {
 								  error:error];
 			});
 		}
-	});
+	}];
 }
 
 - (void)initiateEncryptionWithUsername:(NSString *)recipient
@@ -922,11 +922,11 @@ static OtrlMessageAppOps ui_ops = {
 						  accountName:(NSString *)accountName
 							 protocol:(NSString *)protocol
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		otrl_message_disconnect_all_instances(_userState, &ui_ops, NULL, [accountName UTF8String], [protocol UTF8String], [recipient UTF8String]);
 
 		[self updateEncryptionStatusWithContext:[self contextForUsername:recipient accountName:accountName protocol:protocol]];
-	});
+	}];
 }
 
 - (BOOL)isGeneratingKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol
@@ -937,7 +937,7 @@ static OtrlMessageAppOps ui_ops = {
 
 	__block BOOL generatingKey = NO;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		void *newkeyp;
 
 		gcry_error_t generateError = otrl_privkey_generate_start(_userState, [accountName UTF8String], [protocol UTF8String], &newkeyp);
@@ -947,7 +947,7 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		generatingKey = (generateError == gcry_error(GPG_ERR_EEXIST));
-	});
+	}];
 
 	return generatingKey;
 }
@@ -1088,13 +1088,13 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block NSString *fingerprint = nil;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		char our_hash[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
 
 		otrl_privkey_fingerprint(_userState, our_hash, [accountName UTF8String], [protocol UTF8String]);
 
 		fingerprint = @(our_hash);
-	});
+	}];
 
 	return fingerprint;
 }
@@ -1105,7 +1105,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block NSString *activeFingerprint = nil;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		char their_hash[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
 
 		Fingerprint *fingerprint = [self internalActiveFingerprintForUsername:username accountName:accountName protocol:protocol];
@@ -1115,7 +1115,7 @@ static OtrlMessageAppOps ui_ops = {
 
 			activeFingerprint = @(their_hash);
 		}
-	});
+	}];
 
 	return activeFingerprint;
 }
@@ -1126,7 +1126,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block BOOL verified = NO;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context) {
@@ -1144,7 +1144,7 @@ static OtrlMessageAppOps ui_ops = {
 				currentFingerPrint = currentFingerPrint->next;
 			}
 		}
-	});
+	}];
 
 	return verified;
 }
@@ -1155,7 +1155,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block BOOL verified = NO;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		Fingerprint *fingerprint = [self internalActiveFingerprintForUsername:username accountName:accountName protocol:protocol];
 
 		if (fingerprint && fingerprint->trust) {
@@ -1163,7 +1163,7 @@ static OtrlMessageAppOps ui_ops = {
 				verified = YES;
 			}
 		}
-	});
+	}];
 
 	return verified;
 }
@@ -1173,7 +1173,7 @@ static OtrlMessageAppOps ui_ops = {
 										   protocol:(NSString *)protocol
 										   verified:(BOOL)verified
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		Fingerprint *fingerprint = [self internalActiveFingerprintForUsername:username accountName:accountName protocol:protocol];
 
 		const char *newTrust = nil;
@@ -1187,7 +1187,7 @@ static OtrlMessageAppOps ui_ops = {
 
 			[self writeFingerprints];
 		}
-	});
+	}];
 }
 
 - (void)writeFingerprints
@@ -1211,7 +1211,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block OTRKitMessageState messageState = OTRKitMessageStatePlaintext;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context) {
@@ -1236,7 +1236,7 @@ static OtrlMessageAppOps ui_ops = {
 				}
 			}
 		}
-	});
+	}];
 
 	return messageState;
 }
@@ -1284,7 +1284,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block NSArray *allFingerprints = nil;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		NSMutableArray *fingerprintsArray = [NSMutableArray array];
 
 		ConnContext *context = _userState->context_root;
@@ -1317,7 +1317,7 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		allFingerprints = [fingerprintsArray copy];
-	});
+	}];
 
 	return allFingerprints;
 }
@@ -1329,7 +1329,7 @@ static OtrlMessageAppOps ui_ops = {
 {
 	__block BOOL success = NO;
 
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		BOOL stop = NO;
@@ -1360,7 +1360,7 @@ static OtrlMessageAppOps ui_ops = {
 
 			success = YES;
 		}
-	});
+	}];
 
 	return success;
 }
@@ -1372,7 +1372,7 @@ static OtrlMessageAppOps ui_ops = {
 							   useData:(NSData *)useData
 							completion:(void (^)(NSData *key, NSError *error))completion
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1398,7 +1398,7 @@ static OtrlMessageAppOps ui_ops = {
 				completion(keyData, error);
 			});
 		}
-	});
+	}];
 }
 
 - (void) initiateSMPForUsername:(NSString *)username
@@ -1406,7 +1406,7 @@ static OtrlMessageAppOps ui_ops = {
 					   protocol:(NSString *)protocol
 						 secret:(NSString *)secret
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1414,7 +1414,7 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		otrl_message_initiate_smp([self userState], &ui_ops, NULL, context, (const unsigned char*)[secret UTF8String], [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-	});
+	}];
 }
 
 - (void) initiateSMPForUsername:(NSString *)username
@@ -1423,7 +1423,7 @@ static OtrlMessageAppOps ui_ops = {
 					   question:(NSString *)question
 						 secret:(NSString *)secret
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1431,7 +1431,7 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		otrl_message_initiate_smp_q([self userState], &ui_ops, NULL, context, [question UTF8String], (const unsigned char*)[secret UTF8String], [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-	});
+	}];
 }
 
 - (void)respondToSMPForUsername:(NSString *)username
@@ -1439,7 +1439,7 @@ static OtrlMessageAppOps ui_ops = {
 					   protocol:(NSString *)protocol
 						 secret:(NSString *)secret
 {
-	dispatch_sync([self internalQueue], ^{
+	[self performInternalQueueSyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1447,7 +1447,29 @@ static OtrlMessageAppOps ui_ops = {
 		}
 
 		otrl_message_respond_smp([self userState], &ui_ops, NULL, context, (const unsigned char*)[secret UTF8String], [secret lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-	});
+	}];
+}
+
+- (void)performInternalQueueAsyncOperation:(dispatch_block_t)block
+{
+	dispatch_queue_set_specific([self internalQueue], (__bridge const void *)([self internalQueue]), (void *)1, NULL);
+
+	if (dispatch_get_specific((__bridge const void *)([self internalQueue]))) {
+		block();
+	} else {
+		dispatch_async([self internalQueue], block);
+	}
+}
+
+- (void)performInternalQueueSyncOperation:(dispatch_block_t)block
+{
+	dispatch_queue_set_specific([self internalQueue], (__bridge const void *)([self internalQueue]), (void *)1, NULL);
+
+	if (dispatch_get_specific((__bridge const void *)([self internalQueue]))) {
+		block();
+	} else {
+		dispatch_sync([self internalQueue], block);
+	}
 }
 
 #pragma mark Static Methods
