@@ -739,7 +739,7 @@ static OtrlMessageAppOps ui_ops = {
 
 - (void)setMaximumProtocolSize:(int)maxSize forProtocol:(NSString *)protocol
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		[self protocolMaxSize][protocol] = @(maxSize);
 	}];
 }
@@ -922,7 +922,7 @@ static OtrlMessageAppOps ui_ops = {
 						  accountName:(NSString *)accountName
 							 protocol:(NSString *)protocol
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		otrl_message_disconnect_all_instances(_userState, &ui_ops, NULL, [accountName UTF8String], [protocol UTF8String], [recipient UTF8String]);
 
 		[self updateEncryptionStatusWithContext:[self contextForUsername:recipient accountName:accountName protocol:protocol]];
@@ -1173,7 +1173,7 @@ static OtrlMessageAppOps ui_ops = {
 										   protocol:(NSString *)protocol
 										   verified:(BOOL)verified
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		Fingerprint *fingerprint = [self internalActiveFingerprintForUsername:username accountName:accountName protocol:protocol];
 
 		const char *newTrust = nil;
@@ -1372,7 +1372,7 @@ static OtrlMessageAppOps ui_ops = {
 							   useData:(NSData *)useData
 							completion:(void (^)(NSData *key, NSError *error))completion
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1406,7 +1406,7 @@ static OtrlMessageAppOps ui_ops = {
 					   protocol:(NSString *)protocol
 						 secret:(NSString *)secret
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1423,7 +1423,7 @@ static OtrlMessageAppOps ui_ops = {
 					   question:(NSString *)question
 						 secret:(NSString *)secret
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
@@ -1439,7 +1439,7 @@ static OtrlMessageAppOps ui_ops = {
 					   protocol:(NSString *)protocol
 						 secret:(NSString *)secret
 {
-	[self performInternalQueueSyncOperation:^{
+	[self performInternalQueueAsyncOperation:^{
 		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
 
 		if (context == NULL) {
