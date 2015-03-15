@@ -96,12 +96,12 @@ extern NSString * const kOTRKitTrustKey;
  *  should be sent first through OTRKit encodeMessage and then passed from this delegate
  *  to the appropriate chat protocol manager to send the actual message.
  *
- *  @param otrKit      reference to shared instance
- *  @param message     message to be sent over the network. may contain ciphertext.
- *  @param username   intended recipient of the message
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
- *  @param tag optional tag to attached to message. Only used locally.
+ *  @param otrKit		Reference to shared instance
+ *  @param message		Message to be sent over the network. May contain ciphertext.
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ *  @param tag			Optional tag to attached to message. Only used locally.
  */
 - (void) otrKit:(OTRKit *)otrKit
   injectMessage:(NSString *)message
@@ -114,13 +114,13 @@ extern NSString * const kOTRKitTrustKey;
  *  All outgoing messages should be sent to the OTRKit encodeMessage method before being
  *  sent over the network.
  *
- *  @param otrKit      reference to shared instance
- *  @param encodedMessage     plaintext message
- *  @param wasEncrypted whether or not encodedMessage message is ciphertext, or just plaintext appended with the opportunistic whitespace. This is just a check of the encodedMessage message for a "?OTR" prefix.
- *  @param username      buddy who sent the message
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
- *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
+ *  @param otrKit			Reference to shared instance
+ *  @param encodedMessage   Plain text message
+ *  @param wasEncrypted		Whether or not encodedMessage message is ciphertext, or just plaintext appended with the opportunistic whitespace. This is just a check of the encodedMessage message for a "?OTR" prefix.
+ *  @param username			The account name of the remote user
+ *  @param accountName		The account name of the local user
+ *  @param protocol			The protocol of the exchange
+ *  @param tag optional		Tag to attach additional application-specific data to message. Only used locally.
  */
 - (void) otrKit:(OTRKit *)otrKit
  encodedMessage:(NSString *)encodedMessage
@@ -136,14 +136,14 @@ extern NSString * const kOTRKitTrustKey;
  *  All incoming messages should be sent to the OTRKit decodeMessage method before being
  *  processed by your application. You should only display the messages coming from this delegate method.
  *
- *  @param otrKit      reference to shared instance
- *  @param decodedMessage plaintext message to display to the user. May be nil if other party is sending raw TLVs without messages attached.
- *  @param wasEncrypted whether or not the original message sent to decodeMessage: was encrypted or plaintext. This is just a check of the original message for a "?OTR" prefix.
- *  @param tlvs        OTRTLV values that may be present.
- *  @param username      buddy who sent the message
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
- *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
+ *  @param otrKit			Reference to shared instance
+ *  @param decodedMessage	Plain text message to display to the user. May be nil if other party is sending raw TLVs without messages attached.
+ *  @param wasEncrypted		Whether or not the original message sent to decodeMessage: was encrypted or plain text. This is just a check of the original message for a "?OTR" prefix.
+ *  @param tlvs				OTRTLV values that may be present.
+ *  @param username			The account name of the remote user
+ *  @param accountName		The account name of the local user
+ *  @param protocol			The protocol of the exchange
+ *  @param tag optional		Tag to attach additional application-specific data to message. Only used locally.
  */
 - (void) otrKit:(OTRKit *)otrKit
  decodedMessage:(NSString *)decodedMessage
@@ -157,11 +157,11 @@ extern NSString * const kOTRKitTrustKey;
 /**
  *  When the encryption status changes this method is called
  *
- *  @param otrKit      reference to shared instance
- *  @param messageState plaintext, encrypted or finished
- *  @param username     buddy whose state has changed
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
+ *  @param otrKit		Reference to shared instance
+ *  @param messageState Plain text, encrypted or finished
+ *  @param username     The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
  */
 - (void)    otrKit:(OTRKit *)otrKit
 updateMessageState:(OTRKitMessageState)messageState
@@ -170,13 +170,13 @@ updateMessageState:(OTRKitMessageState)messageState
 		  protocol:(NSString *)protocol;
 
 /**
- *  libotr likes to know if buddies are still "online". This method
+ *  libotr likes to know if users are still "online". This method
  *  is called synchronously on the callback queue so be careful.
  *
- *  @param otrKit      reference to shared instance
- *  @param username   intended recipient of the message
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
+ *  @param otrKit		Reference to shared instance
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
  *
  *  @return online status of recipient
  */
@@ -188,12 +188,12 @@ updateMessageState:(OTRKitMessageState)messageState
 /**
  *  Show a dialog here so the user can confirm when a user's fingerprint changes.
  *
- *  @param otrKit      reference to shared instance
- *  @param accountName your local account name
- *  @param protocol    protocol for account name such as "xmpp"
- *  @param username    buddy whose fingerprint has changed
- *  @param theirHash   buddy's fingerprint
- *  @param ourHash     our fingerprint
+ *  @param otrKit      Reference to shared instance
+ *  @param theirHash   Remote user's fingerprint
+ *  @param ourHash     Local user's fingerprint
+ *  @param accountName The account name of the local user
+ *  @param username    The account name of the remote user
+ *  @param protocol    The protocol of the exchange
  */
 - (void)                           otrKit:(OTRKit *)otrKit
   showFingerprintConfirmationForTheirHash:(NSString *)theirHash
@@ -205,10 +205,10 @@ updateMessageState:(OTRKitMessageState)messageState
 /**
  *  Implement this if you plan to handle SMP.
  *
- *  @param otrKit      reference to shared instance
- *  @param event    SMP event
- *  @param progress percent progress of SMP negotiation
- *  @param question question that should be displayed to user
+ *  @param otrKit		Reference to shared instance
+ *  @param event		SMP event
+ *  @param progress		Percent progress of SMP negotiation
+ *  @param question		Question that should be displayed to user
  */
 - (void) otrKit:(OTRKit *)otrKit
  handleSMPEvent:(OTRKitSMPEvent)event
@@ -221,10 +221,10 @@ updateMessageState:(OTRKitMessageState)messageState
 /**
  *  Implement this delegate method to handle message events.
  *
- *  @param otrKit      reference to shared instance
- *  @param event   message event
- *  @param message offending message
- *  @param error   error describing the problem
+ *  @param otrKit		Reference to shared instance
+ *  @param event		Message event
+ *  @param message		Offending message
+ *  @param error		Error describing the problem
  */
 - (void)    otrKit:(OTRKit *)otrKit
 handleMessageEvent:(OTRKitMessageEvent)event
@@ -236,12 +236,12 @@ handleMessageEvent:(OTRKitMessageEvent)event
 			 error:(NSError *)error;
 
 /**
- *  When another buddy requests a shared symmetric key this will be called.
+ *  When a remote user requests a shared symmetric key, this will be called.
  *
- *  @param otrKit      reference to shared instance
- *  @param symmetricKey key data
- *  @param use          integer tag for identifying the use for the key
- *  @param useData      any extra data to attach
+ *  @param otrKit			Reference to shared instance
+ *  @param symmetricKey		Key data
+ *  @param use				Integer tag for identifying the use for the key
+ *  @param useData			Any extra data to attach
  */
 - (void)        otrKit:(OTRKit *)otrKit
   receivedSymmetricKey:(NSData *)symmetricKey
@@ -256,9 +256,9 @@ handleMessageEvent:(OTRKitMessageEvent)event
 /**
  *  Called when starting to generate a private key, may take a while.
  *
- *  @param otrKit      reference to shared instance
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
+ *  @param otrKit      Reference to shared instance
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
 - (void)                             otrKit:(OTRKit *)otrKit
 willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName
@@ -267,10 +267,10 @@ willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Called when key generation has finished, canceled, or there was an error.
  *
- *  @param otrKit      reference to shared instance
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param error       any error that may have occurred
+ *  @param otrKit      Reference to shared instance
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
+ *  @param error       Any error that may have occurred
  */
 - (void)                             otrKit:(OTRKit *)otrKit
 didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
@@ -321,6 +321,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 
 /**
  * You must call this method before any others.
+ *
  * @param dataPath This is a path to a folder where private keys, fingerprints, and instance tags will be stored. If this is nil a default path will be chosen for you.
  */
 - (void)setupWithDataPath:(NSString *)dataPath;
@@ -328,22 +329,23 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  For specifying fragmentation for a protocol.
  *
- *  @param maxSize  max size of protocol messages in bytes
- *  @param protocol protocol like "xmpp"
+ *  @param maxSize		Max size of protocol messages in bytes
+ *  @param protocol		The protocol of the exchange
  */
 - (void)setMaximumProtocolSize:(int)maxSize forProtocol:(NSString *)protocol;
 
 /**
  * Encodes a message and optional array of OTRTLVs, splits it into fragments,
  * then injects the encoded data via the injectMessage: delegate method.
- * @param message The message to be encoded
- * @param tlvs Array of OTRTLVs, the data length of each TLV must be smaller than UINT16_MAX or it will be ignored.
- * @param username The intended recipient of the message
- * @param accountName Your account name
- * @param protocol the protocol of accountName, such as @"xmpp"
- *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
+ *
+ * @param message		The message to be encoded
+ * @param tlvs			Array of OTRTLVs, the data length of each TLV must be smaller than UINT16_MAX or it will be ignored.
+ * @param username		The account name of the remote user
+ * @param accountName	The account name of the local user
+ * @param protocol		The protocol of the exchange
+ * @param tag			Optional tag to attach additional application-specific data to message. Only used locally.
  */
-- (void)encodeMessage:(NSString *)message
+- (void)encodeMessage:(NSString *)messageToBeEncoded
 				 tlvs:(NSArray *)tlvs
 			 username:(NSString *)username
 		  accountName:(NSString *)accountName
@@ -353,35 +355,34 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  All messages should be sent through here before being processed by your program.
  *
- *  @param message     Encoded or plaintext incoming message
- *  @param username      account name of buddy who sent the message
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param tag optional tag to attach additional application-specific data to message. Only used locally.
+ *  @param message			Encoded or plain text incoming message
+ *  @param username			The account name of the remote user
+ *  @param accountName		The account name of the local user
+ *  @param protocol			The protocol of the exchange
+ *  @param tag				Optional tag to attach additional application-specific data to message. Only used locally.
  */
 - (void)decodeMessage:(NSString *)message
-			 username:(NSString *)username
+			 username:(NSString *)sender
 		  accountName:(NSString *)accountName
 			 protocol:(NSString *)protocol
 				  tag:(id)tag;
 
 /**
- *  You can use this method to determine whether or not OTRKit is currently generating a private key.
+ *  You can use this method to determine whether or not OTRKit is 
+ *  currently generating a private key.
  *
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion  whether or not we are currently generating a key
+ *  @param accountName		The account name of the local user
+ *  @param protocol			The protocol of the exchange
  */
-- (void)checkIfGeneratingKeyForAccountName:(NSString *)accountName
-								  protocol:(NSString *)protocol
-								completion:(void (^)(BOOL isGeneratingKey))completion;
+- (BOOL)isGeneratingKeyForAccountName:(NSString *)accountName
+							 protocol:(NSString *)protocol;
 
 /**
  *  Shortcut for injecting a "?OTR?" message.
  *
- *  @param username   name of buddy you'd like to start OTR conversation
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
+ *  @param username			The account name of the remote user
+ *  @param accountName		The account name of the local user
+ *  @param protocol			The protocol of the exchange
  */
 - (void)initiateEncryptionWithUsername:(NSString *)username
 						   accountName:(NSString *)accountName
@@ -391,9 +392,9 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  Disable encryption and inform buddy you no longer wish to communicate
  *  privately.
  *
- *  @param username   name of buddy you'd like to end OTR conversation
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
  */
 - (void)disableEncryptionWithUsername:(NSString *)username
 						  accountName:(NSString *)accountName
@@ -402,27 +403,25 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Current encryption state for buddy.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion current encryption state, called on callbackQueue
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
  */
-- (void)messageStateForUsername:(NSString *)username
-					accountName:(NSString *)accountName
-					   protocol:(NSString *)protocol
-					 completion:(void (^)(OTRKitMessageState messageState))completion;
+- (OTRKitMessageState)messageStateForUsername:(NSString *)username
+								  accountName:(NSString *)accountName
+									 protocol:(NSString *)protocol;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Socialist's Millionaire Protocol
 //////////////////////////////////////////////////////////////////////
 
 /**
- *  Initiate's SMP with shared secret to verify buddy identity.
+ *  Initiate's SMP with shared secret to verify identity.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param secret      the secret must match exactly between buddies
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ *  @param secret		The secret must match exactly between users
  */
 - (void)initiateSMPForUsername:(NSString *)username
 				   accountName:(NSString *)accountName
@@ -430,13 +429,13 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 						secret:(NSString *)secret;
 
 /**
- *  Initiate's SMP with shared secret to verify buddy identity.
+ *  Initiate's SMP with shared secret to verify identity.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param question    a question to ask remote buddy where the expected answer is the exact secret
- *  @param secret      the secret must match exactly between buddies
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ *  @param question		A question to ask the remote user
+ *  @param secret		The secret must match exactly between users
  */
 - (void)initiateSMPForUsername:(NSString *)username
 				   accountName:(NSString *)accountName
@@ -447,10 +446,10 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Respond to an SMP request with the secret answer.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param secret      the secret must match exactly between buddies
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
+ *  @param secret      The secret must match exactly between users
  */
 - (void)respondToSMPForUsername:(NSString *)username
 					accountName:(NSString *)accountName
@@ -464,12 +463,12 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Requests a symmetric key for out-of-band crypto like file transfer.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param use         integer tag describing the use of the key
- *  @param useData     any extra data that may be required to use the key
- *  @param completion Symmetric key ready to be used externally, or error.
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ *  @param use			Integer tag describing the use of the key
+ *  @param useData		Any extra data that may be required to use the key
+ *  @param completion	Symmetric key ready to be used externally, or error.
  */
 
 - (void)requestSymmetricKeyForUsername:(NSString *)username
@@ -484,95 +483,79 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 //////////////////////////////////////////////////////////////////////
 
 /**
- *  @param completion Returns an array of dictionaries using OTRAccountNameKey, OTRUsernameKey,
+ *  Returns an array of dictionaries using OTRAccountNameKey, OTRUsernameKey,
  *  OTRFingerprintKey, OTRProtocolKey, OTRFingerprintKey to store the relevant
  *  information.
  */
-- (void)requestAllFingerprints:(void (^)(NSArray *allFingerprints))completion;
-
+- (NSArray *)requestAllFingerprints;
 
 /**
  *  Delete a specified fingerprint.
  *
- *  @param fingerprint fingerprint to be deleted
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion whether not the operation was successful.
+ *  @param fingerprint Fingerprint to be deleted
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
-- (void)deleteFingerprint:(NSString *)fingerprint
+- (BOOL)deleteFingerprint:(NSString *)fingerprintString
 				 username:(NSString *)username
 			  accountName:(NSString *)accountName
-				 protocol:(NSString *)protocol
-			   completion:(void (^)(BOOL success))completion;
-
+				 protocol:(NSString *)protocol;
 
 /**
- *  For determining your own fingerprint.
+ *  For determining the fingerprint of the local user.
  *
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion Returns your private key fingerprint
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
-- (void)fingerprintForAccountName:(NSString *)accountName
-						 protocol:(NSString *)protocol
-					   completion:(void (^)(NSString *fingerprint))completion;
+- (NSString *)fingerprintForAccountName:(NSString *)accountName
+							   protocol:(NSString *)protocol;
 
 /**
- *  For determining the fingerprint of a buddy.
+ *  For determining the fingerprint of a remote user.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion Returns username's private key fingerprint
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
-- (void)activeFingerprintForUsername:(NSString *)username
-						 accountName:(NSString *)accountName
-							protocol:(NSString *)protocol
-						  completion:(void (^)(NSString *activeFingerprint))completion;
+- (NSString *)activeFingerprintForUsername:(NSString *)username
+							   accountName:(NSString *)accountName
+								  protocol:(NSString *)protocol;
 
 /**
- *  Whether or not buddy's fingerprint is marked as verified.
+ *  Whether or not the remote user's fingerprint is marked as verified.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param completion fingerprint verification state for buddy
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
-- (void)activeFingerprintIsVerifiedForUsername:(NSString *)username
+- (BOOL)activeFingerprintIsVerifiedForUsername:(NSString *)username
 								   accountName:(NSString *)accountName
-									  protocol:(NSString *)protocol
-									completion:(void (^)(BOOL verified))completion;
-
+									  protocol:(NSString *)protocol;
 
 /**
  *  Mark a user's active fingerprint as verified
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *  @param verified    whether or not to trust this fingerprint
- *  @param completion  whether or not operation was successful
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
+ *  @param verified    Whether or not to trust this fingerprint
  */
 - (void)setActiveFingerprintVerificationForUsername:(NSString *)username
 										accountName:(NSString *)accountName
 										   protocol:(NSString *)protocol
-										   verified:(BOOL)verified
-										 completion:(void (^)(void))completion;
+										   verified:(BOOL)verified;
 
 /**
- *  Whether or not buddy has any previously verified fingerprints.
+ *  Whether or not the remote user has any previously verified fingerprints.
  *
- *  @param username    username of remote buddy
- *  @param accountName your account name
- *  @param protocol    the protocol of accountName, such as @"xmpp"
- *
- *  @param completion Whether or not buddy has any previously verified fingerprints.
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
  */
-- (void)hasVerifiedFingerprintsForUsername:(NSString *)username
+- (BOOL)hasVerifiedFingerprintsForUsername:(NSString *)username
 							   accountName:(NSString *)accountName
-								  protocol:(NSString *)protocol
-								completion:(void (^)(BOOL verified))completion;
+								  protocol:(NSString *)protocol;
 
 /**
  *  Test if a string starts with "?OTR".
