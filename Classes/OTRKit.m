@@ -1252,7 +1252,7 @@ static OtrlMessageAppOps ui_ops = {
 
 - (OtrlPolicy)otrlPolicy
 {
-	switch ([self otrlPolicy]) {
+	switch ([self otrPolicy]) {
 		case OTRKitPolicyDefault:
 		{
 			return OTRL_POLICY_DEFAULT;
