@@ -131,7 +131,6 @@ extern NSString * const kOTRKitTrustKey;
 			tag:(id)tag
 		  error:(NSError *)error;
 
-
 /**
  *  All incoming messages should be sent to the OTRKit decodeMessage method before being
  *  processed by your application. You should only display the messages coming from this delegate method.

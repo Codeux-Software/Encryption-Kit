@@ -869,7 +869,7 @@ static OtrlMessageAppOps ui_ops = {
 		OtrlTLV *otr_tlvs = [self tlvChainForTLVs:tlvs];
 
 		err = otrl_message_sending(_userState, &ui_ops, (void *)CFBridgingRetain(tag),
-								   [accountName UTF8String], [protocol UTF8String], [username UTF8String], OTRL_INSTAG_BEST, [message UTF8String], otr_tlvs, &newMessage, OTRL_FRAGMENT_SEND_SKIP, &context,
+								   [accountName UTF8String], [protocol UTF8String], [username UTF8String], OTRL_INSTAG_BEST, [message UTF8String], otr_tlvs, &newMessage, OTRL_FRAGMENT_SEND_ALL, &context,
 								   NULL, NULL);
 
 		if (otr_tlvs) {
