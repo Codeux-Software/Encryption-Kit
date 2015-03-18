@@ -45,7 +45,7 @@
                             <constraint firstAttribute="width" constant="375" id="cPf-MX-9NE"/>
                             <constraint firstAttribute="height" constant="24" id="n5O-8S-xrn"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Authentication request from %@" id="Ash-IT-Ya7">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Authentication Request" id="Ash-IT-Ya7">
                             <font key="font" metaFont="systemBold" size="20"/>
                             <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -198,7 +198,7 @@ Gw
                 <constraint firstItem="XgO-9G-gkL" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="x1O-fr-OFF"/>
                 <constraint firstItem="nmj-3U-Mew" firstAttribute="top" secondItem="55E-YG-Jbg" secondAttribute="top" constant="19" id="xd6-no-fDU"/>
             </constraints>
-            <point key="canvasLocation" x="613" y="352"/>
+            <point key="canvasLocation" x="608" y="288.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2uI-Wj-ugA" userLabel="Question &amp; Answer View">
             <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>

@@ -236,36 +236,82 @@
 	return [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:@"OTRKitAuthenticationDialog"];
 }
 
+- (NSWindow *)deepestSheetOfWindow:(NSWindow *)window
+{
+	/* Recursively scan all attached sheets until we find a window without one. */
+	NSWindow *attachedSheet = [window attachedSheet];
+
+	if (attachedSheet) {
+		return [self deepestSheetOfWindow:attachedSheet];
+	} else {
+		return window;
+	}
+}
+
+- (void)presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText didEndSelector:(SEL)didEndSelector
+{
+	/* Construct alert */
+	NSAlert *errorAlert = [NSAlert new];
+
+	[errorAlert setAlertStyle:NSInformationalAlertStyle];
+
+	[errorAlert setMessageText:messageText];
+	[errorAlert setInformativeText:informativeText];
+
+	[errorAlert addButtonWithTitle:[self localizedString:@"00012"]]; // "OK" label
+
+	/* Attach the sheet to the highest window */
+	NSWindow *attachedWindow = [self deepestSheetOfWindow:[self authenticationHostWindow]];
+
+	if (didEndSelector == NULL) {
+		[errorAlert beginSheetModalForWindow:attachedWindow
+							   modalDelegate:NULL
+							  didEndSelector:NULL
+								 contextInfo:NULL];
+	} else {
+		[errorAlert beginSheetModalForWindow:attachedWindow
+							   modalDelegate:self
+							  didEndSelector:didEndSelector
+								 contextInfo:NULL];
+	}
+}
+
 - (void)presentDialogAlreadyExistsErrorAlert
 {
 	/* Get the visible portion of the remote user's name. */
 	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
 
 	/* Construct error messages */
-	NSString *buttonText = [self localizedString:@"00010[3]"];
-
 	NSString *messageText = [self localizedString:@"00010[1]"];
 
 	NSString *descriptionText = [NSString stringWithFormat:[self localizedString:@"00010[2]"], username];
 
 	/* Construct and present alert */
-	NSAlert *errorAlert = [NSAlert new];
+	[self presentAlert:messageText informativeText:descriptionText didEndSelector:NULL];
+}
 
-	[errorAlert setAlertStyle:NSInformationalAlertStyle];
+- (void)presentRemoteUserAbortedRequestDialog
+{
+	/* Get the visible portion of the remote user's name. */
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
 
-	[errorAlert setMessageText:messageText];
-	[errorAlert setInformativeText:descriptionText];
+	/* Construct error messages */
+	NSString *messageText = [self localizedString:@"00011[1]"];
 
-	[errorAlert addButtonWithTitle:buttonText];
+	NSString *descriptionText = [NSString stringWithFormat:[self localizedString:@"00011[2]"], username];
 
-	if ([[self authenticationHostWindow] attachedSheet]) {
-		(void)[errorAlert runModal];
-	} else {
-		[errorAlert beginSheetModalForWindow:[self authenticationHostWindow]
-							   modalDelegate:nil
-							  didEndSelector:NULL
-								 contextInfo:NULL];
-	}
+	/* Mark the dialog as stale */
+	[[OTRKitAuthenticationDialogWindowManager sharedManager] markDialogAsStale:self];
+
+	/* Construct and present alert */
+	[self presentAlert:messageText informativeText:descriptionText didEndSelector:@selector(presentRemoteUserAbortedRequestDialogAlertDidEnd:returnCode:contextInfo:)];
+}
+
+- (void)presentRemoteUserAbortedRequestDialogAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self teardownDialog];
+	});
 }
 
 #pragma mark -
@@ -527,6 +573,10 @@
 		[self setAuthenticationMethod:event];
 
 		[self authenticateUserWithQuestion:question];
+	} else if (event == OTRKitSMPEventAbort) {
+		if ([self authenticationProgressWindowIsVisible] == NO) {
+			[self presentRemoteUserAbortedRequestDialog];
+		}
 	}
 }
 

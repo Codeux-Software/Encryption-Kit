@@ -40,6 +40,8 @@
 - (void)addDialog:(OTRKitAuthenticationDialog *)dialog;
 - (void)removeDialog:(OTRKitAuthenticationDialog *)dialog;
 
+- (void)markDialogAsStale:(OTRKitAuthenticationDialog *)dialog;
+
 /* Return any dialog matching given data. */
 - (OTRKitAuthenticationDialog *)dialogForUsername:(NSString *)username
 									  accountName:(NSString *)accountName

@@ -37,7 +37,12 @@
 "00004" = "Authentication failed. Request aborted.";
 "00005" = "An error occurred during authentication.";
 
+/* Button titles */
+"00012" = "OK";
+
 /* General error messages */
 "00010[1]" = "Cannot process authentication request";
 "00010[2]" = "“%@“ tried to send you an authentication request, but it can't be processed at this time.";
-"00010[3]" = "OK";
+
+"00011[1]" = "Cannot process authentication request";
+"00011[2]" = "“%@“ cancelled the authentication request.";
