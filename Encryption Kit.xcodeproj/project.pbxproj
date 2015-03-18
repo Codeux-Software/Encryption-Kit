@@ -13,6 +13,7 @@
 		4C006C5D1AB84DA2004BE3C6 /* libotr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C591AB84DA2004BE3C6 /* libotr.a */; };
 		4C006C5F1AB84E19004BE3C6 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C5E1AB84E19004BE3C6 /* AppKit.framework */; };
 		4C006C611AB84E22004BE3C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C601AB84E22004BE3C6 /* Foundation.framework */; };
+		4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */; };
 		4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */; };
 		4C4DDA7C1AAF6D5C00AB43DC /* OTRKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,7 +27,6 @@
 		4C5229E71AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5229E51AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h */; };
 		4C5229E81AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */; };
 		4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */; };
-		4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishEncryptionBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishEncryptionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */; };
 		4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EB1AB814BC00C22DEF /* LICENSE.txt */; };
@@ -53,6 +53,7 @@
 		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<absolute>"; };
 		4C006C5E1AB84E19004BE3C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4C006C601AB84E22004BE3C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
 		4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryption.m; sourceTree = "<group>"; };
 		4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKit.h; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		4C6990641A91015C00FB41B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Build Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C6990671A91016300FB41B9 /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Entitlements.entitlements; sourceTree = "<group>"; };
-		4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryptionBase.m; sourceTree = "<group>"; };
 		4C8699EB1AB814BC00C22DEF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 		4C69906B1A91017500FB41B9 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
-				4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */,
+				4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */,
 				4C8699EB1AB814BC00C22DEF /* LICENSE.txt */,
 				4C8699EC1AB814BC00C22DEF /* LICENSE-GPLv2.txt */,
 				4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */,
@@ -354,11 +354,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */,
+				4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */,
 				4C8699F01AB814BC00C22DEF /* LICENSE-GPLv2.txt in Resources */,
 				4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */,
 				4C8699F41AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings in Resources */,
 				4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */,
-				4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */,
 				4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
 				4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
 			);
