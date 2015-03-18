@@ -352,6 +352,11 @@
 	[self updateProgressIndicatorPercentage:progress];
 }
 
+- (void)didEndProgressIndicatorSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet orderOut:self];
+}
+
 - (void)setupProgressIndicatorWindow
 {
 	/* Get the visible portion of the remote user's name. */
@@ -366,8 +371,8 @@
 	/* Present the sheet. */
 	[NSApp beginSheet:[self authenticationProgressWindow]
 	   modalForWindow:[self authenticationHostWindow]
-		modalDelegate:nil
-	   didEndSelector:NULL
+		modalDelegate:self
+	   didEndSelector:@selector(didEndProgressIndicatorSheet:returnCode:contextInfo:)
 		  contextInfo:NULL];
 
 	[self setAuthenticationProgressWindowIsVisible:YES];
@@ -425,7 +430,7 @@
 {
 	/* Close the current progress window if open. */
 	if ([self authenticationProgressWindowIsVisible]) {
-		[[self authenticationProgressWindow] close];
+		[NSApp endSheet:[self authenticationProgressWindow]];
 
 		[self setAuthenticationProgressWindowIsVisible:NO];
 	}
