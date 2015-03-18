@@ -17,7 +17,7 @@ Classes/BlowfishEncryptionKeyExchange.h
 // as published by the Free Software Foundation; either version 2
 // of the License, or (at your option) any later version.
 //
-// Please see LICENSE-GPLv2 for further information.
+// Please see LICENSE-GPLv2.txt for further information.
 
 |-----------------------------------------------------------------------|
 
@@ -63,6 +63,8 @@ Classes/OTRKit.h
 Classes/OTRTLV.m
 Classes/OTRTLV.v
 
+OTRKit <https://github.com/ChatSecure/OTRKit>
+
 Software License Agreement (LGPLv2.1+ / MPL 2.0)
 Copyright (c) 2014, Chris Ballinger <chris@chatsecure.org>. All rights reserved.
 
@@ -100,8 +102,28 @@ for use in the OpenSSL Toolkit (http://www.openssl.org/)
 
 |-----------------------------------------------------------------------|
 
-libgpg-error:  Copyright 2003, 2004, 2005, 2006, 2007 g10 Code GmbH
-libgcrypt:     Copyright 1998, 1999, 2000, 2001, 2002, 2003, 2006, 2007, 2008, 2009, 2011 Free Software Foundation, Inc.
-libotr:        Copyright 2004, 2005, 2007, 2008 Ian Goldberg, Chris Alexander, Nikita Borisov <otr@cypherpunks.ca>
+libgcrypt <http://www.gnu.org/software/libgcrypt/>
 
-For licensing information related to these copyrighted works, see the file: LICENSE-GPLv2.1
+Copyright (C) 1989,1991-2015 Free Software Foundation, Inc.
+Copyright (C) 2012-2015 g10 Code GmbH
+Copyright (C) 2013-2015 Jussi Kivilinna
+
+For licensing information related to this copyrighted work, see the file: LICENSE-GPLv2-1.txt
+
+|-----------------------------------------------------------------------|
+
+libgpg-error <https://www.gnupg.org/related_software/libgpg-error/index.html>
+
+Copyright 2003, 2004, 2005, 2006, 2007, 2013, 2014, 2015 g10 Code GmbH
+
+For licensing information related to this copyrighted work, see the file: LICENSE-GPLv2-1.txt
+
+|-----------------------------------------------------------------------|
+
+libotr <https://otr.cypherpunks.ca>
+    
+Copyright (C) 2004-2014 Ian Goldberg, David Goulet, Rob Smits, Chris Alexander, Willy Lew, Lisa Du, Nikita Borisov 
+
+<otr@cypherpunks.ca>
+
+For licensing information related to this copyrighted work, see the file: LICENSE-GPLv2-1.txt
