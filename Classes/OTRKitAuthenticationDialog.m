@@ -32,6 +32,8 @@
 
 #import "OTRKitAuthenticationDialogPrivate.h"
 
+#include <objc/message.h>
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 
@@ -271,16 +273,23 @@
 	/* Attach the sheet to the highest window */
 	NSWindow *attachedWindow = [self deepestSheetOfWindow:[self authenticationHostWindow]];
 
-	if (didEndSelector == NULL) {
+	id modalDelegate = nil;
+
+	if (didEndSelector) {
+		modalDelegate = self;
+	}
+
+	if (attachedWindow) {
 		[errorAlert beginSheetModalForWindow:attachedWindow
-							   modalDelegate:NULL
-							  didEndSelector:NULL
-								 contextInfo:NULL];
-	} else {
-		[errorAlert beginSheetModalForWindow:attachedWindow
-							   modalDelegate:self
+							   modalDelegate:modalDelegate
 							  didEndSelector:didEndSelector
 								 contextInfo:NULL];
+	} else {
+		NSModalResponse returnCode = [errorAlert runModal];
+
+		if (modalDelegate) {
+			objc_msgSend(modalDelegate, didEndSelector, errorAlert, returnCode, NULL);
+		}
 	}
 }
 
