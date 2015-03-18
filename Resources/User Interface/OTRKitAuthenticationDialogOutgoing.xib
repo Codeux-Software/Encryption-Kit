@@ -266,10 +266,10 @@ Gw
             <point key="canvasLocation" x="70.5" y="253.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="rqv-sO-4nT" userLabel="Question &amp; Answer View">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="242"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="244"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JoI-h9-mOU">
-                    <rect key="frame" x="18" y="167" width="379" height="56"/>
+                    <rect key="frame" x="18" y="169" width="379" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="tJG-qn-sgX">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Pick a question whose answer is known only to you and your chat partner. Enter this question and this answer, then wait for your chat partner to respond. You may be talking to an imposter if your chat partner's response does not match the value configured below.</string>
@@ -320,7 +320,7 @@ Gw
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-sR-Ity">
-                    <rect key="frame" x="18" y="132" width="379" height="17"/>
+                    <rect key="frame" x="18" y="134" width="379" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="48U-ya-kEE"/>
                         <constraint firstAttribute="width" constant="375" id="Cz5-Z6-gUf"/>
@@ -348,17 +348,17 @@ Gw
                 <constraint firstItem="w5j-sv-48d" firstAttribute="leading" secondItem="rqv-sO-4nT" secondAttribute="leading" constant="20" id="WHM-VO-gXc"/>
                 <constraint firstItem="aMr-sR-Ity" firstAttribute="leading" secondItem="rqv-sO-4nT" secondAttribute="leading" constant="20" id="fJ8-s0-jpk"/>
                 <constraint firstAttribute="trailing" secondItem="wrI-1E-ulk" secondAttribute="trailing" constant="20" id="ihp-rZ-tyF"/>
-                <constraint firstItem="1Mp-nJ-n0s" firstAttribute="top" secondItem="aMr-sR-Ity" secondAttribute="bottom" constant="3" id="lfD-tB-T6T"/>
+                <constraint firstItem="1Mp-nJ-n0s" firstAttribute="top" secondItem="aMr-sR-Ity" secondAttribute="bottom" constant="5" id="lfD-tB-T6T"/>
                 <constraint firstAttribute="trailing" secondItem="w5j-sv-48d" secondAttribute="trailing" constant="20" id="mHu-FK-jIa"/>
-                <constraint firstAttribute="height" constant="242" id="qQm-XS-76O"/>
+                <constraint firstAttribute="height" constant="244" id="qQm-XS-76O"/>
             </constraints>
             <point key="canvasLocation" x="158.5" y="216"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="xK3-wL-2XQ" userLabel="Shared Secret View">
-            <rect key="frame" x="0.0" y="2" width="415" height="171"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="173"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7ri-Bx-ATX">
-                    <rect key="frame" x="18" y="63" width="379" height="17"/>
+                    <rect key="frame" x="18" y="65" width="379" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="375" id="CFc-od-Z0Q"/>
                         <constraint firstAttribute="height" constant="17" id="wfb-Jy-51Y"/>
@@ -370,7 +370,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gyh-MA-97h">
-                    <rect key="frame" x="18" y="96" width="379" height="56"/>
+                    <rect key="frame" x="18" y="98" width="379" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="wWe-Ws-RQz">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Pick a secret known only to you and your chat partner. Enter this secret, then wait for your chat partner to respond. You may be talking to an imposter if your chat partner’s response does not match the value configured below.</string>
@@ -402,8 +402,8 @@ Gw
                 <constraint firstAttribute="trailing" secondItem="gyh-MA-97h" secondAttribute="trailing" constant="20" id="KsP-96-UdO"/>
                 <constraint firstAttribute="trailing" secondItem="dPn-tW-9lh" secondAttribute="trailing" constant="20" id="fa7-OV-WAM"/>
                 <constraint firstAttribute="width" constant="415" id="hoW-Cs-JCP"/>
-                <constraint firstAttribute="height" constant="171" id="mXD-Eh-3pW"/>
-                <constraint firstItem="dPn-tW-9lh" firstAttribute="top" secondItem="7ri-Bx-ATX" secondAttribute="bottom" constant="3" id="pbi-vG-CVo"/>
+                <constraint firstAttribute="height" constant="173" id="mXD-Eh-3pW"/>
+                <constraint firstItem="dPn-tW-9lh" firstAttribute="top" secondItem="7ri-Bx-ATX" secondAttribute="bottom" constant="5" id="pbi-vG-CVo"/>
                 <constraint firstItem="7ri-Bx-ATX" firstAttribute="leading" secondItem="xK3-wL-2XQ" secondAttribute="leading" constant="20" id="wCb-6r-VbO"/>
                 <constraint firstAttribute="trailing" secondItem="7ri-Bx-ATX" secondAttribute="trailing" constant="20" id="xNa-NE-xnD"/>
             </constraints>

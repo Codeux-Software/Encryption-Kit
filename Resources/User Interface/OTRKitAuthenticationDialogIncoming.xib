@@ -24,7 +24,7 @@
                 <outlet property="contentViewSharedSecretAuthentication" destination="55E-YG-Jbg" id="RRN-I7-bRY"/>
                 <outlet property="questionAndAnswerAnswerTextField" destination="o2Y-80-kWB" id="P1u-Sg-pjT"/>
                 <outlet property="questionAndAnswerDescriptionTextField" destination="RN2-3h-6nK" id="H3a-HC-Tj9"/>
-                <outlet property="questionAndAnswerQuestionTextField" destination="f9x-GL-B5r" id="gf2-3Z-j3D"/>
+                <outlet property="questionAndAnswerQuestionTextField" destination="DfG-u6-czE" id="lPQ-jL-X5Q"/>
                 <outlet property="sharedSecretAnswerTextField" destination="XgO-9G-gkL" id="hQB-4k-TcX"/>
                 <outlet property="sharedSecretDescriptionTextField" destination="nmj-3U-Mew" id="OND-Hl-L0a"/>
             </connections>
@@ -33,7 +33,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Authenticate Chat Partner" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="u9F-DW-xfz">
             <windowStyleMask key="styleMask" titled="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="283" y="305" width="415" height="381"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="UXA-GQ-9Kf">
@@ -141,13 +140,13 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="nul-iT-XfB" secondAttribute="trailing" id="wm9-ws-O7i"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="424.5" y="333.5"/>
+            <point key="canvasLocation" x="644.5" y="246.5"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="55E-YG-Jbg" userLabel="Shared Secret View">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="146"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="145"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0y-1N-aNB">
-                    <rect key="frame" x="18" y="66" width="378" height="17"/>
+                    <rect key="frame" x="18" y="65" width="378" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="XOO-rp-A5U"/>
                         <constraint firstAttribute="width" constant="374" id="ybn-YM-UYa"/>
@@ -159,7 +158,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nmj-3U-Mew">
-                    <rect key="frame" x="18" y="99" width="378" height="28"/>
+                    <rect key="frame" x="18" y="98" width="378" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="aZK-M8-kOf"/>
                         <constraint firstAttribute="height" constant="28" id="pW6-mn-0YC"/>
@@ -181,28 +180,35 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="QzO-5p-W6I"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="height" constant="146" id="5VK-53-Tgd"/>
-                <constraint firstItem="XgO-9G-gkL" firstAttribute="top" secondItem="r0y-1N-aNB" secondAttribute="bottom" constant="6" id="9mV-JZ-56n"/>
-                <constraint firstItem="nmj-3U-Mew" firstAttribute="top" secondItem="55E-YG-Jbg" secondAttribute="top" constant="19" id="BhQ-OX-GSG"/>
-                <constraint firstItem="r0y-1N-aNB" firstAttribute="top" secondItem="nmj-3U-Mew" secondAttribute="bottom" constant="16" id="FNX-tz-JMo"/>
-                <constraint firstItem="nmj-3U-Mew" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="GMR-wn-0z7"/>
-                <constraint firstItem="XgO-9G-gkL" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="Lea-Da-99C"/>
-                <constraint firstAttribute="trailing" secondItem="r0y-1N-aNB" secondAttribute="trailing" constant="20" id="c6Y-Kz-YBm"/>
-                <constraint firstItem="r0y-1N-aNB" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="dFE-KW-AMy"/>
-                <constraint firstAttribute="width" constant="414" id="iJQ-3Q-G9V"/>
-                <constraint firstAttribute="trailing" secondItem="nmj-3U-Mew" secondAttribute="trailing" constant="20" id="prz-Bs-C5o"/>
-                <constraint firstAttribute="trailing" secondItem="XgO-9G-gkL" secondAttribute="trailing" constant="20" id="ywO-gA-Oj8"/>
+                <constraint firstAttribute="height" constant="145" id="B48-1g-Xep"/>
+                <constraint firstAttribute="width" constant="414" id="O2g-ua-Yt7"/>
+                <constraint firstAttribute="trailing" secondItem="r0y-1N-aNB" secondAttribute="trailing" constant="20" id="U6j-rw-QcD"/>
+                <constraint firstItem="nmj-3U-Mew" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="V0U-DC-phW"/>
+                <constraint firstAttribute="trailing" secondItem="nmj-3U-Mew" secondAttribute="trailing" constant="20" id="fyH-fb-dh3"/>
+                <constraint firstItem="r0y-1N-aNB" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="kG4-mG-0jE"/>
+                <constraint firstAttribute="trailing" secondItem="XgO-9G-gkL" secondAttribute="trailing" constant="20" id="kmB-Mf-7bd"/>
+                <constraint firstItem="XgO-9G-gkL" firstAttribute="top" secondItem="r0y-1N-aNB" secondAttribute="bottom" constant="5" id="oFg-bw-Wa9"/>
+                <constraint firstItem="r0y-1N-aNB" firstAttribute="top" secondItem="nmj-3U-Mew" secondAttribute="bottom" constant="16" id="vnL-FD-S9n"/>
+                <constraint firstItem="XgO-9G-gkL" firstAttribute="leading" secondItem="55E-YG-Jbg" secondAttribute="leading" constant="20" id="x1O-fr-OFF"/>
+                <constraint firstItem="nmj-3U-Mew" firstAttribute="top" secondItem="55E-YG-Jbg" secondAttribute="top" constant="19" id="xd6-no-fDU"/>
             </constraints>
-            <point key="canvasLocation" x="452" y="352.5"/>
+            <point key="canvasLocation" x="613" y="352"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2uI-Wj-ugA" userLabel="Question &amp; Answer View">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="207"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="214"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RN2-3h-6nK">
-                    <rect key="frame" x="18" y="160" width="378" height="28"/>
+                    <rect key="frame" x="18" y="167" width="378" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="FJM-Ki-ddh"/>
+                        <constraint firstAttribute="width" constant="374" id="WTa-wL-ej3"/>
+                    </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="To authenticate, %@ has requested that you answer the question that is presented below." id="578-4j-aAv">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -210,7 +216,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GhQ-yf-T1m">
-                    <rect key="frame" x="18" y="127" width="378" height="17"/>
+                    <rect key="frame" x="18" y="134" width="378" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="1Mc-hp-hs7"/>
                         <constraint firstAttribute="height" constant="17" id="sCH-jJ-FDC"/>
@@ -221,17 +227,20 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f9x-GL-B5r">
-                    <rect key="frame" x="37" y="91" width="359" height="34"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-u6-czE">
+                    <rect key="frame" x="35" y="90" width="361" height="39"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="355" id="06w-mp-j4i"/>
-                        <constraint firstAttribute="height" constant="34" id="A9U-fJ-fWb"/>
+                        <constraint firstAttribute="width" constant="357" id="01h-MF-wyh"/>
+                        <constraint firstAttribute="height" constant="39" id="ua5-JD-gpl"/>
                     </constraints>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="How much wood could a woodchuck chuck If a woodchuck could chuck wood?" id="LIg-PR-lrq">
+                    <textFieldCell key="cell" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" id="q1r-lC-AwV">
                         <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="JJI-gK-twJ"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="o2Y-80-kWB">
                     <rect key="frame" x="20" y="21" width="374" height="39"/>
@@ -244,9 +253,12 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="2KC-Go-x0f"/>
+                    </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bJ2-d1-pNi">
-                    <rect key="frame" x="18" y="66" width="378" height="17"/>
+                    <rect key="frame" x="18" y="65" width="378" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="374" id="dno-Dd-rAy"/>
                         <constraint firstAttribute="height" constant="17" id="zg5-QT-3Uw"/>
@@ -259,25 +271,25 @@ Gw
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="bJ2-d1-pNi" secondAttribute="trailing" constant="20" id="6Ok-WQ-Qor"/>
-                <constraint firstItem="bJ2-d1-pNi" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="6gP-jH-qiL"/>
-                <constraint firstItem="f9x-GL-B5r" firstAttribute="top" secondItem="GhQ-yf-T1m" secondAttribute="bottom" constant="2" id="ASD-Uh-mf1"/>
-                <constraint firstItem="RN2-3h-6nK" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="GJG-KG-gQJ"/>
-                <constraint firstAttribute="width" constant="414" id="Wzv-Jv-UAt"/>
-                <constraint firstAttribute="trailing" secondItem="o2Y-80-kWB" secondAttribute="trailing" constant="20" id="aXW-S2-xAV"/>
-                <constraint firstItem="GhQ-yf-T1m" firstAttribute="top" secondItem="RN2-3h-6nK" secondAttribute="bottom" constant="16" id="bSj-dz-OgU"/>
-                <constraint firstItem="o2Y-80-kWB" firstAttribute="top" secondItem="bJ2-d1-pNi" secondAttribute="bottom" constant="6" id="beG-eh-2rV"/>
-                <constraint firstAttribute="height" constant="207" id="dOw-Ej-rEm"/>
-                <constraint firstItem="bJ2-d1-pNi" firstAttribute="top" secondItem="f9x-GL-B5r" secondAttribute="bottom" constant="8" id="lZH-KA-o4Y"/>
-                <constraint firstItem="GhQ-yf-T1m" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="nKz-8S-QI1"/>
-                <constraint firstAttribute="trailing" secondItem="RN2-3h-6nK" secondAttribute="trailing" constant="20" id="pK7-Ar-zTq"/>
-                <constraint firstAttribute="trailing" secondItem="f9x-GL-B5r" secondAttribute="trailing" constant="20" id="rQr-r6-YpB"/>
-                <constraint firstItem="f9x-GL-B5r" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="39" id="sId-Js-cis"/>
-                <constraint firstItem="o2Y-80-kWB" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="tKD-5j-Ol2"/>
-                <constraint firstItem="RN2-3h-6nK" firstAttribute="top" secondItem="2uI-Wj-ugA" secondAttribute="top" constant="19" id="weM-AD-ITw"/>
-                <constraint firstAttribute="trailing" secondItem="GhQ-yf-T1m" secondAttribute="trailing" constant="20" id="xx0-vr-M4U"/>
+                <constraint firstAttribute="trailing" secondItem="o2Y-80-kWB" secondAttribute="trailing" constant="20" id="1rh-8P-R9H"/>
+                <constraint firstItem="bJ2-d1-pNi" firstAttribute="top" secondItem="DfG-u6-czE" secondAttribute="bottom" constant="8" id="71Y-L8-HRF"/>
+                <constraint firstAttribute="trailing" secondItem="RN2-3h-6nK" secondAttribute="trailing" constant="20" id="Ago-Bs-UsM"/>
+                <constraint firstItem="DfG-u6-czE" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="37" id="Dk5-hY-eaN"/>
+                <constraint firstItem="GhQ-yf-T1m" firstAttribute="top" secondItem="RN2-3h-6nK" secondAttribute="bottom" constant="16" id="Hbf-Mi-Qno"/>
+                <constraint firstAttribute="trailing" secondItem="DfG-u6-czE" secondAttribute="trailing" constant="20" id="PZ3-xM-y4l"/>
+                <constraint firstAttribute="width" constant="414" id="StD-Ef-IgR"/>
+                <constraint firstAttribute="trailing" secondItem="bJ2-d1-pNi" secondAttribute="trailing" constant="20" id="ZTG-nn-CmT"/>
+                <constraint firstItem="bJ2-d1-pNi" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="e4M-Ws-N9B"/>
+                <constraint firstItem="o2Y-80-kWB" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="eY7-cx-lZ0"/>
+                <constraint firstAttribute="height" constant="214" id="hi9-5P-ew4"/>
+                <constraint firstItem="RN2-3h-6nK" firstAttribute="top" secondItem="2uI-Wj-ugA" secondAttribute="top" constant="19" id="oaI-qG-KIA"/>
+                <constraint firstItem="DfG-u6-czE" firstAttribute="top" secondItem="GhQ-yf-T1m" secondAttribute="bottom" constant="5" id="pAa-8T-WCf"/>
+                <constraint firstItem="GhQ-yf-T1m" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="sAR-nq-IXR"/>
+                <constraint firstAttribute="trailing" secondItem="GhQ-yf-T1m" secondAttribute="trailing" constant="20" id="tRY-Lw-6RJ"/>
+                <constraint firstItem="RN2-3h-6nK" firstAttribute="leading" secondItem="2uI-Wj-ugA" secondAttribute="leading" constant="20" id="yLv-TP-ccN"/>
+                <constraint firstItem="o2Y-80-kWB" firstAttribute="top" secondItem="bJ2-d1-pNi" secondAttribute="bottom" constant="5" id="yMI-Nj-fWL"/>
             </constraints>
-            <point key="canvasLocation" x="489" y="439.5"/>
+            <point key="canvasLocation" x="617" y="443"/>
         </customView>
         <window title="Progress Information" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="FFI-uU-r3Q">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -340,6 +352,9 @@ Gw
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="authenticationProgressOk:" target="-2" id="Uxf-MC-3FS"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FaB-AS-LxD">
                         <rect key="frame" x="133" y="13" width="85" height="32"/>
@@ -356,6 +371,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="authenticationProgressCancel:" target="-2" id="m12-EC-Ozh"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -377,7 +395,7 @@ Gw
                     <constraint firstItem="rjS-Zr-1dk" firstAttribute="top" secondItem="Aja-QA-H76" secondAttribute="bottom" constant="6" id="z0g-XY-9Ou"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="270.5" y="331.5"/>
+            <point key="canvasLocation" x="685.5" y="357"/>
         </window>
     </objects>
 </document>

@@ -91,7 +91,7 @@
 
 			return; // Do not further event...
 		} else {
-			openDialogs = [OTRKitAuthenticationDialogOutgoing new];
+			 openDialogs = [OTRKitAuthenticationDialogIncoming new];
 
 			[openDialogs setIsIncomingRequest:YES];
 
@@ -285,10 +285,7 @@
 {
 	/* Inform callback as to whether the user was authenticated. */
 	if ([self callbackBlock]) {
-		[self callbackBlock]([self cachedUsername],
-							 [self cachedAccountName],
-							 [self cachedProtocol],
-							 isVerified);
+		[self callbackBlock]([self cachedUsername], [self cachedAccountName], [self cachedProtocol], isVerified);
 	}
 
 	/* Inform OTRKit of the change. */
@@ -335,10 +332,28 @@
 {
 	/* Update last event and possibly progress information. */
 	if (_lastEvent != lastEvent) {
-		_lastEvent  = lastEvent;
+		_lastEvent = lastEvent;
 
 		if ([self authenticationProgressWindowIsVisible]) {
 			[self updateProgressIndicatorButtonsWithEvent:lastEvent];
+		}
+	}
+}
+
+- (void)setAuthenticationMethod:(OTRKitSMPEvent)authenticationMethod
+{
+	/* Switch views when authentication method changes. */
+	if (_authenticationMethod != authenticationMethod) {
+		_authenticationMethod = authenticationMethod;
+
+		if (authenticationMethod == OTRKitSMPEventNone) {
+			[self changeContentViewTo:[self contentViewFingerprintAuthentication]];
+		} else if (authenticationMethod == OTRKitSMPEventAskForAnswer) {
+			[self changeContentViewTo:[self contentViewQuestionAndAnswerAuthentication]];
+		} else if (authenticationMethod == OTRKitSMPEventAskForSecret) {
+			[self changeContentViewTo:[self contentViewSharedSecretAuthentication]];
+		} else {
+			NSAssert(NO, @"Bad authenticationMethod value");
 		}
 	}
 }
@@ -350,11 +365,6 @@
 
 	/* Update progress information based on event. */
 	[self updateProgressIndicatorPercentage:progress];
-}
-
-- (void)didEndProgressIndicatorSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	[sheet orderOut:self];
 }
 
 - (void)setupProgressIndicatorWindow
@@ -371,8 +381,8 @@
 	/* Present the sheet. */
 	[NSApp beginSheet:[self authenticationProgressWindow]
 	   modalForWindow:[self authenticationHostWindow]
-		modalDelegate:self
-	   didEndSelector:@selector(didEndProgressIndicatorSheet:returnCode:contextInfo:)
+		modalDelegate:nil
+	   didEndSelector:NULL
 		  contextInfo:NULL];
 
 	[self setAuthenticationProgressWindowIsVisible:YES];
@@ -430,7 +440,7 @@
 {
 	/* Close the current progress window if open. */
 	if ([self authenticationProgressWindowIsVisible]) {
-		[NSApp endSheet:[self authenticationProgressWindow]];
+		[[self authenticationProgressWindow] close];
 
 		[self setAuthenticationProgressWindowIsVisible:NO];
 	}
@@ -440,9 +450,13 @@
 {
 	/* Close negotation if it is open. */
 	[self maybeAbortOpenNegotations];
-
-	/* Close the progress window and bring the host window back forward. */
-	[self endProgressIndicatorWindow];
+	
+	/* We cannot recover outgoing authentication, so tear down window. */
+	if ([self isIncomingRequest] == NO) {
+		[self teardownDialog];
+	} else {
+		[self endProgressIndicatorWindow];
+	}
 }
 
 - (IBAction)authenticationProgressOk:(id)sender
@@ -452,7 +466,12 @@
 	if ([self lastEvent] == OTRKitSMPEventSuccess) {
 		[self teardownDialog]; // Will close progress window for us...
 	} else {
-		[self endProgressIndicatorWindow];
+		/* There is no way to resend failed requests for outgoing. */
+		if ([self isIncomingRequest] == NO) {
+			[self teardownDialog];
+		} else {
+			[self endProgressIndicatorWindow];
+		}
 	}
 }
 
@@ -463,26 +482,77 @@
 
 @implementation OTRKitAuthenticationDialogIncoming
 
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[[NSBundle bundleForClass:[self class]] loadNibNamed:@"OTRKitAuthenticationDialogIncoming" owner:self topLevelObjects:nil];
+
+		return self;
+	}
+
+	return nil;
+}
+
 - (void)cancelAuthentication:(id)sender
 {
-
+	[self teardownDialog];
 }
 
 - (void)performAuthentication:(id)sender
 {
+	/* Start a negoation depending on which method was selected. */
+	NSString *secretAnswer = nil;
 
+	if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer) {
+		secretAnswer = [[self questionAndAnswerAnswerTextField] stringValue];
+	} else if ([self authenticationMethod] == OTRKitSMPEventAskForSecret) {
+		secretAnswer = [[self sharedSecretAnswerTextField] stringValue];
+	}
+
+	if (secretAnswer) {
+		[[OTRKit sharedInstance] respondToSMPForUsername:[self cachedUsername]
+											 accountName:[self cachedAccountName]
+												protocol:[self cachedProtocol]
+												  secret:secretAnswer];
+
+		[self setupProgressIndicatorWindow];
+	}
 }
 
 - (void)handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
 {
 	[super handleEvent:event progress:progress question:question];
 
-	// Do something here...
+	if (event == OTRKitSMPEventAskForAnswer || event == OTRKitSMPEventAskForSecret) {
+		[self setAuthenticationMethod:event];
+
+		[self authenticateUserWithQuestion:question];
+	}
 }
 
-- (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
+- (void)authenticateUserWithQuestion:(NSString *)question
 {
-	
+	NSParameterAssert(question);
+
+	/* Get the visible portion of the remote user's name. */
+	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
+
+	/* Format several text fields with the user's name. */
+	[self formatTextField:[self authenticationHostWindowTitleTextField] withUsername:remoteUsername];
+	[self formatTextField:[self authenticationHostWindowDescriptionTextField] withUsername:remoteUsername];
+
+	if ([self authenticationMethod] == OTRKitSMPEventAskForSecret) {
+		[self formatTextField:[self sharedSecretDescriptionTextField] withUsername:remoteUsername];
+	} else if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer) {
+		[self formatTextField:[self questionAndAnswerDescriptionTextField] withUsername:remoteUsername];
+
+		[[self questionAndAnswerQuestionTextField] setStringValue:question];
+	}
+
+	/* Bring the trust dialog forward. */
+	[self updateButtonEnabledState];
+
+	[self bringHostWindowForward];
 }
 
 @end
@@ -557,22 +627,6 @@
 	[self updateButtonEnabledState];
 }
 
-- (void)setAuthenticationMethod:(OTRKitSMPEvent)authenticationMethod
-{
-	/* Switch views when authentication method changes. */
-	if (authenticationMethod == OTRKitSMPEventNone) {
-		[self changeContentViewTo:[self contentViewFingerprintAuthentication]];
-	} else if (authenticationMethod == OTRKitSMPEventAskForAnswer) {
-		[self changeContentViewTo:[self contentViewQuestionAndAnswerAuthentication]];
-	} else if (authenticationMethod == OTRKitSMPEventAskForSecret) {
-		[self changeContentViewTo:[self contentViewSharedSecretAuthentication]];
-	} else {
-		NSAssert(NO, @"Bad authenticationMethod value");
-	}
-
-	[super setAuthenticationMethod:authenticationMethod];
-}
-
 - (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
 {
 	[super updateProgressIndicatorButtonsWithEvent:event];
@@ -584,7 +638,7 @@
 
 - (void)showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash from:(NSString *)messageFrom to:(NSString *)messageTo
 {
-
+	NSAssert(NO, @"Not yet implemented");
 }
 
 - (void)authenticateUser
@@ -626,6 +680,7 @@
 
 	/* Bring the trust dialog forward. */
 	[self updateButtonEnabledState];
+
 	[self bringHostWindowForward];
 }
 

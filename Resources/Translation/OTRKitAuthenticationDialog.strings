@@ -32,7 +32,7 @@
 
 /* Authentication progress status messages */
 "00001" = "Waiting for response…";
-"00002" = "Successfully authenticated user.";
+"00002" = "Successfully authenticated";
 "00003" = "Authentication failed. Incorrect response.";
 "00004" = "Authentication failed. Request aborted.";
 "00005" = "An error occurred during authentication.";
