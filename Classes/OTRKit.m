@@ -318,8 +318,6 @@ static void handle_smp_event_cb(void *opdata, OtrlSMPEvent smp_event, ConnContex
 
 	OTRKitSMPEvent event = OTRKitSMPEventNone;
 
-	double progress = ((double)progress_percent / 100.0);
-
 	if (context == NULL) {
 		return;
 	}
@@ -397,7 +395,7 @@ static void handle_smp_event_cb(void *opdata, OtrlSMPEvent smp_event, ConnContex
 	NSString *protocol = @(context->protocol);
 
 	dispatch_async([otrKit callbackQueue], ^{
-		[[otrKit delegate] otrKit:otrKit handleSMPEvent:event progress:progress question:questionString username:username accountName:accountName protocol:protocol];
+		[[otrKit delegate] otrKit:otrKit handleSMPEvent:event progress:progress_percent question:questionString username:username accountName:accountName protocol:protocol];
 	});
 }
 
@@ -642,6 +640,8 @@ static OtrlMessageAppOps ui_ops = {
 		self.callbackQueue = dispatch_get_main_queue();
 
 		self.internalQueue = dispatch_queue_create("OTRKit Internal Queue", DISPATCH_QUEUE_SERIAL);
+
+		self.accountNameSeparator = @"@";
 
 		[self performInternalQueueSyncOperation:^{
 			OTRL_INIT;
@@ -1450,6 +1450,21 @@ static OtrlMessageAppOps ui_ops = {
 	}];
 }
 
+- (void)abortSMPForUsername:(NSString *)username
+				accountName:(NSString *)accountName
+				   protocol:(NSString *)protocol
+{
+	[self performInternalQueueAsyncOperation:^{
+		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
+
+		if (context == NULL) {
+			return;
+		}
+
+		otrl_message_abort_smp([self userState], &ui_ops, NULL, context);
+	}];
+}
+
 - (void)performInternalQueueAsyncOperation:(dispatch_block_t)block
 {
 	dispatch_queue_set_specific([self internalQueue], (__bridge const void *)([self internalQueue]), (void *)1, NULL);
@@ -1470,6 +1485,47 @@ static OtrlMessageAppOps ui_ops = {
 	} else {
 		dispatch_sync([self internalQueue], block);
 	}
+}
+
+- (NSString *)rightPortionOfAccountName:(NSString *)accountName
+{
+	NSParameterAssert(accountName != nil);
+
+	NSString *separatorSequence = [self accountNameSeparator];
+
+	NSAssert(([separatorSequence length] > 0), @"Bad -accountNameSeparator value");
+
+	NSRange sequenceRange = [accountName rangeOfString:separatorSequence options:NSBackwardsSearch];
+
+	NSInteger sliceRange = (sequenceRange.location + [separatorSequence length]);
+
+	NSAssert((sliceRange > 0), @"Bad accountName value");
+	NSAssert((sliceRange < [accountName length]), @"Bad accountName value");
+	NSAssert((sequenceRange.location != NSNotFound), @"Bad accountName value");
+
+	NSString *username = [accountName substringFromIndex:sliceRange];
+
+	return username;
+}
+
+- (NSString *)leftPortionOfAccountName:(NSString *)accountName
+{
+	NSParameterAssert(accountName != nil);
+
+	NSString *separatorSequence = [self accountNameSeparator];
+
+	NSAssert(([separatorSequence length] > 0), @"Bad -accountNameSeparator value");
+
+	NSRange sequenceRange = [accountName rangeOfString:separatorSequence options:NSBackwardsSearch];
+
+	NSInteger sliceRange = sequenceRange.location;
+
+	NSAssert((sliceRange > 0), @"Bad accountName value");
+	NSAssert((sliceRange != NSNotFound), @"Bad accountName value");
+
+	NSString *username = [accountName substringToIndex:sliceRange];
+
+	return username;
 }
 
 #pragma mark Static Methods

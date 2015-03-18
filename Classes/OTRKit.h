@@ -185,7 +185,7 @@ updateMessageState:(OTRKitMessageState)messageState
 			 protocol:(NSString *)protocol;
 
 /**
- *  Show a dialog here so the user can confirm when a user's fingerprint changes.
+ *  Show a dialog so the user can confirm when a user's fingerprint changes.
  *
  *  @param otrKit      Reference to shared instance
  *  @param theirHash   Remote user's fingerprint
@@ -202,12 +202,15 @@ updateMessageState:(OTRKitMessageState)messageState
 								 protocol:(NSString *)protocol;
 
 /**
- *  Implement this if you plan to handle SMP.
+ *  Implement this if you plan to handle Socialist Millionaire Problem (SMP) calls.
  *
  *  @param otrKit		Reference to shared instance
- *  @param event		SMP event
- *  @param progress		Percent progress of SMP negotiation
+ *  @param event		The type of event
+ *  @param progress		Percent progress of the negotiation
  *  @param question		Question that should be displayed to user
+ *  @param accountName  The account name of the local user
+ *  @param username     The account name of the remote user
+ *  @param protocol     The protocol of the exchange
  */
 - (void) otrKit:(OTRKit *)otrKit
  handleSMPEvent:(OTRKitSMPEvent)event
@@ -224,6 +227,9 @@ updateMessageState:(OTRKitMessageState)messageState
  *  @param event		Message event
  *  @param message		Offending message
  *  @param error		Error describing the problem
+ *  @param accountName  The account name of the local user
+ *  @param username     The account name of the remote user
+ *  @param protocol     The protocol of the exchange
  */
 - (void)    otrKit:(OTRKit *)otrKit
 handleMessageEvent:(OTRKitMessageEvent)event
@@ -241,6 +247,9 @@ handleMessageEvent:(OTRKitMessageEvent)event
  *  @param symmetricKey		Key data
  *  @param use				Integer tag for identifying the use for the key
  *  @param useData			Any extra data to attach
+ *  @param accountName      The account name of the local user
+ *  @param username         The account name of the remote user
+ *  @param protocol        s The protocol of the exchange
  */
 - (void)        otrKit:(OTRKit *)otrKit
   receivedSymmetricKey:(NSData *)symmetricKey
@@ -309,6 +318,15 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  Path to the OTRv3 Instance tags file.
  */
 @property (nonatomic, copy, readonly) NSString *instanceTagsPath;
+
+/**
+ *  The symbol that is used for separating user information. For example, 
+ *  an account name can be supplied as user@example.com whereas @ is the 
+ *  separator character. This is used during authentication to provide a 
+ *  user friendly way of viewing account name information. Default value
+ *  for property is at sign - do not set to empty.
+ */
+@property (nonatomic, copy) NSString *accountNameSeparator;
 
 /**
  *  Always use the sharedInstance. Using two OTRKits within your application
@@ -388,8 +406,8 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 							  protocol:(NSString *)protocol;
 
 /**
- *  Disable encryption and inform buddy you no longer wish to communicate
- *  privately.
+ *  Disable encryption and inform remote user you no longer wish to 
+ *  communicate privately.
  *
  *  @param username		The account name of the remote user
  *  @param accountName	The account name of the local user
@@ -400,7 +418,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 							 protocol:(NSString *)protocol;
 
 /**
- *  Current encryption state for buddy.
+ *  Current encryption state for conversation.
  *
  *  @param username		The account name of the remote user
  *  @param accountName	The account name of the local user
@@ -415,7 +433,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 //////////////////////////////////////////////////////////////////////
 
 /**
- *  Initiate's SMP with shared secret to verify identity.
+ *  Initiate a Socialist Millionaire Problem (SMP) with shared secret to verify identity.
  *
  *  @param username		The account name of the remote user
  *  @param accountName	The account name of the local user
@@ -428,7 +446,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 						secret:(NSString *)secret;
 
 /**
- *  Initiate's SMP with shared secret to verify identity.
+ *  Initiate a Socialist Millionaire Problem (SMP) with shared secret to verify identity.
  *
  *  @param username		The account name of the remote user
  *  @param accountName	The account name of the local user
@@ -443,7 +461,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 						secret:(NSString *)secret;
 
 /**
- *  Respond to an SMP request with the secret answer.
+ *  Respond to an Socialist Millionaire Problem (SMP) request with the secret answer.
  *
  *  @param username    The account name of the remote user
  *  @param accountName The account name of the local user
@@ -454,6 +472,17 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 					accountName:(NSString *)accountName
 					   protocol:(NSString *)protocol
 						 secret:(NSString *)secret;
+
+/**
+ *  Abort an open Socialist Millionaire Problem (SMP) request.
+ *
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
+ */
+- (void)abortSMPForUsername:(NSString *)username
+				accountName:(NSString *)accountName
+				   protocol:(NSString *)protocol;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Shared Symmetric Key
@@ -566,11 +595,19 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 + (BOOL)stringStartsWithOTRPrefix:(NSString *)string;
 
 /**
- *  Current libotr version
- *
- *  @return string version number ex. 4.0.0
+ *  Current library versions
  */
 + (NSString *)libotrVersion;
 + (NSString *)libgcryptVersion;
 + (NSString *)libgpgErrorVersion;
+
+/**
+ *  Return right portion of accountName as dictated by -accountNameSeparator
+ */
+- (NSString *)rightPortionOfAccountName:(NSString *)accountName;
+
+/**
+ *  Return left portion of accountName as dictated by -accountNameSeparator
+ */
+- (NSString *)leftPortionOfAccountName:(NSString *)accountName;
 @end

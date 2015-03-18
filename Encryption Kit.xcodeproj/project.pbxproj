@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1912441AAF4238006B8BE5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912401AAF4238006B8BE5 /* libcrypto.a */; };
-		4C1912451AAF4238006B8BE5 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912411AAF4238006B8BE5 /* libgcrypt.a */; };
-		4C1912461AAF4238006B8BE5 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912421AAF4238006B8BE5 /* libgpg-error.a */; };
-		4C1912471AAF4238006B8BE5 /* libotr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1912431AAF4238006B8BE5 /* libotr.a */; };
-		4C19124A1AAF48FE006B8BE5 /* LICENSE-GPLv2 in Resources */ = {isa = PBXBuildFile; fileRef = 4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */; };
-		4C19124B1AAF48FE006B8BE5 /* LICENSE-GPLv2.1 in Resources */ = {isa = PBXBuildFile; fileRef = 4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */; };
+		4C006C5A1AB84DA2004BE3C6 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C561AB84DA2004BE3C6 /* libcrypto.a */; };
+		4C006C5B1AB84DA2004BE3C6 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C571AB84DA2004BE3C6 /* libgcrypt.a */; };
+		4C006C5C1AB84DA2004BE3C6 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C581AB84DA2004BE3C6 /* libgpg-error.a */; };
+		4C006C5D1AB84DA2004BE3C6 /* libotr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C591AB84DA2004BE3C6 /* libotr.a */; };
+		4C006C5F1AB84E19004BE3C6 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C5E1AB84E19004BE3C6 /* AppKit.framework */; };
+		4C006C611AB84E22004BE3C6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C601AB84E22004BE3C6 /* Foundation.framework */; };
 		4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292F8012DFD69400BE23FE /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */; };
 		4C4DDA7C1AAF6D5C00AB43DC /* OTRKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,25 +23,36 @@
 		4C500F3D16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F3B16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm */; };
 		4C500F4116C06C79001692AF /* BlowfishEncryptionKeyExchange.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C500F3F16C06C79001692AF /* BlowfishEncryptionKeyExchange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C500F4216C06C79001692AF /* BlowfishEncryptionKeyExchange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C500F4016C06C79001692AF /* BlowfishEncryptionKeyExchange.mm */; };
+		4C5229E71AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5229E51AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h */; };
+		4C5229E81AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */; };
 		4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */; };
 		4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */; };
-		4C69906F1A9105FC00FB41B9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C69906A1A91017100FB41B9 /* LICENSE */; };
 		4C7FC88416C05C7A00B912A5 /* BlowfishEncryptionBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */; };
 		4C7FC88516C05C7A00B912A5 /* BlowfishEncryptionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */; };
+		4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EB1AB814BC00C22DEF /* LICENSE.txt */; };
+		4C8699F01AB814BC00C22DEF /* LICENSE-GPLv2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EC1AB814BC00C22DEF /* LICENSE-GPLv2.txt */; };
+		4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */; };
+		4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EE1AB814BC00C22DEF /* LICENSE-MPLv2-0.txt */; };
+		4C8699F41AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */; };
+		4C9A21AC1AB68A750057677D /* OTRKitAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C9A21AD1AB68A750057677D /* OTRKitAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */; };
+		4CB8782B1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */; };
 		4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCE47E716C0EEF800915F60 /* Base64Encoding.h */; };
 		4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE47E816C0EEF800915F60 /* Base64Encoding.m */; };
 		4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8EAE619802FC000DE9846 /* NSDataHelper.h */; };
 		4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8EAE719802FC000DE9846 /* NSDataHelper.m */; };
+		4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242501AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib */; };
+		4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4C1912401AAF4238006B8BE5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libcrypto.a"; sourceTree = "<group>"; };
-		4C1912411AAF4238006B8BE5 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<group>"; };
-		4C1912421AAF4238006B8BE5 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgpg-error.a"; sourceTree = "<group>"; };
-		4C1912431AAF4238006B8BE5 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "../../../../private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<group>"; };
-		4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2"; sourceTree = "<group>"; };
-		4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = "LICENSE-GPLv2.1"; sourceTree = "<group>"; };
+		4C006C561AB84DA2004BE3C6 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libcrypto.a"; sourceTree = "<absolute>"; };
+		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<absolute>"; };
+		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgpg-error.a"; sourceTree = "<absolute>"; };
+		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<absolute>"; };
+		4C006C5E1AB84E19004BE3C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4C006C601AB84E22004BE3C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C292F7D12DFD69400BE23FE /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryption.h; sourceTree = "<group>"; };
 		4C292F7E12DFD69400BE23FE /* BlowfishEncryption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryption.m; sourceTree = "<group>"; };
 		4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKit.h; sourceTree = "<group>"; };
@@ -52,18 +63,29 @@
 		4C500F3B16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlowfishEncryptionKeyExchangeBase.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C500F3F16C06C79001692AF /* BlowfishEncryptionKeyExchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionKeyExchange.h; sourceTree = "<group>"; };
 		4C500F4016C06C79001692AF /* BlowfishEncryptionKeyExchange.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BlowfishEncryptionKeyExchange.mm; sourceTree = "<group>"; };
+		4C5229E51AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitAuthenticationDialogWindowManager.h; sourceTree = "<group>"; };
+		4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKitAuthenticationDialogWindowManager.m; sourceTree = "<group>"; };
 		4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncryptionKit_Prefix.pch; path = Classes/EncryptionKit_Prefix.pch; sourceTree = "<group>"; };
-		4C6990641A91015C00FB41B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Misc. Resources/Info.plist"; sourceTree = "<group>"; };
+		4C6990641A91015C00FB41B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Build Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C6990671A91016300FB41B9 /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Entitlements.entitlements; sourceTree = "<group>"; };
 		4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT; sourceTree = "<group>"; };
-		4C69906A1A91017100FB41B9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4C7FC88216C05C7A00B912A5 /* BlowfishEncryptionBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishEncryptionBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishEncryptionBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishEncryptionBase.m; sourceTree = "<group>"; };
+		4C8699EB1AB814BC00C22DEF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		4C8699EC1AB814BC00C22DEF /* LICENSE-GPLv2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2.txt"; sourceTree = "<group>"; };
+		4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2-1.txt"; sourceTree = "<group>"; };
+		4C8699EE1AB814BC00C22DEF /* LICENSE-MPLv2-0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-MPLv2-0.txt"; sourceTree = "<group>"; };
+		4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = OTRKitAuthenticationDialog.strings; path = Resources/Translation/OTRKitAuthenticationDialog.strings; sourceTree = "<group>"; };
+		4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitAuthenticationDialog.h; sourceTree = "<group>"; };
+		4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKitAuthenticationDialog.m; sourceTree = "<group>"; };
+		4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitAuthenticationDialogPrivate.h; sourceTree = "<group>"; };
 		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; usesTabs = 0; };
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CE8EAE619802FC000DE9846 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		4CE8EAE719802FC000DE9846 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
+		4CF242501AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitAuthenticationDialogIncoming.xib; path = "Resources/User Interface/OTRKitAuthenticationDialogIncoming.xib"; sourceTree = "<group>"; };
+		4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitAuthenticationDialogOutgoing.xib; path = "Resources/User Interface/OTRKitAuthenticationDialogOutgoing.xib"; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -72,10 +94,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C1912451AAF4238006B8BE5 /* libgcrypt.a in Frameworks */,
-				4C1912441AAF4238006B8BE5 /* libcrypto.a in Frameworks */,
-				4C1912461AAF4238006B8BE5 /* libgpg-error.a in Frameworks */,
-				4C1912471AAF4238006B8BE5 /* libotr.a in Frameworks */,
+				4C006C5F1AB84E19004BE3C6 /* AppKit.framework in Frameworks */,
+				4C006C611AB84E22004BE3C6 /* Foundation.framework in Frameworks */,
+				4C006C5B1AB84DA2004BE3C6 /* libgcrypt.a in Frameworks */,
+				4C006C5A1AB84DA2004BE3C6 /* libcrypto.a in Frameworks */,
+				4C006C5C1AB84DA2004BE3C6 /* libgpg-error.a in Frameworks */,
+				4C006C5D1AB84DA2004BE3C6 /* libotr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +129,8 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C006C601AB84E22004BE3C6 /* Foundation.framework */,
+				4C006C5E1AB84E19004BE3C6 /* AppKit.framework */,
 				4C1AD6FC12DF624600B4AD56 /* Libraries */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
@@ -114,6 +140,8 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C8699F51AB82D7200C22DEF /* Translation */,
+				4C9A21A61AB689F80057677D /* User Interface */,
 				4C69906B1A91017500FB41B9 /* Documents */,
 				4C6990641A91015C00FB41B9 /* Info.plist */,
 			);
@@ -150,7 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8455A816C18FDE00AD9203 /* Core */,
-				4C4DDA771AAF6D4600AB43DC /* Off the Record Messaging */,
+				4C4DDA771AAF6D4600AB43DC /* Off-the-Record Messaging */,
 				4CB3E5011AAE5D36001E79CE /* Weak Resources */,
 			);
 			name = Framework;
@@ -159,23 +187,28 @@
 		4C1AD6FC12DF624600B4AD56 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4C1912401AAF4238006B8BE5 /* libcrypto.a */,
-				4C1912411AAF4238006B8BE5 /* libgcrypt.a */,
-				4C1912421AAF4238006B8BE5 /* libgpg-error.a */,
-				4C1912431AAF4238006B8BE5 /* libotr.a */,
+				4C006C561AB84DA2004BE3C6 /* libcrypto.a */,
+				4C006C571AB84DA2004BE3C6 /* libgcrypt.a */,
+				4C006C581AB84DA2004BE3C6 /* libgpg-error.a */,
+				4C006C591AB84DA2004BE3C6 /* libotr.a */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
 		};
-		4C4DDA771AAF6D4600AB43DC /* Off the Record Messaging */ = {
+		4C4DDA771AAF6D4600AB43DC /* Off-the-Record Messaging */ = {
 			isa = PBXGroup;
 			children = (
 				4C4DDA781AAF6D5C00AB43DC /* OTRKit.h */,
 				4C4DDA791AAF6D5C00AB43DC /* OTRKit.m */,
+				4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */,
+				4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */,
+				4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */,
+				4C5229E51AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h */,
+				4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */,
 				4C4DDA7A1AAF6D5C00AB43DC /* OTRTLV.h */,
 				4C4DDA7B1AAF6D5C00AB43DC /* OTRTLV.m */,
 			);
-			name = "Off the Record Messaging";
+			name = "Off-the-Record Messaging";
 			sourceTree = "<group>";
 		};
 		4C6990651A91016300FB41B9 /* Build Configuration */ = {
@@ -191,9 +224,10 @@
 			isa = PBXGroup;
 			children = (
 				4C6990681A91017100FB41B9 /* ACKNOWLEDGEMENT */,
-				4C69906A1A91017100FB41B9 /* LICENSE */,
-				4C1912481AAF48FE006B8BE5 /* LICENSE-GPLv2 */,
-				4C1912491AAF48FE006B8BE5 /* LICENSE-GPLv2.1 */,
+				4C8699EB1AB814BC00C22DEF /* LICENSE.txt */,
+				4C8699EC1AB814BC00C22DEF /* LICENSE-GPLv2.txt */,
+				4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */,
+				4C8699EE1AB814BC00C22DEF /* LICENSE-MPLv2-0.txt */,
 			);
 			name = Documents;
 			sourceTree = "<group>";
@@ -207,6 +241,23 @@
 				4CE8EAE719802FC000DE9846 /* NSDataHelper.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		4C8699F51AB82D7200C22DEF /* Translation */ = {
+			isa = PBXGroup;
+			children = (
+				4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */,
+			);
+			name = Translation;
+			sourceTree = "<group>";
+		};
+		4C9A21A61AB689F80057677D /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4CF242501AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib */,
+				4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */,
+			);
+			name = "User Interface";
 			sourceTree = "<group>";
 		};
 		4CB3E5011AAE5D36001E79CE /* Weak Resources */ = {
@@ -234,8 +285,11 @@
 				4C292F7F12DFD69400BE23FE /* BlowfishEncryption.h in Headers */,
 				4C500F4116C06C79001692AF /* BlowfishEncryptionKeyExchange.h in Headers */,
 				4C4DDA7E1AAF6D5C00AB43DC /* OTRTLV.h in Headers */,
+				4C9A21AC1AB68A750057677D /* OTRKitAuthenticationDialog.h in Headers */,
 				4C4DDA7C1AAF6D5C00AB43DC /* OTRKit.h in Headers */,
+				4CB8782B1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h in Headers */,
 				4CCE47E916C0EEF800915F60 /* Base64Encoding.h in Headers */,
+				4C5229E71AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h in Headers */,
 				4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */,
 				4CE8EAE819802FC000DE9846 /* NSDataHelper.h in Headers */,
 				4C7FC88416C05C7A00B912A5 /* BlowfishEncryptionBase.h in Headers */,
@@ -299,10 +353,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */,
+				4C8699F01AB814BC00C22DEF /* LICENSE-GPLv2.txt in Resources */,
+				4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */,
+				4C8699F41AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings in Resources */,
+				4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */,
 				4C69906D1A9105FC00FB41B9 /* ACKNOWLEDGEMENT in Resources */,
-				4C19124B1AAF48FE006B8BE5 /* LICENSE-GPLv2.1 in Resources */,
-				4C19124A1AAF48FE006B8BE5 /* LICENSE-GPLv2 in Resources */,
-				4C69906F1A9105FC00FB41B9 /* LICENSE in Resources */,
+				4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
+				4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +393,9 @@
 				4C500F3D16C06C5A001692AF /* BlowfishEncryptionKeyExchangeBase.mm in Sources */,
 				4C500F4216C06C79001692AF /* BlowfishEncryptionKeyExchange.mm in Sources */,
 				4CE8EAE919802FC000DE9846 /* NSDataHelper.m in Sources */,
+				4C9A21AD1AB68A750057677D /* OTRKitAuthenticationDialog.m in Sources */,
 				4C4DDA7F1AAF6D5C00AB43DC /* OTRTLV.m in Sources */,
+				4C5229E81AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m in Sources */,
 				4CCE47EA16C0EEF800915F60 /* Base64Encoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,7 +418,7 @@
 			buildSettings = {
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = Classes/EncryptionKit_Prefix.pch;
-				INFOPLIST_FILE = "Misc. Resources/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = EncryptionKit;
 				WRAPPER_EXTENSION = framework;
 			};
