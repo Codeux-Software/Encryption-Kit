@@ -71,19 +71,15 @@ typedef void (^OTRKitAuthenticationDialogCallbackBlock)(NSString *username, NSSt
 /**
  *  Show a dialog so the user can confirm when a user's fingerprint changes.
  *
- *  @param theirHash   Remote user's fingerprint
- *  @param ourHash     Local user's fingerprint
  *  @param accountName The account name of the local user
  *  @param username    The account name of the remote user
  *  @param protocol    The protocol of the exchange
  *  @param callback    The block to invoke when a result is had
  */
-+ (void)showFingerprintConfirmationForTheirHash:(NSString *)theirHash
-										ourHash:(NSString *)ourHash
-									   username:(NSString *)username
-									accountName:(NSString *)accountName
-									   protocol:(NSString *)protocol
-									   callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock;
++ (void)showFingerprintConfirmationForUsername:(NSString *)username
+								   accountName:(NSString *)accountName
+									  protocol:(NSString *)protocol
+									  callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock;
 
 /**
  *  Cancel all progress and close the dialog.

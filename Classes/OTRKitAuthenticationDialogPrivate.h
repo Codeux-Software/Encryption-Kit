@@ -101,7 +101,7 @@
 
 - (void)authenticateUser;
 
-- (void)showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash;
+- (void)showFingerprintConfirmationForTheirHash;
 
 - (IBAction)authenticationMethodChanged:(id)sender;
 @end

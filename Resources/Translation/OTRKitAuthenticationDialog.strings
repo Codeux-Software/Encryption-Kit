@@ -30,19 +30,21 @@
 
  *********************************************************************** */
 
-/* Authentication progress status messages */
 "00001" = "Waiting for response…";
 "00002" = "Successfully authenticated";
 "00003" = "Authentication failed. Incorrect response.";
 "00004" = "Authentication failed. Request aborted.";
 "00005" = "An error occurred during authentication.";
 
-/* Button titles */
 "00012" = "OK";
 
-/* General error messages */
 "00010[1]" = "Cannot process authentication request";
 "00010[2]" = "“%@“ tried to send you an authentication request, but it can't be processed at this time.";
 
 "00011[1]" = "Cannot process authentication request";
 "00011[2]" = "“%@“ cancelled the authentication request.";
+
+"00012[1]" = "Chat partner’s fingerprint has changed";
+"00012[2]" = "The fingerprint belonging to “%@“ has changed.\n\nDo you want to authenticate this user?";
+"00012[3]" = "Yes";
+"00012[4]" = "No";

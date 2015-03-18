@@ -106,7 +106,7 @@
 	[openDialogs handleEvent:event progress:progress question:question];
 }
 
-+ (void)showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock
++ (void)showFingerprintConfirmationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock
 {
 	NSParameterAssert(username != nil);
 	NSParameterAssert(accountName != nil);
@@ -131,7 +131,7 @@
 
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:incomingRequest];
 
-		[incomingRequest showFingerprintConfirmationForTheirHash:theirHash ourHash:ourHash];
+		[incomingRequest showFingerprintConfirmationForTheirHash];
 	}
 }
 
@@ -230,10 +230,18 @@
 	[self updateButtonEnabledState];
 }
 
-- (NSString *)localizedString:(NSString *)original
+- (NSString *)localizedString:(NSString *)original, ...
 {
-	/* This is a framework so we have to find the bundle related to this class. */
-	return [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:@"OTRKitAuthenticationDialog"];
+	NSString *localeString = [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:@"OTRKitAuthenticationDialog"];
+
+	va_list args;
+	va_start(args, original);
+
+	NSString *formattedString = [[NSString alloc] initWithFormat:localeString arguments:args];
+
+	va_end(args);
+
+	return formattedString;
 }
 
 - (NSWindow *)deepestSheetOfWindow:(NSWindow *)window
@@ -284,7 +292,7 @@
 	/* Construct error messages */
 	NSString *messageText = [self localizedString:@"00010[1]"];
 
-	NSString *descriptionText = [NSString stringWithFormat:[self localizedString:@"00010[2]"], username];
+	NSString *descriptionText = [self localizedString:@"00010[2]", username];
 
 	/* Construct and present alert */
 	[self presentAlert:messageText informativeText:descriptionText didEndSelector:NULL];
@@ -298,7 +306,7 @@
 	/* Construct error messages */
 	NSString *messageText = [self localizedString:@"00011[1]"];
 
-	NSString *descriptionText = [NSString stringWithFormat:[self localizedString:@"00011[2]"], username];
+	NSString *descriptionText = [self localizedString:@"00011[2]", username];
 
 	/* Mark the dialog as stale */
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] markDialogAsStale:self];
@@ -410,7 +418,9 @@
 	[self setLastEvent:event];
 
 	/* Update progress information based on event. */
-	[self updateProgressIndicatorPercentage:progress];
+	if ([self authenticationProgressWindowIsVisible]) {
+		[self updateProgressIndicatorPercentage:progress];
+	}
 }
 
 - (void)setupProgressIndicatorWindow
@@ -582,8 +592,6 @@
 
 - (void)authenticateUserWithQuestion:(NSString *)question
 {
-	NSParameterAssert(question);
-
 	/* Get the visible portion of the remote user's name. */
 	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
 
@@ -594,7 +602,9 @@
 	if ([self authenticationMethod] == OTRKitSMPEventAskForSecret) {
 		[self formatTextField:[self sharedSecretDescriptionTextField] withUsername:remoteUsername];
 	} else if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer) {
-		[self formatTextField:[self questionAndAnswerDescriptionTextField] withUsername:remoteUsername];
+		if (question) {
+			[self formatTextField:[self questionAndAnswerDescriptionTextField] withUsername:remoteUsername];
+		}
 
 		[[self questionAndAnswerQuestionTextField] setStringValue:question];
 	}
@@ -636,6 +646,8 @@
 		BOOL isVerified = ([[self fingerprintIsVerifiedUserCheck] state] == NSOnState);
 
 		[self markUserVerified:isVerified];
+
+		[self teardownDialog];
 	}
 	else if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer)
 	{
@@ -647,6 +659,8 @@
 											   protocol:[self cachedProtocol]
 											   question:question
 												 secret:answer];
+
+		[self setupProgressIndicatorWindow];
 	}
 	else if ([self authenticationMethod] == OTRKitSMPEventAskForSecret)
 	{
@@ -656,9 +670,9 @@
 											accountName:[self cachedAccountName]
 											   protocol:[self cachedProtocol]
 												 secret:secret];
-	}
 
-	[self setupProgressIndicatorWindow];
+		[self setupProgressIndicatorWindow];
+	}
 }
 
 - (void)authenticationMethodChanged:(id)sender
@@ -686,9 +700,43 @@
 	}
 }
 
-- (void)showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash from:(NSString *)messageFrom to:(NSString *)messageTo
+- (void)showFingerprintConfirmationForTheirHash
 {
-	NSAssert(NO, @"Not yet implemented");
+	/* Get the visible portion of the remote user's name. */
+	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
+
+	/* Construct alert message */
+	NSString *messageText = [self localizedString:@"00012[1]"];
+
+	NSString *descriptionText = [self localizedString:@"00012[2]", remoteUsername];
+
+	/* Construct alert */
+	NSAlert *errorAlert = [NSAlert new];
+
+	[errorAlert setAlertStyle:NSInformationalAlertStyle];
+
+	[errorAlert setMessageText:messageText];
+	[errorAlert setInformativeText:descriptionText];
+
+	[errorAlert addButtonWithTitle:[self localizedString:@"00012[3]"]]; // "Yes" label
+	[errorAlert addButtonWithTitle:[self localizedString:@"00012[4]"]]; // "No" label
+
+	/* Attach the sheet to frontmost window */
+	[errorAlert beginSheetModalForWindow:[NSApp keyWindow]
+						   modalDelegate:self
+						  didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)
+							 contextInfo:NULL];
+}
+
+- (void)showFingerprintConfirmationForHashAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if (returnCode == NSAlertFirstButtonReturn) {
+			[self authenticateUser];
+		} else {
+			[self teardownDialog];
+		}
+	});
 }
 
 - (void)authenticateUser
