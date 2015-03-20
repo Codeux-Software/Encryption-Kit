@@ -30,7 +30,7 @@
 
  *********************************************************************** */
 
-@interface EKBlowfishEncryptionKeyExchange : NSObject
-- (NSString *)generatePublicKey;
-- (NSString *)secretKeyFromPublicKey:(NSString *)publicKey;
-@end
+#import <EncryptionKit/OTRKit.h>
+#import <EncryptionKit/OTRKitAuthenticationDialog.h>
+
+#import <EncryptionKit/OTRTLV.h>

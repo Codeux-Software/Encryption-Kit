@@ -2,12 +2,17 @@
 
 export PLATFORM_BUILD_SDK_VERSION="macosx10.10"
 
-export LIBRARY_OPENSSL_VERSION="1.0.2a"
 export LIBRARY_GPG_ERROR_VERSION="1.18"
 export LIBRARY_GCRYPT_VERSION="1.6.3"
 export LIBRARY_OTR_VERSION="4.1.0"
 
-export LIBRARIES_TO_BUILD="openssl libgpg-error libgcrypt libotr"
+if [ "$1" == "build-openssl" ]; then
+	export LIBRARY_OPENSSL_VERSION="1.0.2a"
+
+	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr openssl"
+else
+	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
+fi
 
 export ROOT_DIRECTORY="/private/tmp/com.codeux.frameworks.encryptionKit/"
 
