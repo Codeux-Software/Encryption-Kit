@@ -42,11 +42,11 @@
 
 @implementation OTRKitAuthenticationDialog
 
-+ (void)requestAuthenticationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock
++ (void)requestAuthenticationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValue(username)
+	CheckParamaterForNilValue(accountName)
+	CheckParamaterForNilValue(protocol)
 
 	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
 																											 accountName:accountName
@@ -63,8 +63,6 @@
 		[outgoingRequest setCachedAccountName:accountName];
 		[outgoingRequest setCachedProtocol:protocol];
 
-		[outgoingRequest setCallbackBlock:callbackBlock];
-
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:outgoingRequest];
 
 		[outgoingRequest authenticateUser];
@@ -73,9 +71,9 @@
 
 + (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValue(username)
+	CheckParamaterForNilValue(accountName)
+	CheckParamaterForNilValue(protocol)
 
 	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
 																											 accountName:accountName
@@ -108,11 +106,11 @@
 	[openDialogs handleEvent:event progress:progress question:question];
 }
 
-+ (void)showFingerprintConfirmationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock
++ (void)showFingerprintConfirmationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValue(username)
+	CheckParamaterForNilValue(accountName)
+	CheckParamaterForNilValue(protocol)
 
 	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
 																											 accountName:accountName
@@ -129,8 +127,6 @@
 		[incomingRequest setCachedAccountName:accountName];
 		[incomingRequest setCachedProtocol:protocol];
 
-		[incomingRequest setCallbackBlock:callbackBlock];
-
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:incomingRequest];
 
 		[incomingRequest showFingerprintConfirmationForTheirHash];
@@ -139,9 +135,9 @@
 
 + (void)cancelRequestForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValue(username)
+	CheckParamaterForNilValue(accountName)
+	CheckParamaterForNilValue(protocol)
 
 	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username accountName:accountName protocol:protocol];
 
@@ -234,12 +230,10 @@
 
 - (NSString *)localizedString:(NSString *)original, ...
 {
-	NSString *localeString = [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:@"OTRKitAuthenticationDialog"];
-
 	va_list args;
 	va_start(args, original);
 
-	NSString *formattedString = [[NSString alloc] initWithFormat:localeString arguments:args];
+	NSString *formattedString = [OTRKitFrameworkHelpers localizedString:original inTable:@"OTRKitAuthenticationDialog" arguments:args];
 
 	va_end(args);
 
@@ -346,11 +340,6 @@
 
 - (void)markUserVerified:(BOOL)isVerified
 {
-	/* Inform callback as to whether the user was authenticated. */
-	if ([self callbackBlock]) {
-		[self callbackBlock]([self cachedUsername], [self cachedAccountName], [self cachedProtocol], isVerified);
-	}
-
 	/* Inform OTRKit of the change. */
 	[[OTRKit sharedInstance] setActiveFingerprintVerificationForUsername:[self cachedUsername]
 															 accountName:[self cachedAccountName]

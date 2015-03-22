@@ -39,7 +39,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Authenticate Chat Partner" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ufy-ek-Sql">
+        <window title="Off-the-Record Messaging: Authenticate Chat Partner" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="ufy-ek-Sql">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="283" y="305" width="415" height="486"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -175,7 +175,7 @@ Gw
                     <constraint firstItem="7V6-E8-3k9" firstAttribute="top" secondItem="G9B-mJ-WzG" secondAttribute="bottom" constant="20" id="zv3-dx-whb"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="148.5" y="329"/>
+            <point key="canvasLocation" x="278.5" y="393"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-f2-2tL" userLabel="Fingerprint View">
             <rect key="frame" x="0.0" y="0.0" width="415" height="239"/>

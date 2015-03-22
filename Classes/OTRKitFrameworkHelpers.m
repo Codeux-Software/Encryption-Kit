@@ -30,21 +30,17 @@
 
  *********************************************************************** */
 
-"00001" = "Waiting for response…";
-"00002" = "Successfully authenticated";
-"00003" = "Authentication failed. Incorrect response.";
-"00004" = "Authentication failed. Request aborted.";
-"00005" = "An error occurred during authentication.";
+#import "OTRKitFrameworkHelpers.h"
 
-"00012" = "OK";
+@implementation OTRKitFrameworkHelpers
 
-"00010[1]" = "Cannot process authentication request";
-"00010[2]" = "“%@“ tried to send you an authentication request, but it was ignored because you already have one open related to this user.";
++ (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable arguments:(va_list)arguments
+{
+	NSString *localeString = [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:inTable];
 
-"00011[1]" = "Cannot process authentication request";
-"00011[2]" = "“%@“ cancelled the authentication request.";
+	NSString *formattedString = [[NSString alloc] initWithFormat:localeString arguments:arguments];
 
-"00012[1]" = "Unrecognized chat partner";
-"00012[2]" = "The identity of “%@“ has not been confirmed.\n\nDo you want to authenticate this user?";
-"00012[3]" = "Yes";
-"00012[4]" = "No";
+	return formattedString;
+}
+
+@end

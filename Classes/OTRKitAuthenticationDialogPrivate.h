@@ -33,6 +33,8 @@
 #import "OTRKitAuthenticationDialog.h"
 #import "OTRKitAuthenticationDialogWindowManager.h"
 
+#import "OTRKitFrameworkHelpers.h"
+
 #pragma mark -
 #pragma makr Headers
 
@@ -40,7 +42,6 @@
 @property (nonatomic, copy) NSString *cachedUsername;
 @property (nonatomic, copy) NSString *cachedAccountName;
 @property (nonatomic, copy) NSString *cachedProtocol;
-@property (nonatomic, copy) OTRKitAuthenticationDialogCallbackBlock callbackBlock;
 @property (nonatomic, assign) BOOL isIncomingRequest;
 @property (nonatomic, assign) BOOL authenticationHostWindowIsVisible;
 @property (nonatomic, assign) BOOL authenticationProgressWindowIsVisible;

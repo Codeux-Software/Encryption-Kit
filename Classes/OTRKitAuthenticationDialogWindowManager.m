@@ -71,7 +71,7 @@
 
 - (void)addDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	NSParameterAssert(dialog != nil);
+	CheckParamaterForNilValue(dialog)
 
 	if ([NSThread isMainThread] == NO) {
 		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
@@ -89,7 +89,7 @@
 
 - (void)removeDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	NSParameterAssert(dialog != nil);
+	CheckParamaterForNilValue(dialog)
 
 	if ([NSThread isMainThread] == NO) {
 		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
@@ -110,7 +110,7 @@
 
 - (void)markDialogAsStale:(OTRKitAuthenticationDialog *)dialog
 {
-	NSParameterAssert(dialog != nil);
+	CheckParamaterForNilValue(dialog)
 
 	if ([NSThread isMainThread] == NO) {
 		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
@@ -137,10 +137,9 @@
 
 - (OTRKitAuthenticationDialog *)dialogForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-	
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValueR(username, nil)
+	CheckParamaterForNilValueR(accountName, nil)
+	CheckParamaterForNilValueR(protocol, nil)
 
 	if ([NSThread isMainThread] == NO) {
 		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
@@ -156,10 +155,9 @@
 
 - (NSString *)storageDictionaryKeyForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol isStale:(BOOL)isStale
 {
-	NSParameterAssert(username != nil);
-	NSParameterAssert(accountName != nil);
-
-	NSParameterAssert(protocol != nil);
+	CheckParamaterForNilValueR(username, nil)
+	CheckParamaterForNilValueR(accountName, nil)
+	CheckParamaterForNilValueR(protocol, nil)
 
 	/* Stale dialogs are those that are still kept a reference to, but will not be returned
 	 if looked up for. Stale dialogs are stored with a random key. We are able to remove them

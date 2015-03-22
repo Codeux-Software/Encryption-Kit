@@ -32,22 +32,19 @@
 
 #import "OTRKit.h"
 
-typedef void (^OTRKitAuthenticationDialogCallbackBlock)(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated);
-
 @interface OTRKitAuthenticationDialog : NSObject
 
 /**
  *  Request authentication of a remote user using a Socialist Millionaire Problem (SMP)
  *
- *  @param accountName The account name of the local user
  *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  *  @param callback    The block to invoke when a result is had
  */
 + (void)requestAuthenticationForUsername:(NSString *)username
 							 accountName:(NSString *)accountName
-								protocol:(NSString *)protocol
-								callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock;
+								protocol:(NSString *)protocol;
 
 /**
  *  Respond to a Socialist Millionaire Problem (SMP)
@@ -55,8 +52,8 @@ typedef void (^OTRKitAuthenticationDialogCallbackBlock)(NSString *username, NSSt
  *  @param event		The type of event
  *  @param progress		Percent progress of the negotiation
  *  @param question		Question that should be displayed to user
- *  @param accountName  The account name of the local user
  *  @param username     The account name of the remote user
+ *  @param accountName  The account name of the local user
  *  @param protocol     The protocol of the exchange
  *  
  *  The callback block only
@@ -71,15 +68,14 @@ typedef void (^OTRKitAuthenticationDialogCallbackBlock)(NSString *username, NSSt
 /**
  *  Show a dialog so the user can confirm when a user's fingerprint changes.
  *
- *  @param accountName The account name of the local user
  *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  *  @param callback    The block to invoke when a result is had
  */
 + (void)showFingerprintConfirmationForUsername:(NSString *)username
 								   accountName:(NSString *)accountName
-									  protocol:(NSString *)protocol
-									  callback:(OTRKitAuthenticationDialogCallbackBlock)callbackBlock;
+									  protocol:(NSString *)protocol;
 
 /**
  *  Cancel all progress and close the dialog.
