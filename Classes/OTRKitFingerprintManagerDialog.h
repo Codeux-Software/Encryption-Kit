@@ -37,8 +37,11 @@
 
 /**
  *  Bring the dialog forward
+ *
+ *  Given hostWindow, the dialog attaches as a sheet instead of separate window.
  */
 - (void)open;
+- (void)open:(NSWindow *)hostWindow;
 
 /**
  *  Close the dialog

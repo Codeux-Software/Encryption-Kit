@@ -460,12 +460,17 @@
 	/* Present the sheet. */
 	[NSApp beginSheet:[self authenticationProgressWindow]
 	   modalForWindow:[self authenticationHostWindow]
-		modalDelegate:nil
-	   didEndSelector:NULL
+		modalDelegate:self
+	   didEndSelector:@selector(didEndAuthenticationProgressWindowSheet:returnCode:contextInfo:)
 		  contextInfo:NULL];
 
 	/* Fake our last event so that -maybeAbortOpenNegotations will work. */
 	[self setLastEvent:OTRKitSMPEventInProgress];
+}
+
+- (void)didEndAuthenticationProgressWindowSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet close];
 }
 
 - (void)updateProgressIndicatorStatusMessage:(NSString *)statusMessage
@@ -516,8 +521,8 @@
 - (void)endProgressIndicatorWindow
 {
 	/* Close the current progress window if open. */
-	if ([[self authenticationProgressWindow] isVisible]) {
-		[[self authenticationProgressWindow] close];
+	if ([[self authenticationProgressWindow] isSheet]) {
+		[NSApp endSheet:[self authenticationProgressWindow]];
 	}
 }
 
@@ -526,8 +531,8 @@
 	/* Close negotation if it is open. */
 	[self maybeAbortOpenNegotations];
 	
-	/* We cannot recover outgoing authentication, so tear down window. */
-	if ([self isIncomingRequest] == NO) {
+	/* We cannot incoming outgoing authentication, so tear down window. */
+	if ([self isIncomingRequest]) {
 		[self teardownDialog];
 	} else {
 		[self endProgressIndicatorWindow];
@@ -541,8 +546,8 @@
 	if ([self lastEvent] == OTRKitSMPEventSuccess) {
 		[self teardownDialog]; // Will close progress window for us...
 	} else {
-		/* There is no way to resend failed requests for outgoing. */
-		if ([self isIncomingRequest] == NO) {
+		/* There is no way to resend failed requests for incoming. */
+		if ([self isIncomingRequest]) {
 			[self teardownDialog];
 		} else {
 			[self endProgressIndicatorWindow];

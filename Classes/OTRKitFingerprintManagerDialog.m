@@ -69,27 +69,58 @@
 
 - (void)open
 {
+	[self open:nil];
+}
+
+- (void)open:(NSWindow *)hostWindow
+{
 	if ([self isStale]) {
 		NSAssert(NO, @"Cannot opent the dialog because it is marked as stale.");
 	}
 
-	[[self fingerprintManagerWindow] makeKeyAndOrderFront:nil];
+	if (hostWindow) {
+		if ([[self fingerprintManagerWindow] isSheet] == NO) {
+			[NSApp beginSheet:[self fingerprintManagerWindow]
+			   modalForWindow:hostWindow
+				modalDelegate:self
+			   didEndSelector:@selector(didEndSheet:returnCode:contextInfo:)
+				  contextInfo:NULL];
+		}
+	} else {
+		[[self fingerprintManagerWindow] makeKeyAndOrderFront:nil];
+	}
+}
+
+- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[sheet close];
+
+	[self closeStepTwo];
 }
 
 - (void)close
 {
 	if ([self isStale] == NO) {
-		if ([[self fingerprintManagerWindow] isVisible]) {
-			[[self fingerprintManagerWindow] close];
+		if ([[self fingerprintManagerWindow] isSheet]) {
+			[NSApp endSheet:[self fingerprintManagerWindow]];
+		} else {
+			if ([[self fingerprintManagerWindow] isVisible]) {
+				[[self fingerprintManagerWindow] close];
+
+				[self closeStepTwo];
+			}
 		}
+	}
+}
 
-		[self setIsStale:YES];
+- (void)closeStepTwo
+{
+	[self setIsStale:YES];
 
-		[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-		if ( [self delegate]) {
-			[[self delegate] otrKitFingerprintManagerDialogDidClose:self];
-		}
+	if ( [self delegate]) {
+		[[self delegate] otrKitFingerprintManagerDialogDidClose:self];
 	}
 }
 
