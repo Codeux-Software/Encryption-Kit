@@ -43,8 +43,6 @@
 @property (nonatomic, copy) NSString *cachedAccountName;
 @property (nonatomic, copy) NSString *cachedProtocol;
 @property (nonatomic, assign) BOOL isIncomingRequest;
-@property (nonatomic, assign) BOOL authenticationHostWindowIsVisible;
-@property (nonatomic, assign) BOOL authenticationProgressWindowIsVisible;
 @property (nonatomic, assign) OTRKitSMPEvent lastEvent;
 @property (nonatomic, assign) OTRKitSMPEvent authenticationMethod; // none = fingerprint, question & answer, or shared secret
 @property (nonatomic, weak) IBOutlet NSView *contentView;

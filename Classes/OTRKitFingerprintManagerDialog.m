@@ -52,7 +52,7 @@
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[self setDelegate:nil];
 }
 
 - (void)prepareInitialState
@@ -60,6 +60,8 @@
 	[self populateFingerprintCache];
 
 	[self updateButtonsEnabledState];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitListOfFingerprintsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitMessageStateDidChangeNotification object:nil];
@@ -77,9 +79,13 @@
 - (void)close
 {
 	if ([self isStale] == NO) {
-		[[self fingerprintManagerWindow] close];
+		if ([[self fingerprintManagerWindow] isVisible]) {
+			[[self fingerprintManagerWindow] close];
+		}
 
 		[self setIsStale:YES];
+
+		[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 		if ( [self delegate]) {
 			[[self delegate] otrKitFingerprintManagerDialogDidClose:self];
@@ -88,6 +94,11 @@
 }
 
 - (IBAction)closeDialog:(id)sender
+{
+	[self close];
+}
+
+- (void)applicationWillTerminateNotification:(NSNotification *)notification
 {
 	[self close];
 }
@@ -122,6 +133,8 @@
 	if (currentSelection > (-1)) {
 		if ([[self fingerprintListTable] numberOfRows] > currentSelection) {
 			[[self fingerprintListTable] selectRowIndexes:[NSIndexSet indexSetWithIndex:currentSelection] byExtendingSelection:NO];
+		} else {
+			[self updateButtonsEnabledState];
 		}
 	}
 }
@@ -261,8 +274,6 @@
 	OTRKitConcreteObject *dataObject  = [[self cachedListOfFingerprints] objectAtIndex:[self tableViewSelectedRow]];
 
 	[[OTRKit sharedInstance] deleteFingerprintWithConcreteObject:dataObject];
-
-	[self updateButtonsEnabledState];
 }
 
 - (IBAction)fingerprintModifyTrust:(id)sender

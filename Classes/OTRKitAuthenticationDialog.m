@@ -151,13 +151,35 @@
 #pragma mark -
 #pragma mark Dialog Construction
 
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	/* Observe notifications for when the application will terminate so that we can
+	 tear down the dialog gracefully instead of allowing OS X to shove its memory aside. */
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
+}
+
+- (void)applicationWillTerminateNotification:(NSNotification *)notification
+{
+	/* Invoke -cancelRequest so that an abort signal can be sent if it must. */
+	[self cancelRequest];
+}
+
 - (void)bringHostWindowForward
 {
 	/* Bring the host window forward if it has not been brought forward already. */
-	if ([self authenticationHostWindowIsVisible] == NO) {
+	if ([[self authenticationHostWindow] isVisible] == NO) {
 		[[self authenticationHostWindow] makeKeyAndOrderFront:nil];
-
-		[self setAuthenticationHostWindowIsVisible:YES];
 	}
 }
 
@@ -358,6 +380,9 @@
 
 - (void)teardownDialog
 {
+	/* Remove any active notification observers */
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+
 	/* Tear down windows. */
 	[self endProgressIndicatorWindow];
 
@@ -370,10 +395,8 @@
 - (void)closeHostWindow
 {
 	/* Close the host window if visible. */
-	if ([self authenticationHostWindowIsVisible]) {
+	if ([[self authenticationHostWindow] isVisible]) {
 		[[self authenticationHostWindow] close];
-
-		[self setAuthenticationHostWindowIsVisible:NO];
 	}
 }
 
@@ -386,7 +409,7 @@
 	if (_lastEvent != lastEvent) {
 		_lastEvent = lastEvent;
 
-		if ([self authenticationProgressWindowIsVisible]) {
+		if ([[self authenticationProgressWindow] isVisible]) {
 			[self updateProgressIndicatorButtonsWithEvent:lastEvent];
 		}
 	}
@@ -416,7 +439,7 @@
 	[self setLastEvent:event];
 
 	/* Update progress information based on event. */
-	if ([self authenticationProgressWindowIsVisible]) {
+	if ([[self authenticationProgressWindow] isVisible]) {
 		[self updateProgressIndicatorPercentage:progress];
 	}
 }
@@ -438,8 +461,6 @@
 		modalDelegate:nil
 	   didEndSelector:NULL
 		  contextInfo:NULL];
-
-	[self setAuthenticationProgressWindowIsVisible:YES];
 
 	/* Fake our last event so that -maybeAbortOpenNegotations will work. */
 	[self setLastEvent:OTRKitSMPEventInProgress];
@@ -493,10 +514,8 @@
 - (void)endProgressIndicatorWindow
 {
 	/* Close the current progress window if open. */
-	if ([self authenticationProgressWindowIsVisible]) {
+	if ([[self authenticationProgressWindow] isVisible]) {
 		[[self authenticationProgressWindow] close];
-
-		[self setAuthenticationProgressWindowIsVisible:NO];
 	}
 }
 
@@ -582,7 +601,7 @@
 
 		[self authenticateUserWithQuestion:question];
 	} else if (event == OTRKitSMPEventAbort) {
-		if ([self authenticationProgressWindowIsVisible] == NO) {
+		if ([[self authenticationProgressWindow] isVisible] == NO) {
 			[self presentRemoteUserAbortedRequestDialog];
 		}
 	}
