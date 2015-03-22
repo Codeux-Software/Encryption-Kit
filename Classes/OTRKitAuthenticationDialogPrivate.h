@@ -45,6 +45,7 @@
 @property (nonatomic, assign) BOOL isIncomingRequest;
 @property (nonatomic, assign) OTRKitSMPEvent lastEvent;
 @property (nonatomic, assign) OTRKitSMPEvent authenticationMethod; // none = fingerprint, question & answer, or shared secret
+@property (nonatomic, assign) NSWindow *applicationHostWindow;
 @property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, strong) IBOutlet NSWindow *authenticationHostWindow;

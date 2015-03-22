@@ -61,6 +61,7 @@
 
 		[outgoingRequest setCachedUsername:username];
 		[outgoingRequest setCachedAccountName:accountName];
+
 		[outgoingRequest setCachedProtocol:protocol];
 
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:outgoingRequest];
@@ -97,6 +98,7 @@
 
 			[openDialogs setCachedUsername:username];
 			[openDialogs setCachedAccountName:accountName];
+
 			[openDialogs setCachedProtocol:protocol];
 
 			[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialogs];
@@ -106,7 +108,7 @@
 	[openDialogs handleEvent:event progress:progress question:question];
 }
 
-+ (void)showFingerprintConfirmationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
++ (void)showFingerprintConfirmation:(NSWindow *)hostWindow username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	CheckParamaterForNilValue(username)
 	CheckParamaterForNilValue(accountName)
@@ -125,7 +127,10 @@
 
 		[incomingRequest setCachedUsername:username];
 		[incomingRequest setCachedAccountName:accountName];
+
 		[incomingRequest setCachedProtocol:protocol];
+
+		[incomingRequest setApplicationHostWindow:hostWindow];
 
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:incomingRequest];
 
@@ -196,9 +201,6 @@
 	[[self contentViewHeightConstraint] setConstant:NSHeight([contentView frame])];
 
 	[[self contentView] addSubview:contentView];
-
-	/* Update keyboard navigation (tab key) */
-	[[self authenticationHostWindow] recalculateKeyViewLoop];
 }
 
 - (void)formatTextField:(NSTextField *)textField withUsername:(NSString *)username
@@ -739,7 +741,15 @@
 	[errorAlert addButtonWithTitle:[self localizedString:@"00012[4]"]]; // "No" label
 
 	/* Attach the sheet to frontmost window */
-	[errorAlert beginSheetModalForWindow:[NSApp keyWindow]
+	NSWindow *hostWindow = nil;
+
+	if ([self applicationHostWindow] == nil) {
+		hostWindow = [NSApp keyWindow];
+	} else {
+		hostWindow = [self applicationHostWindow];
+	}
+
+	[errorAlert beginSheetModalForWindow:hostWindow
 						   modalDelegate:self
 						  didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)
 							 contextInfo:NULL];

@@ -40,7 +40,6 @@
  *  @param username    The account name of the remote user
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
- *  @param callback    The block to invoke when a result is had
  */
 + (void)requestAuthenticationForUsername:(NSString *)username
 							 accountName:(NSString *)accountName
@@ -68,14 +67,16 @@
 /**
  *  Show a dialog so the user can confirm when a user's fingerprint changes.
  *
+ *  @param hostWindow  A window the confirmation sheet can be attached to.
+ *                     Uses [NSApp keyWindow] if hostWindow is nil.
  *  @param username    The account name of the remote user
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
- *  @param callback    The block to invoke when a result is had
  */
-+ (void)showFingerprintConfirmationForUsername:(NSString *)username
-								   accountName:(NSString *)accountName
-									  protocol:(NSString *)protocol;
++ (void)showFingerprintConfirmation:(NSWindow *)hostWindow
+						   username:(NSString *)username
+						accountName:(NSString *)accountName
+						   protocol:(NSString *)protocol;
 
 /**
  *  Cancel all progress and close the dialog.
