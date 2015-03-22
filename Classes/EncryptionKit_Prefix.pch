@@ -1,6 +1,23 @@
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
 
-	#define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#import <Cocoa/Cocoa.h>
+
+#define LogToConsole(fmt, ...)							NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define LogToConsoleCurrentStackTrace					NSLog(@"Current Stack: %@", [NSThread callStackSymbols]);
+
+#define CheckParamaterForNilValueBodyTop(param)		if ((param) == nil || (param) == NULL) {																\
+														LogToConsole(@"Cannot continue operation. nil value provided for paramater %s", #param)				\
+														LogToConsoleCurrentStackTrace																		\
+
+#define CheckParamaterForNilValueBodyBottom			}
+
+#define CheckParamaterForNilValue(param)			CheckParamaterForNilValueBodyTop((param))		\
+														return;										\
+													CheckParamaterForNilValueBodyBottom
+
+#define CheckParamaterForNilValueR(param, rr)		CheckParamaterForNilValueBodyTop((param))		\
+														return (rr);								\
+													CheckParamaterForNilValueBodyBottom
+
 #endif

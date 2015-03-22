@@ -35,6 +35,8 @@
  */
 
 @class OTRKit;
+@class OTRKitConcreteObject;
+
 @class OTRTLV;
 
 typedef NS_ENUM(NSUInteger, OTRKitMessageState) {
@@ -82,11 +84,8 @@ typedef NS_ENUM(NSUInteger, OTRKitMessageEvent) {
 	OTRKitMessageEventReceivedMessageForOtherInstance
 };
 
-extern NSString * const kOTRKitUsernameKey;
-extern NSString * const kOTRKitAccountNameKey;
-extern NSString * const kOTRKitFingerprintKey;
-extern NSString * const kOTRKitProtocolKey;
-extern NSString * const kOTRKitTrustKey;
+extern NSString * const OTRKitListOfFingerprintsDidChangeNotification;
+extern NSString * const OTRKitMessageStateDidChangeNotification;
 
 @protocol OTRKitDelegate <NSObject>
 @required
@@ -190,8 +189,8 @@ updateMessageState:(OTRKitMessageState)messageState
  *  @param otrKit      Reference to shared instance
  *  @param theirHash   Remote user's fingerprint
  *  @param ourHash     Local user's fingerprint
- *  @param accountName The account name of the local user
  *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  */
 - (void)                           otrKit:(OTRKit *)otrKit
@@ -202,14 +201,29 @@ updateMessageState:(OTRKitMessageState)messageState
 								 protocol:(NSString *)protocol;
 
 /**
+ *  Method invoked when the trust state of the active fingerprint for a user changes.
+ *
+ *  @param otrKit      Reference to shared instance
+ *  @param username    The account name of the remote user
+ *  @param accountName The account name of the local user
+ *  @param protocol    The protocol of the exchange
+ *  @param verified    Whether or not to trust this fingerprint
+ */
+- (void)							  otrKit:(OTRKit *)otrKit
+fingerprintIsVerifiedStateChangedForUsername:(NSString *)username
+								 accountName:(NSString *)accountName
+			   						protocol:(NSString *)protocol
+									verified:(BOOL)verified;
+
+/**
  *  Implement this if you plan to handle Socialist Millionaire Problem (SMP) calls.
  *
  *  @param otrKit		Reference to shared instance
  *  @param event		The type of event
  *  @param progress		Percent progress of the negotiation
  *  @param question		Question that should be displayed to user
- *  @param accountName  The account name of the local user
  *  @param username     The account name of the remote user
+ *  @param accountName  The account name of the local user
  *  @param protocol     The protocol of the exchange
  */
 - (void) otrKit:(OTRKit *)otrKit
@@ -226,10 +240,11 @@ updateMessageState:(OTRKitMessageState)messageState
  *  @param otrKit		Reference to shared instance
  *  @param event		Message event
  *  @param message		Offending message
- *  @param error		Error describing the problem
- *  @param accountName  The account name of the local user
  *  @param username     The account name of the remote user
+ *  @param accountName  The account name of the local user
  *  @param protocol     The protocol of the exchange
+ *  @param tag			Tag to attach additional application-specific data to message. Only used locally.
+ *  @param error		Error describing the problem
  */
 - (void)    otrKit:(OTRKit *)otrKit
 handleMessageEvent:(OTRKitMessageEvent)event
@@ -247,9 +262,9 @@ handleMessageEvent:(OTRKitMessageEvent)event
  *  @param symmetricKey		Key data
  *  @param use				Integer tag for identifying the use for the key
  *  @param useData			Any extra data to attach
- *  @param accountName      The account name of the local user
  *  @param username         The account name of the remote user
- *  @param protocol        s The protocol of the exchange
+ *  @param accountName      The account name of the local user
+ *  @param protocol         The protocol of the exchange
  */
 - (void)        otrKit:(OTRKit *)otrKit
   receivedSymmetricKey:(NSData *)symmetricKey
@@ -511,24 +526,29 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 //////////////////////////////////////////////////////////////////////
 
 /**
- *  Returns an array of dictionaries using OTRAccountNameKey, OTRUsernameKey,
- *  OTRFingerprintKey, OTRProtocolKey, OTRFingerprintKey to store the relevant
- *  information.
+ *  Returns an array of OTRKitConcreteObject objects
  */
 - (NSArray *)requestAllFingerprints;
 
 /**
  *  Delete a specified fingerprint.
  *
- *  @param fingerprint Fingerprint to be deleted
+ *  @param fingerprint Fingerprint to delete
  *  @param username    The account name of the remote user
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  */
-- (BOOL)deleteFingerprint:(NSString *)fingerprintString
+- (void)deleteFingerprint:(NSString *)fingerprintString
 				 username:(NSString *)username
 			  accountName:(NSString *)accountName
 				 protocol:(NSString *)protocol;
+
+/**
+ *  Delete a specified fingerprint.
+ *
+ *  @param fingerprint Fingerprint concrete object
+ */
+- (void)deleteFingerprintWithConcreteObject:(OTRKitConcreteObject *)fingerprint;
 
 /**
  *  For determining the fingerprint of the local user.
@@ -575,15 +595,14 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 										   verified:(BOOL)verified;
 
 /**
- *  Whether or not the remote user has any previously verified fingerprints.
+ *  Mark a user's active fingerprint as verified
  *
- *  @param username    The account name of the remote user
- *  @param accountName The account name of the local user
- *  @param protocol    The protocol of the exchange
+ *  @param fingerprint Fingerprint concrete object
+ *  @param verified    Whether or not to trust this fingerprint
  */
-- (BOOL)hasVerifiedFingerprintsForUsername:(NSString *)username
-							   accountName:(NSString *)accountName
-								  protocol:(NSString *)protocol;
+
+- (void)setFingerprintVerificationForConcreteObject:(OTRKitConcreteObject *)fingerprint
+										   verified:(BOOL)verified;
 
 /**
  *  Test if a string starts with "?OTR".
