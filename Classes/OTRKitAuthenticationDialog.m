@@ -749,7 +749,7 @@
 		hostWindow = [self applicationHostWindow];
 	}
 
-	[errorAlert beginSheetModalForWindow:hostWindow
+	[errorAlert beginSheetModalForWindow:[self deepestSheetOfWindow:hostWindow]
 						   modalDelegate:self
 						  didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)
 							 contextInfo:NULL];
