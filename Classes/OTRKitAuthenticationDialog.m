@@ -166,7 +166,7 @@
 {
 	/* Observe notifications for when the application will terminate so that we can
 	 tear down the dialog gracefully instead of allowing OS X to shove its memory aside. */
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:OTRKitPrepareForApplicationTerminationNotification object:nil];
 }
 
 - (void)applicationWillTerminateNotification:(NSNotification *)notification

@@ -61,7 +61,7 @@
 
 	[self updateButtonsEnabledState];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:OTRKitPrepareForApplicationTerminationNotification object:nil];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitListOfFingerprintsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitMessageStateDidChangeNotification object:nil];

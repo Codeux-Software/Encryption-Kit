@@ -45,6 +45,8 @@ static NSString * const kOTRKitErrorDomain				= @"org.chatsecure.OTRKit";
 NSString * const OTRKitListOfFingerprintsDidChangeNotification	= @"OTRKitListOfFingerprintsDidChangeNotification";
 NSString * const OTRKitMessageStateDidChangeNotification		= @"OTRKitMessageStateDidChangeNotification";
 
+NSString * const OTRKitPrepareForApplicationTerminationNotification = @"OTRKitPrepareForApplicationTerminationNotification";
+
 @implementation OTRKit
 
 #pragma mark libotr ui_ops callback functions

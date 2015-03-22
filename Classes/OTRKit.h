@@ -84,8 +84,28 @@ typedef NS_ENUM(NSUInteger, OTRKitMessageEvent) {
 	OTRKitMessageEventReceivedMessageForOtherInstance
 };
 
+/** 
+ *  Notification fired when a fingerprint and/or its attributes change. This 
+ *  includes a new fingerprint arriving, one being deleted, or the trust of an 
+ *  existing fingerprint being modified.
+ * 
+ *  This notification does not contain a userInfo dictionary.
+ */
 extern NSString * const OTRKitListOfFingerprintsDidChangeNotification;
+
+/**
+ *  Notification fired when the message state of any conversation has changed.
+ *
+ *  This notification does not contain a userInfo dictionary.
+ */
 extern NSString * const OTRKitMessageStateDidChangeNotification;
+
+/* 
+ *  This is a notification that OTRKit observes, not fires. It is observed
+ *  by OTRKitAuthenticationDialog and OTRKitFingerprintManagerDialog to allow 
+ *  graceful closing of related dialogs. 
+ */
+extern NSString * const OTRKitPrepareForApplicationTerminationNotification;
 
 @protocol OTRKitDelegate <NSObject>
 @required
