@@ -52,8 +52,8 @@
 																											 accountName:accountName
 																												protocol:protocol];
 
-	if (openDialogs) {
-		LogToConsole(@"Tried to open a dialog when one was already open.");
+	if ( openDialogs) {
+		[openDialogs bringHostWindowForward];
 	} else {
 		OTRKitAuthenticationDialogOutgoing *outgoingRequest = [OTRKitAuthenticationDialogOutgoing new];
 
@@ -182,10 +182,7 @@
 
 - (void)bringHostWindowForward
 {
-	/* Bring the host window forward if it has not been brought forward already. */
-	if ([[self authenticationHostWindow] isVisible] == NO) {
-		[[self authenticationHostWindow] makeKeyAndOrderFront:nil];
-	}
+	[[self authenticationHostWindow] makeKeyAndOrderFront:nil];
 }
 
 - (void)changeContentViewTo:(NSView *)contentView
