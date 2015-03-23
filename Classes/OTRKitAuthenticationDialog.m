@@ -718,6 +718,8 @@
 
 	if (event == OTRKitSMPEventSuccess) {
 		[self markUserVerified:YES]; // Mark user as trusted.
+	} else if (event == OTRKitSMPEventFailure) {
+		[self markUserVerified:NO]; // Mark user as trusted.
 	}
 }
 
