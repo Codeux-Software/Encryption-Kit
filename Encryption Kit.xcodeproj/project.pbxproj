@@ -41,6 +41,8 @@
 		4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */; };
 		4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */; };
 		4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */; };
+		4CF40F791AC1A6D300A26BE0 /* Build Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */; };
+		4CF40F7A1AC1A6D300A26BE0 /* Entitlements.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,8 +67,6 @@
 		4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKitAuthenticationDialogWindowManager.m; sourceTree = "<group>"; };
 		4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncryptionKit_Prefix.pch; path = Classes/EncryptionKit_Prefix.pch; sourceTree = "<group>"; };
 		4C6990641A91015C00FB41B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Build Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C6990671A91016300FB41B9 /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Entitlements.entitlements; sourceTree = "<group>"; };
 		4C7A18061ABE43E800EB304A /* EncryptionKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncryptionKit.h; path = Classes/EncryptionKit.h; sourceTree = "<group>"; };
 		4C8699EB1AB814BC00C22DEF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2-1.txt"; sourceTree = "<group>"; };
@@ -81,6 +81,8 @@
 		4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitAuthenticationDialogOutgoing.xib; path = "Resources/User Interface/OTRKitAuthenticationDialogOutgoing.xib"; sourceTree = "<group>"; };
 		4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = OTRKitAuthenticationDialog.strings; sourceTree = "<group>"; };
 		4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = OTRKitFingerprintManagerDialog.strings; sourceTree = "<group>"; };
+		4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Build Configuration.xcconfig"; path = "Resources/Build Configuration/Build Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Resources/Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -198,8 +200,8 @@
 		4C6990651A91016300FB41B9 /* Build Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */,
-				4C6990671A91016300FB41B9 /* Entitlements.entitlements */,
+				4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */,
+				4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */,
 			);
 			path = "Build Configuration";
 			sourceTree = "<group>";
@@ -362,7 +364,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF40F7A1AC1A6D300A26BE0 /* Entitlements.entitlements in Resources */,
 				4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */,
+				4CF40F791AC1A6D300A26BE0 /* Build Configuration.xcconfig in Resources */,
 				4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */,
 				4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */,
 				4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */,
@@ -421,7 +425,7 @@
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C6990661A91016300FB41B9 /* Build Configuration.xcconfig */;
+			baseConfigurationReference = 4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = Classes/EncryptionKit_Prefix.pch;
