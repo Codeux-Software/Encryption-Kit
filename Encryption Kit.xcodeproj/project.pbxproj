@@ -31,16 +31,16 @@
 		4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EB1AB814BC00C22DEF /* LICENSE.txt */; };
 		4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */; };
 		4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699EE1AB814BC00C22DEF /* LICENSE-MPLv2-0.txt */; };
-		4C8699F41AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */; };
 		4C9A21AC1AB68A750057677D /* OTRKitAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9A21AD1AB68A750057677D /* OTRKitAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */; };
 		4CB8782B1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */; };
 		4CB9983C1ABD145200BE7ADD /* OTRKitFingerprintManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CB9983B1ABD145200BE7ADD /* OTRKitFingerprintManagerDialog.xib */; };
-		4CB9983E1ABD1EF700BE7ADD /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CB9983D1ABD1EF700BE7ADD /* OTRKitFingerprintManagerDialog.strings */; };
 		4CB998411ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB9983F1ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.h */; };
 		4CB998421ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB998401ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.m */; };
 		4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242501AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib */; };
 		4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */; };
+		4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */; };
+		4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,16 +71,16 @@
 		4C8699EB1AB814BC00C22DEF /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4C8699ED1AB814BC00C22DEF /* LICENSE-GPLv2-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2-1.txt"; sourceTree = "<group>"; };
 		4C8699EE1AB814BC00C22DEF /* LICENSE-MPLv2-0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-MPLv2-0.txt"; sourceTree = "<group>"; };
-		4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = OTRKitAuthenticationDialog.strings; path = Resources/Translation/OTRKitAuthenticationDialog.strings; sourceTree = "<group>"; };
 		4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitAuthenticationDialog.h; sourceTree = "<group>"; };
 		4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKitAuthenticationDialog.m; sourceTree = "<group>"; };
 		4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitAuthenticationDialogPrivate.h; sourceTree = "<group>"; };
 		4CB9983B1ABD145200BE7ADD /* OTRKitFingerprintManagerDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitFingerprintManagerDialog.xib; path = "Resources/User Interface/OTRKitFingerprintManagerDialog.xib"; sourceTree = "<group>"; };
-		4CB9983D1ABD1EF700BE7ADD /* OTRKitFingerprintManagerDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = OTRKitFingerprintManagerDialog.strings; path = Resources/Translation/OTRKitFingerprintManagerDialog.strings; sourceTree = "<group>"; };
 		4CB9983F1ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRKitFrameworkHelpers.h; sourceTree = "<group>"; };
 		4CB998401ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRKitFrameworkHelpers.m; sourceTree = "<group>"; };
 		4CF242501AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitAuthenticationDialogIncoming.xib; path = "Resources/User Interface/OTRKitAuthenticationDialogIncoming.xib"; sourceTree = "<group>"; };
 		4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OTRKitAuthenticationDialogOutgoing.xib; path = "Resources/User Interface/OTRKitAuthenticationDialogOutgoing.xib"; sourceTree = "<group>"; };
+		4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = OTRKitAuthenticationDialog.strings; sourceTree = "<group>"; };
+		4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = OTRKitFingerprintManagerDialog.strings; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -132,10 +132,10 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4C8699F51AB82D7200C22DEF /* Translation */,
-				4C9A21A61AB689F80057677D /* User Interface */,
 				4C69906B1A91017500FB41B9 /* Documents */,
-				4C6990641A91015C00FB41B9 /* Info.plist */,
+				4CF40F711AC1A65F00A26BE0 /* Language Files */,
+				4CF40F761AC1A67100A26BE0 /* Property Lists */,
+				4C9A21A61AB689F80057677D /* User Interface */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -215,15 +215,6 @@
 			name = Documents;
 			sourceTree = "<group>";
 		};
-		4C8699F51AB82D7200C22DEF /* Translation */ = {
-			isa = PBXGroup;
-			children = (
-				4C8699F31AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings */,
-				4CB9983D1ABD1EF700BE7ADD /* OTRKitFingerprintManagerDialog.strings */,
-			);
-			name = Translation;
-			sourceTree = "<group>";
-		};
 		4C9A21A61AB689F80057677D /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +263,24 @@
 				4CB998401ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.m */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		4CF40F711AC1A65F00A26BE0 /* Language Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */,
+				4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */,
+			);
+			name = "Language Files";
+			path = "Resources/Language Files";
+			sourceTree = SOURCE_ROOT;
+		};
+		4CF40F761AC1A67100A26BE0 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C6990641A91015C00FB41B9 /* Info.plist */,
+			);
+			name = "Property Lists";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,9 +365,9 @@
 				4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */,
 				4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */,
 				4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */,
+				4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */,
 				4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */,
-				4C8699F41AB82D1700C22DEF /* OTRKitAuthenticationDialog.strings in Resources */,
-				4CB9983E1ABD1EF700BE7ADD /* OTRKitFingerprintManagerDialog.strings in Resources */,
+				4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */,
 				4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
 				4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
 				4CB9983C1ABD145200BE7ADD /* OTRKitFingerprintManagerDialog.xib in Resources */,
