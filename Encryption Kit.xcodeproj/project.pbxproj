@@ -41,8 +41,6 @@
 		4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF242511AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib */; };
 		4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */; };
 		4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */; };
-		4CF40F791AC1A6D300A26BE0 /* Build Configuration.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */; };
-		4CF40F7A1AC1A6D300A26BE0 /* Entitlements.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -364,13 +362,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF40F7A1AC1A6D300A26BE0 /* Entitlements.entitlements in Resources */,
 				4C8699EF1AB814BC00C22DEF /* LICENSE.txt in Resources */,
-				4CF40F791AC1A6D300A26BE0 /* Build Configuration.xcconfig in Resources */,
 				4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */,
 				4C8699F11AB814BC00C22DEF /* LICENSE-GPLv2-1.txt in Resources */,
-				4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */,
 				4C8699F21AB814BC00C22DEF /* LICENSE-MPLv2-0.txt in Resources */,
+				4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */,
 				4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */,
 				4CF242521AB77F7B0074CC53 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
 				4CF242531AB77F7B0074CC53 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
