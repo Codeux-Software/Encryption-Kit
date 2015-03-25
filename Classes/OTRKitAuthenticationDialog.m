@@ -388,7 +388,10 @@
 - (void)maybeAbortOpenNegotations
 {
 	/* If a negotation is in progres, abort it. */
-	if ([self lastEvent] == OTRKitSMPEventInProgress) {
+	if ([self lastEvent] == OTRKitSMPEventInProgress ||
+		[self lastEvent] == OTRKitSMPEventAskForAnswer ||
+		[self lastEvent] == OTRKitSMPEventAskForSecret)
+	{
 		[[OTRKit sharedInstance] abortSMPForUsername:[self cachedUsername]
 										 accountName:[self cachedAccountName]
 											protocol:[self cachedProtocol]];
