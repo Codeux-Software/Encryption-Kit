@@ -159,6 +159,8 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
+		[self setVisibleAlerts:[NSMutableArray array]];
+
 		[self prepareInitialState];
 
 		return self;
@@ -273,7 +275,7 @@
 	}
 }
 
-- (void)presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText didEndSelector:(SEL)didEndSelector
+- (void)presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray *)buttons didEndSelector:(SEL)didEndSelector
 {
 	/* Construct alert */
 	NSAlert *errorAlert = [NSAlert new];
@@ -283,7 +285,15 @@
 	[errorAlert setMessageText:messageText];
 	[errorAlert setInformativeText:informativeText];
 
-	[errorAlert addButtonWithTitle:[self localizedString:@"00012"]]; // "OK" label
+	if (buttons == nil) {
+		[errorAlert addButtonWithTitle:[self localizedString:@"00012"]]; // "OK" label
+	} else {
+		for (NSString *button in buttons) {
+			[errorAlert addButtonWithTitle:button];
+		}
+	}
+
+	[[self visibleAlerts] addObject:errorAlert];
 
 	/* Attach the sheet to the highest window */
 	NSWindow *hostWindow = nil;
@@ -294,23 +304,26 @@
 		hostWindow = [self deepestSheetOfWindow:[self applicationHostWindow]];
 	}
 
-	id modalDelegate = nil;
-
-	if (didEndSelector) {
-		modalDelegate = self;
+	if (didEndSelector == NULL) {
+		didEndSelector = @selector(alertSheetDidEnd:returnCode:contextInfo:);
 	}
 
 	if (hostWindow) {
 		[errorAlert beginSheetModalForWindow:hostWindow
-							   modalDelegate:modalDelegate
+							   modalDelegate:self
 							  didEndSelector:didEndSelector
 								 contextInfo:NULL];
 	} else {
 		NSModalResponse returnCode = [errorAlert runModal];
 
-		if (modalDelegate) {
-			objc_msgSend(modalDelegate, didEndSelector, errorAlert, returnCode, NULL);
-		}
+		objc_msgSend(self, didEndSelector, errorAlert, returnCode, NULL);
+	}
+}
+
+- (void)alertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	if (returnCode > 0) {
+		[[self visibleAlerts] removeObject:alert];
 	}
 }
 
@@ -325,7 +338,7 @@
 	NSString *descriptionText = [self localizedString:@"00010[2]", username];
 
 	/* Construct and present alert */
-	[self presentAlert:messageText informativeText:descriptionText didEndSelector:NULL];
+	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:NULL];
 }
 
 - (void)presentRemoteUserAbortedRequestDialog
@@ -342,13 +355,17 @@
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] markDialogAsStale:self];
 
 	/* Construct and present alert */
-	[self presentAlert:messageText informativeText:descriptionText didEndSelector:@selector(presentRemoteUserAbortedRequestDialogAlertDidEnd:returnCode:contextInfo:)];
+	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:@selector(presentRemoteUserAbortedRequestDialogAlertDidEnd:returnCode:contextInfo:)];
 }
 
 - (void)presentRemoteUserAbortedRequestDialogAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
+	[self alertSheetDidEnd:alert returnCode:returnCode contextInfo:contextInfo];
+
 	dispatch_async(dispatch_get_main_queue(), ^{
-		[self teardownDialog];
+		if (returnCode == NSAlertFirstButtonReturn) {
+			[self teardownDialog];
+		}
 	});
 }
 
@@ -388,7 +405,14 @@
 	/* Remove any active notification observers */
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	/* Tear down windows. */
+	/* Tear down visible alerts */
+	for (NSAlert *alert in [self visibleAlerts]) {
+		[NSApp endSheet:[alert window] returnCode:0];
+	}
+
+	[self setVisibleAlerts:nil];
+
+	/* Tear down windows */
 	[self endProgressIndicatorWindow];
 
 	[self closeHostWindow];
@@ -731,46 +755,29 @@
 
 - (void)showFingerprintConfirmationForTheirHash
 {
-	/* Get the visible portion of the remote user's name. */
 	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
 
-	/* Construct alert message */
 	NSString *messageText = [self localizedString:@"00012[1]"];
 
 	NSString *descriptionText = [self localizedString:@"00012[2]", remoteUsername];
 
-	/* Construct alert */
-	NSAlert *errorAlert = [NSAlert new];
+	NSArray *alertButtons = @[[self localizedString:@"00012[3]"],
+							  [self localizedString:@"00012[4]"]];
 
-	[errorAlert setAlertStyle:NSInformationalAlertStyle];
-
-	[errorAlert setMessageText:messageText];
-	[errorAlert setInformativeText:descriptionText];
-
-	[errorAlert addButtonWithTitle:[self localizedString:@"00012[3]"]]; // "Yes" label
-	[errorAlert addButtonWithTitle:[self localizedString:@"00012[4]"]]; // "No" label
-
-	/* Attach the sheet to frontmost window */
-	NSWindow *hostWindow = nil;
-
-	if ([self applicationHostWindow] == nil) {
-		hostWindow = [NSApp keyWindow];
-	} else {
-		hostWindow = [self applicationHostWindow];
-	}
-
-	[errorAlert beginSheetModalForWindow:[self deepestSheetOfWindow:hostWindow]
-						   modalDelegate:self
-						  didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)
-							 contextInfo:NULL];
+	[self presentAlert:messageText
+	   informativeText:descriptionText
+			   buttons:alertButtons
+		didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)];
 }
 
 - (void)showFingerprintConfirmationForHashAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
+	[self alertSheetDidEnd:alert returnCode:returnCode contextInfo:contextInfo];
+
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (returnCode == NSAlertFirstButtonReturn) {
 			[self authenticateUser];
-		} else {
+		} else if (returnCode == NSAlertSecondButtonReturn) {
 			[self teardownDialog];
 		}
 	});
