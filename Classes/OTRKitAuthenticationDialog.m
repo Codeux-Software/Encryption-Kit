@@ -286,7 +286,13 @@
 	[errorAlert addButtonWithTitle:[self localizedString:@"00012"]]; // "OK" label
 
 	/* Attach the sheet to the highest window */
-	NSWindow *attachedWindow = [self deepestSheetOfWindow:[self authenticationHostWindow]];
+	NSWindow *hostWindow = nil;
+
+	if ([[self authenticationHostWindow] isVisible]) {
+		hostWindow = [self deepestSheetOfWindow:[self authenticationHostWindow]];
+	} else if ([self applicationHostWindow]) {
+		hostWindow = [self deepestSheetOfWindow:[self applicationHostWindow]];
+	}
 
 	id modalDelegate = nil;
 
@@ -294,8 +300,8 @@
 		modalDelegate = self;
 	}
 
-	if (attachedWindow) {
-		[errorAlert beginSheetModalForWindow:attachedWindow
+	if (hostWindow) {
+		[errorAlert beginSheetModalForWindow:hostWindow
 							   modalDelegate:modalDelegate
 							  didEndSelector:didEndSelector
 								 contextInfo:NULL];
