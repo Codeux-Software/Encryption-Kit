@@ -705,7 +705,7 @@
 
 - (void)cancelAuthentication:(id)sender
 {
-	[self cancelRequest];
+	[self teardownDialog];
 }
 
 - (void)performAuthentication:(id)sender
