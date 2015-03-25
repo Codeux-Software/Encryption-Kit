@@ -325,11 +325,6 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 @property (nonatomic, weak) id<OTRKitDelegate> delegate;
 
 /**
- *  Defaults to main queue. All delegate and block callbacks will be done on this queue.
- */
-@property (nonatomic, strong) dispatch_queue_t callbackQueue;
-
-/**
  * By default uses `OTRKitPolicyDefault`
  */
 @property (nonatomic) OTRKitPolicy otrPolicy;
