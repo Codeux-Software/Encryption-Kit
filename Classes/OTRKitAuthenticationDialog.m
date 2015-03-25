@@ -159,8 +159,6 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[self setVisibleAlerts:[NSMutableArray array]];
-
 		[self prepareInitialState];
 
 		return self;
@@ -293,8 +291,6 @@
 		}
 	}
 
-	[[self visibleAlerts] addObject:errorAlert];
-
 	/* Attach the sheet to the highest window */
 	NSWindow *hostWindow = nil;
 
@@ -322,13 +318,16 @@
 
 - (void)alertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	if (returnCode > 0) {
-		[[self visibleAlerts] removeObject:alert];
-	}
+	;
 }
 
 - (void)presentDialogAlreadyExistsErrorAlert
 {
+	/* Do not show alert multiple times */
+	if ([self dialogAlreadyExistsErrorAlertIsVisible]) {
+		return; // Cancel operation...
+	}
+
 	/* Get the visible portion of the remote user's name. */
 	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
 
@@ -338,6 +337,8 @@
 	NSString *descriptionText = [self localizedString:@"00010[2]", username];
 
 	/* Construct and present alert */
+	[self setDialogAlreadyExistsErrorAlertIsVisible:YES];
+
 	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:NULL];
 }
 
@@ -358,10 +359,22 @@
 	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:@selector(presentRemoteUserAbortedRequestDialogAlertDidEnd:returnCode:contextInfo:)];
 }
 
+- (void)presentPrivateConversationIsNotActiveAlert
+{
+	/* Get the visible portion of the remote user's name. */
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
+
+	/* Construct error messages */
+	NSString *messageText = [self localizedString:@"00013[1]"];
+
+	NSString *descriptionText = [self localizedString:@"00013[2]", username];
+
+	/* Construct and present alert */
+	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:NULL];
+}
+
 - (void)presentRemoteUserAbortedRequestDialogAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	[self alertSheetDidEnd:alert returnCode:returnCode contextInfo:contextInfo];
-
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (returnCode == NSAlertFirstButtonReturn) {
 			[self teardownDialog];
@@ -404,13 +417,6 @@
 {
 	/* Remove any active notification observers */
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	/* Tear down visible alerts */
-	for (NSAlert *alert in [self visibleAlerts]) {
-		[NSApp endSheet:[alert window] returnCode:0];
-	}
-
-	[self setVisibleAlerts:nil];
 
 	/* Tear down windows */
 	[self endProgressIndicatorWindow];
@@ -602,11 +608,24 @@
 
 - (void)cancelAuthentication:(id)sender
 {
-	[self teardownDialog];
+	[self cancelRequest];
 }
 
 - (void)performAuthentication:(id)sender
 {
+	/* Check the message state for this user. */
+	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:[self cachedUsername]
+																		   accountName:[self cachedAccountName]
+																			  protocol:[self cachedProtocol]];
+
+	if (messageState == OTRKitMessageStateFinished ||
+		messageState == OTRKitMessageStatePlaintext)
+	{
+		[self presentPrivateConversationIsNotActiveAlert];
+
+		return; // Cancel operation...
+	}
+
 	/* Start a negoation depending on which method was selected. */
 	NSString *secretAnswer = nil;
 
@@ -686,11 +705,24 @@
 
 - (void)cancelAuthentication:(id)sender
 {
-	[self teardownDialog];
+	[self cancelRequest];
 }
 
 - (void)performAuthentication:(id)sender
 {
+	/* Check the message state for this user. */
+	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:[self cachedUsername]
+																		   accountName:[self cachedAccountName]
+																			  protocol:[self cachedProtocol]];
+
+	if (messageState == OTRKitMessageStateFinished ||
+		messageState == OTRKitMessageStatePlaintext)
+	{
+		[self presentPrivateConversationIsNotActiveAlert];
+
+		return; // Cancel operation...
+	}
+
 	/* Start a negoation depending on which method was selected. */
 	if ([self authenticationMethod] == OTRKitSMPEventNone)
 	{
@@ -772,8 +804,6 @@
 
 - (void)showFingerprintConfirmationForHashAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	[self alertSheetDidEnd:alert returnCode:returnCode contextInfo:contextInfo];
-
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (returnCode == NSAlertFirstButtonReturn) {
 			[self authenticateUser];
