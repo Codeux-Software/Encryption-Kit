@@ -6,26 +6,29 @@ export LIBRARY_GPG_ERROR_VERSION="1.18"
 export LIBRARY_GCRYPT_VERSION="1.6.3"
 export LIBRARY_OTR_VERSION="4.1.0"
 
-if [ "$1" == "build-openssl" ]; then
-	export LIBRARY_OPENSSL_VERSION="1.0.2a"
-
-	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr openssl"
-else
-	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
-fi
+export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
 
 export ROOT_DIRECTORY="/private/tmp/com.codeux.frameworks.encryptionKit/"
-
-if [ -d "${ROOT_DIRECTORY}" ]; then
-	echo "Built contents directory already exists. Exiting..."
-
-	exit;
-fi 
 
 export SHARED_RESULT_ROOT_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/"
 export SHARED_RESULT_BINARY_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/bin"
 export SHARED_RESULT_LIBRARY_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/lib"
 export SHARED_RESULT_INCLUDE_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/include"
+
+LIBRARIES_THAT_DONT_EXIST=()
+
+for LIBRARY_TO_BUILD in ${LIBRARIES_TO_BUILD[@]}
+do
+	if [ ! -f "${SHARED_RESULT_LIBRARY_LOCATION}/${LIBRARY_TO_BUILD}.a" ]; then
+		LIBRARIES_THAT_DONT_EXIST+=("${LIBRARY_TO_BUILD}")
+	fi
+done
+
+if [ ${#LIBRARIES_THAT_DONT_EXIST[@]} == 0 ]; then
+	echo "There is nothing to build..."
+	
+	exit 1;
+fi 
 
 export WORKING_DIRECTORY="${ROOT_DIRECTORY}Library-Build-Source/"
 
@@ -48,7 +51,7 @@ function deleteOldAndCreateDirectory {
 deleteOldAndCreateDirectory "${WORKING_DIRECTORY}"
 deleteOldAndCreateDirectory "${SHARED_RESULT_ROOT_LOCATION}"
 
-for LIBRARY_TO_BUILD in ${LIBRARIES_TO_BUILD[@]}
+for LIBRARY_TO_BUILD in ${LIBRARIES_THAT_DONT_EXIST[@]}
 do
 	export LIBRARY_WORKING_DIRECTORY_LOCATION="${WORKING_DIRECTORY}${LIBRARY_TO_BUILD}/"
 

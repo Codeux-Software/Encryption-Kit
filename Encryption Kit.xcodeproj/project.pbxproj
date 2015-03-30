@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C0FC2FE1AC98F1A00881CE5 /* Build configuration list for PBXAggregateTarget "Build OSS Libraries" */;
+			buildPhases = (
+				4C0FC3001AC98F3000881CE5 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Build OSS Libraries";
+			productName = "Build OSS Libraries";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		4C006C5B1AB84DA2004BE3C6 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C571AB84DA2004BE3C6 /* libgcrypt.a */; };
 		4C006C5C1AB84DA2004BE3C6 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C581AB84DA2004BE3C6 /* libgpg-error.a */; };
@@ -42,6 +56,16 @@
 		4CF40F741AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F721AC1A65F00A26BE0 /* OTRKitAuthenticationDialog.strings */; };
 		4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4C0FC3011AC9908B00881CE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C0FC2FD1AC98F1A00881CE5;
+			remoteInfo = "Build OSS Libraries";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<absolute>"; };
@@ -313,7 +337,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EncryptionKit" */;
 			buildPhases = (
-				4C18BC4B1AB1AC7300D4E25C /* ShellScript */,
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
@@ -322,6 +345,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4C0FC3021AC9908B00881CE5 /* PBXTargetDependency */,
 			);
 			name = EncryptionKit;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -336,6 +360,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0620;
+				TargetAttributes = {
+					4C0FC2FD1AC98F1A00881CE5 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+				};
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Encryption Kit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -353,6 +382,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* EncryptionKit */,
+				4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */,
 			);
 		};
 /* End PBXProject section */
@@ -377,7 +407,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C18BC4B1AB1AC7300D4E25C /* ShellScript */ = {
+		4C0FC3001AC98F3000881CE5 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -409,6 +439,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4C0FC3021AC9908B00881CE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */;
+			targetProxy = 4C0FC3011AC9908B00881CE5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -431,6 +469,13 @@
 			};
 			name = Release;
 		};
+		4C0FC2FF1AC98F1A00881CE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -449,6 +494,13 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4C0FC2FE1AC98F1A00881CE5 /* Build configuration list for PBXAggregateTarget "Build OSS Libraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C0FC2FF1AC98F1A00881CE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
