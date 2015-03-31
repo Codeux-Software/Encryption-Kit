@@ -27,7 +27,7 @@ done
 if [ ${#LIBRARIES_THAT_DONT_EXIST[@]} == 0 ]; then
 	echo "There is nothing to build..."
 	
-	exit 1;
+	exit 0;
 fi 
 
 export WORKING_DIRECTORY="${ROOT_DIRECTORY}Library-Build-Source/"
