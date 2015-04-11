@@ -1289,6 +1289,52 @@ static OtrlMessageAppOps ui_ops = {
 	return messageState;
 }
 
+- (OTRKitOfferState)offerStateForUsername:(NSString *)username
+							  accountName:(NSString *)accountName
+								 protocol:(NSString *)protocol
+{
+	CheckParamaterForNilValueR(username, OTRKitOfferStateNone)
+	CheckParamaterForNilValueR(accountName, OTRKitOfferStateNone)
+	CheckParamaterForNilValueR(protocol, OTRKitOfferStateNone)
+
+	__block OTRKitOfferState offerState = OTRKitOfferStateNone;
+
+	[self performSyncOperationOnMainQueue:^{
+		ConnContext *context = [self contextForUsername:username accountName:accountName protocol:protocol];
+
+		if (context) {
+			switch (context->otr_offer) {
+				case OFFER_NOT:
+				{
+					offerState = OTRKitOfferStateNone;
+
+					break;
+				}
+				case OFFER_ACCEPTED:
+				{
+					offerState = OTRKitOfferStateAccepted;
+
+					break;
+				}
+				case OFFER_REJECTED:
+				{
+					offerState = OTRKitOfferStateRejected;
+
+					break;
+				}
+				case OFFER_SENT:
+				{
+					offerState = OTRKitOfferStateSent;
+
+					break;
+				}
+			}
+		}
+	}];
+	
+	return offerState;
+}
+
 - (OTRKitPolicy)otrPolicy
 {
 	if (_otrPolicy) {

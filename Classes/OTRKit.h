@@ -53,6 +53,13 @@ typedef NS_ENUM(NSUInteger, OTRKitPolicy) {
 	OTRKitPolicyDefault
 };
 
+typedef NS_ENUM(NSUInteger, OTRKitOfferState) {
+	OTRKitOfferStateNone,
+	OTRKitOfferStateSent,
+	OTRKitOfferStateRejected,
+	OTRKitOfferStateAccepted
+};
+
 typedef NS_ENUM(NSUInteger, OTRKitSMPEvent) {
 	OTRKitSMPEventNone,
 	OTRKitSMPEventAskForSecret,
@@ -457,6 +464,17 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 - (OTRKitMessageState)messageStateForUsername:(NSString *)username
 								  accountName:(NSString *)accountName
 									 protocol:(NSString *)protocol;
+
+/**
+ *  Current offer state for conversation.
+ *
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ */
+- (OTRKitOfferState)offerStateForUsername:(NSString *)username
+							  accountName:(NSString *)accountName
+								 protocol:(NSString *)protocol;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Socialist's Millionaire Protocol
