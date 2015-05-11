@@ -32,7 +32,7 @@
 
 #import "OTRKitConcreteObject.h"
 
-#import "proto.h"
+#import "libotr/proto.h"
 
 @interface OTRKitConcreteObject ()
 @property (nonatomic, readwrite, copy) NSString *username;

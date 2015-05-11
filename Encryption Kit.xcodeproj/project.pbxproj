@@ -359,7 +359,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					4C0FC2FD1AC98F1A00881CE5 = {
 						CreatedOnToolsVersion = 6.2;
@@ -452,8 +452,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				HEADER_SEARCH_PATHS = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/include/**";
-				LIBRARY_SEARCH_PATHS = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib";
 			};
 			name = Release;
 		};
@@ -501,6 +499,7 @@
 				4C0FC2FF1AC98F1A00881CE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

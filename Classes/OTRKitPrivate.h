@@ -39,9 +39,9 @@
 
 #import "OTRTLV.h"
 
-#import "proto.h"
-#import "message.h"
-#import "privkey.h"
+#import "libotr/proto.h"
+#import "libotr/message.h"
+#import "libotr/privkey.h"
 
 @interface OTRKit()
 @property (nonatomic, strong) dispatch_queue_t internalQueue;
