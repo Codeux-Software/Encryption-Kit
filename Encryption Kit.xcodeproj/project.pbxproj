@@ -359,7 +359,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					4C0FC2FD1AC98F1A00881CE5 = {
 						CreatedOnToolsVersion = 6.2;
@@ -452,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.encryptionKit;
 			};
 			name = Release;
 		};
@@ -470,6 +471,7 @@
 		4C0FC2FF1AC98F1A00881CE5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.encryptionKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
