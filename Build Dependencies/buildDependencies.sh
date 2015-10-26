@@ -1,10 +1,15 @@
 #!/bin/bash
 
+export LIBRARY_LIBRESSL_VERSION="2.2.4";
 export LIBRARY_GPG_ERROR_VERSION="1.20"
 export LIBRARY_GCRYPT_VERSION="1.6.3"
 export LIBRARY_OTR_VERSION="4.1.0"
 
-export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
+if [ $1 == "build-libressl" ]; then
+	export LIBRARIES_TO_BUILD="libressl"
+else 
+	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
+fi
 
 export ROOT_DIRECTORY="/private/tmp/com.codeux.frameworks.encryptionKit/"
 
