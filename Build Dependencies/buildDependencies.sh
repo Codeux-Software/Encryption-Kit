@@ -1,9 +1,9 @@
 #!/bin/bash
 
 export LIBRARY_LIBRESSL_VERSION="2.2.5";
-export LIBRARY_GPG_ERROR_VERSION="1.20"
-export LIBRARY_GCRYPT_VERSION="1.6.3"
-export LIBRARY_OTR_VERSION="4.1.0"
+export LIBRARY_GPG_ERROR_VERSION="1.21"
+export LIBRARY_GCRYPT_VERSION="1.6.5"
+export LIBRARY_OTR_VERSION="4.1.1"
 
 if [ $1 == "build-libressl" ]; then
 	export LIBRARIES_TO_BUILD="libressl"
