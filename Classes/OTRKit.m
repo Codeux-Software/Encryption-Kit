@@ -1697,6 +1697,14 @@ static OtrlMessageAppOps ui_ops = {
 	dispatch_queue_t delegateQueue = self.delegateQueue;
 
 	if (delegateQueue == NULL) {
+		/* The main queue is defaulted to if the delegate does not specify one.
+		 Check if this is the main thread (or queue) and may just invoke block. */
+		if ([NSThread isMainThread]) {
+			block();
+
+			return;
+		}
+
 		delegateQueue = dispatch_get_main_queue();
 	}
 
