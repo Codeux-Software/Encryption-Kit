@@ -46,119 +46,99 @@
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		 sharedSelf = [OTRKitAuthenticationDialogWindowManager new];
-
-		[sharedSelf setOpenDialogs:[NSMutableDictionary dictionary]];
+		sharedSelf = [OTRKitAuthenticationDialogWindowManager new];
 	});
 
 	return sharedSelf;
 }
 
-- (NSArray *)allDialogs
+- (instancetype)init
 {
-	if ([NSThread isMainThread] == NO) {
-		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
+	if ((self = [super init])) {
+		self.openDialogs = [NSMutableDictionary dictionary];
+
+		return self;
 	}
 
-	NSMutableArray *allObjects = [NSMutableArray array];
-
-	[[self openDialogs] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		[allObjects addObject:obj];
-	}];
-
-	return allObjects;
+	return nil;
 }
 
 - (void)addDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	CheckParamaterForNilValue(dialog)
-
-	if ([NSThread isMainThread] == NO) {
-		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
-	}
+	AssertParamaterNil(dialog)
 
 	NSString *dictKey = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
 												  accountName:[dialog cachedAccountName]
 													 protocol:[dialog cachedProtocol]
 													  isStale:NO];
 
-	if ([self openDialogs][dictKey] == nil) {
-		[self openDialogs][dictKey] = dialog;
+	@synchronized (self.openDialogs) {
+		self.openDialogs[dictKey] = dialog;
 	}
 }
 
 - (void)removeDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	CheckParamaterForNilValue(dialog)
+	AssertParamaterNil(dialog)
 
-	if ([NSThread isMainThread] == NO) {
-		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
-	}
+	@synchronized (self.openDialogs) {
+		NSSet *dictKeys = [self.openDialogs keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
+			if (object == dialog) {
+				*stop = YES;
 
-	__block NSString *dictKey = nil;
+				return YES;
+			} else {
+				return NO;
+			}
+		}];
 
-	[[self openDialogs] enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (obj == dialog) {
-			dictKey = key;
+		id dictKey = [dictKeys anyObject];
+
+		if (dictKey) {
+			[self.openDialogs removeObjectForKey:dictKey];
 		}
-	}];
-
-	if (dictKey) {
-		[[self openDialogs] removeObjectForKey:dictKey];
 	}
 }
 
 - (void)markDialogAsStale:(OTRKitAuthenticationDialog *)dialog
 {
-	CheckParamaterForNilValue(dialog)
+	AssertParamaterNil(dialog)
 
-	if ([NSThread isMainThread] == NO) {
-		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
-	}
+	@synchronized (self.openDialogs) {
+		NSString *dictKeyNotStale = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
+															  accountName:[dialog cachedAccountName]
+																 protocol:[dialog cachedProtocol]
+																  isStale:NO];
 
-	NSString *dictKeyNotStale = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
-														  accountName:[dialog cachedAccountName]
-															 protocol:[dialog cachedProtocol]
-																	  isStale:NO];
-
-	id _dialog = [self openDialogs][dictKeyNotStale];
-
-	if (_dialog) {
-		[[self openDialogs] removeObjectForKey:dictKeyNotStale];
+		[self.openDialogs removeObjectForKey:dictKeyNotStale];
 
 		NSString *dictKeyIsStale = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
 															 accountName:[dialog cachedAccountName]
 																protocol:[dialog cachedProtocol]
 																 isStale:YES];
 
-		[self openDialogs][dictKeyIsStale] = _dialog;
+		self.openDialogs[dictKeyIsStale] = dialog;
 	}
 }
 
 - (OTRKitAuthenticationDialog *)dialogForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	CheckParamaterForNilValueR(username, nil)
-	CheckParamaterForNilValueR(accountName, nil)
-	CheckParamaterForNilValueR(protocol, nil)
-
-	if ([NSThread isMainThread] == NO) {
-		NSAssert(NO, @"Do not invoke this method from anywhere except the main thread.");
-	}
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
 
 	NSString *dictKey = [self storageDictionaryKeyForUsername:username
 												  accountName:accountName
 													 protocol:protocol
 													  isStale:NO];
 
-	return [self openDialogs][dictKey];
+	@synchronized (self.openDialogs) {
+		return self.openDialogs[dictKey];
+	}
 }
 
 - (NSString *)storageDictionaryKeyForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol isStale:(BOOL)isStale
 {
-	CheckParamaterForNilValueR(username, nil)
-	CheckParamaterForNilValueR(accountName, nil)
-	CheckParamaterForNilValueR(protocol, nil)
-
 	/* Stale dialogs are those that are still kept a reference to, but will not be returned
 	 if looked up for. Stale dialogs are stored with a random key. We are able to remove them
 	 by enumerating all open dialogs when it is time. */
@@ -167,7 +147,7 @@
 
 		return [NSString stringWithFormat:@"%@ <-> %@ <-> %@ <-> %@", username, accountName, protocol, randomID];
 	} else {
-		return [NSString stringWithFormat:@"%@ <-> %@ <-> %@", username, accountName, protocol, isStale];
+		return [NSString stringWithFormat:@"%@ <-> %@ <-> %@ <-> %d", username, accountName, protocol, isStale];
 	}
 }
 

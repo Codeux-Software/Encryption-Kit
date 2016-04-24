@@ -32,15 +32,123 @@
 
 #import "OTRKitFrameworkHelpers.h"
 
+#include <objc/message.h>
+
+@interface OTRKitAlertDialogContextObject : NSObject
+@property (nonatomic, strong) id contextInfo;
+@property (nonatomic, copy) OTRKitAlertDialogCompletionBlock completionBlock;
+@end
+
 @implementation OTRKitFrameworkHelpers
+
++ (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable, ...
+{
+	va_list arguments;
+	va_start(arguments, inTable);
+
+	NSString *formattedString = [OTRKitFrameworkHelpers localizedString:original inTable:inTable arguments:arguments];
+
+	va_end(arguments);
+
+	return formattedString;
+}
 
 + (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable arguments:(va_list)arguments
 {
-	NSString *localeString = [[NSBundle bundleForClass:[self class]] localizedStringForKey:original value:original table:inTable];
+	NSBundle *selfBundle = CurrentBundle();
+
+	NSString *localeString = [selfBundle localizedStringForKey:original value:original table:inTable];
 
 	NSString *formattedString = [[NSString alloc] initWithFormat:localeString arguments:arguments];
 
 	return formattedString;
 }
 
++ (NSWindow *)_deepestSheetOfWindow:(NSWindow *)window
+{
+	/* Recursively scan all attached sheets until we find a window without one. */
+	NSWindow *attachedSheet = [window attachedSheet];
+
+	if (attachedSheet) {
+		return [OTRKitFrameworkHelpers _deepestSheetOfWindow:attachedSheet];
+	} else {
+		return window;
+	}
+}
+
++ (void)presentAlertInWindow:(NSWindow *)hostWindow messageText:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray<NSString *> *)buttons contextInfo:(id)contextInfo completionBlock:(OTRKitAlertDialogCompletionBlock)completionBlock
+{
+	/* Construct alert */
+	NSAlert *errorAlert = [NSAlert new];
+
+	[errorAlert setAlertStyle:NSInformationalAlertStyle];
+
+	[errorAlert setMessageText:messageText];
+	[errorAlert setInformativeText:informativeText];
+
+	for (NSString *button in buttons) {
+		[errorAlert addButtonWithTitle:button];
+	}
+
+	/* Attach the sheet to the highest window */
+	OTRKitAlertDialogContextObject *contextObject = nil;
+
+	if (contextInfo || completionBlock) {
+		contextObject = [OTRKitAlertDialogContextObject new];
+
+		[contextObject setContextInfo:contextInfo];
+
+		[contextObject setCompletionBlock:completionBlock];
+	}
+
+	if (hostWindow) {
+		hostWindow = [OTRKitFrameworkHelpers _deepestSheetOfWindow:hostWindow];
+	}
+
+	if (hostWindow) {
+		void *contextObjectRef = NULL;
+
+		if (contextObject) {
+			contextObjectRef = (void *)CFBridgingRetain(contextObject);
+		}
+
+		[errorAlert beginSheetModalForWindow:hostWindow
+							   modalDelegate:[OTRKitFrameworkHelpers class]
+							  didEndSelector:@selector(_alertDialogSheetDidEnd:returnCode:contextInfo:)
+								 contextInfo:contextObjectRef];
+	} else {
+		NSModalResponse returnCode = [errorAlert runModal];
+
+		if (contextObject) {
+			(void)objc_msgSend([OTRKitFrameworkHelpers class],
+							   @selector(_alertDialogDidEnd:contextObject:),
+							   returnCode,
+							   contextObject);
+		}
+	}
+}
+
++ (void)_alertDialogSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	if (contextInfo) {
+		OTRKitAlertDialogContextObject *contextObject = (OTRKitAlertDialogContextObject *)CFBridgingRelease(contextInfo);
+
+		[OTRKitFrameworkHelpers _alertDialogDidEnd:returnCode contextObject:contextObject];
+	}
+}
+
++ (void)_alertDialogDidEnd:(NSInteger)returnCode contextObject:(OTRKitAlertDialogContextObject *)contextObject
+{
+	id contextInfo = [contextObject contextInfo];
+
+	OTRKitAlertDialogCompletionBlock completionBlock = [contextObject completionBlock];
+
+	if (completionBlock) {
+		completionBlock(returnCode, contextInfo);
+	}
+}
+
+@end
+
+@implementation OTRKitAlertDialogContextObject
 @end

@@ -18,6 +18,7 @@
 
     if ((self = [super init])) {
 		[self setType:type];
+
 		[self setData:data];
     }
 

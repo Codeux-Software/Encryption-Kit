@@ -43,10 +43,13 @@
 #import "libotr/message.h"
 #import "libotr/privkey.h"
 
-@interface OTRKit()
+@interface OTRKit () {
+	void *IsOnInternalQueueKey;
+}
+
 @property (nonatomic, strong) dispatch_queue_t internalQueue;
 @property (nonatomic, strong) NSTimer *pollTimer;
 @property (nonatomic) OtrlUserState userState;
-@property (nonatomic, strong) NSMutableDictionary *protocolMaxSize;
-@property (nonatomic, readwrite, copy) NSString *dataPath;
+@property (nonatomic, strong) NSDictionary *protocolMaxSize;
+@property (nonatomic, copy, readwrite) NSString *dataPath;
 @end

@@ -32,6 +32,8 @@
 
 #import "OTRKit.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitAuthenticationDialog : NSObject
 
 /**
@@ -68,7 +70,6 @@
  *  Show a dialog so the user can confirm when a user's fingerprint changes.
  *
  *  @param hostWindow  A window the confirmation sheet can be attached to.
- *                     Uses [NSApp keyWindow] if hostWindow is nil.
  *  @param username    The account name of the remote user
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
@@ -87,3 +88,5 @@
 					 accountName:(NSString *)accountName
 						protocol:(NSString *)protocol;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -3,21 +3,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define LogToConsole(fmt, ...)							NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#define LogToConsoleCurrentStackTrace					NSLog(@"Current Stack: %@", [NSThread callStackSymbols]);
+#define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define LogToConsoleCurrentStackTrace			NSLog(@"Current Stack: %@", [NSThread callStackSymbols]);
 
-#define CheckParamaterForNilValueBodyTop(param)		if ((param) == nil || (param) == NULL) {																\
-														LogToConsole(@"Cannot continue operation. nil value provided for paramater %s", #param)				\
-														LogToConsoleCurrentStackTrace																		\
+#define AssertParamaterNil(param)				NSParameterAssert((param) != nil);
+#define AssertParamaterNull(param)				NSParameterAssert((param) != NULL);
+#define AssertParamaterLength(param)			NSParameterAssert((param) != nil && [(param) length] > 0);
+#define AssertParamaterCount(param)				NSParameterAssert((param) != nil && [(param) count] > 0);
 
-#define CheckParamaterForNilValueBodyBottom			}
-
-#define CheckParamaterForNilValue(param)			CheckParamaterForNilValueBodyTop((param))		\
-														return;										\
-													CheckParamaterForNilValueBodyBottom
-
-#define CheckParamaterForNilValueR(param, rr)		CheckParamaterForNilValueBodyTop((param))		\
-														return (rr);								\
-													CheckParamaterForNilValueBodyBottom
+#define CurrentBundle()							[NSBundle bundleForClass:[self class]]
 
 #endif

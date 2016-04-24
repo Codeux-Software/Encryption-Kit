@@ -38,13 +38,16 @@
 
 "00012" = "OK";
 
-"00010[1]" = "Cannot process authentication request";
-"00010[2]" = "“%@“ tried to send you an authentication request, but it was ignored because you already have one open related to this user.";
+"00010[1]" = "An authentication request from %@ was automatically declined. An authentication window related to this user is already open.";
+"00010[2]" = "";
 
-"00011[1]" = "Cannot process authentication request";
-"00011[2]" = "“%@“ cancelled the authentication request.";
+"00011[1]" = "%@ cancelled the authentication request";
+"00011[2]" = "";
 
-"00012[1]" = "Unrecognized chat partner";
-"00012[2]" = "The identity of “%@“ has not been confirmed.\n\nDo you want to authenticate this user?";
+"00012[1]" = "%@ has started a private conversation with you for the first time";
+"00012[2]" = "Would you like to authenticate them?";
 "00012[3]" = "Yes";
 "00012[4]" = "No";
+
+"00013[1]" = "Cannot send an authentication request to %@ because a private conversation is not active";
+"00013[2]" = "";

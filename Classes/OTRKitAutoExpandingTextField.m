@@ -1,6 +1,6 @@
 /* *********************************************************************
 
-        Copyright (c) 2010 - 2015 Codeux Software, LLC
+        Copyright (c) 2010 - 2016 Codeux Software, LLC
      Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,30 @@
 
  *********************************************************************** */
 
-#import "OTRKitConcreteObjectPrivate.h"
+#import "OTRKitAutoExpandingTextField.h"
 
-@implementation OTRKitConcreteObject
+@implementation OTRKitAutoExpandingTextField
 
-- (BOOL)isEqual:(id)object
+- (NSSize)intrinsicContentSize
 {
-	if (object == nil) {
-		return NO;
+	if ([[self cell] wraps] == NO) {
+		return [super intrinsicContentSize];
 	}
 
-	if ([object isKindOfClass:[OTRKitConcreteObject class]] == NO) {
-		return NO;
-	}
+	NSRect originalFrame = [self frame];
 
-	if (self == object) {
-		return YES;
-	}
+	originalFrame.size.height = CGFLOAT_MAX;
 
-	OTRKitConcreteObject *objectTypeCast = (OTRKitConcreteObject *)object;
+	NSSize newFrameSize = [[self cell] cellSizeForBounds:originalFrame];
 
-	return ([self.username isEqualToString:[objectTypeCast username]] &&
-			[self.accountName isEqualToString:[objectTypeCast accountName]]	&&
-			[self.protocol isEqualToString:[objectTypeCast protocol]] &&
-			[self.fingerprintString	isEqualToString:[objectTypeCast fingerprintString]]	&&
-			self.fingerprintIsTrusted == [objectTypeCast fingerprintIsTrusted]);
+	return newFrameSize;
+}
+
+- (void)textDidChange:(NSNotification *)notification
+{
+	[super textDidChange:notification];
+
+	[self invalidateIntrinsicContentSize];
 }
 
 @end

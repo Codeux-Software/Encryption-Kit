@@ -1,6 +1,6 @@
 /* *********************************************************************
 
-        Copyright (c) 2010 - 2015 Codeux Software, LLC
+        Copyright (c) 2010 - 2016 Codeux Software, LLC
      Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,31 +30,5 @@
 
  *********************************************************************** */
 
-#import "OTRKitConcreteObjectPrivate.h"
-
-@implementation OTRKitConcreteObject
-
-- (BOOL)isEqual:(id)object
-{
-	if (object == nil) {
-		return NO;
-	}
-
-	if ([object isKindOfClass:[OTRKitConcreteObject class]] == NO) {
-		return NO;
-	}
-
-	if (self == object) {
-		return YES;
-	}
-
-	OTRKitConcreteObject *objectTypeCast = (OTRKitConcreteObject *)object;
-
-	return ([self.username isEqualToString:[objectTypeCast username]] &&
-			[self.accountName isEqualToString:[objectTypeCast accountName]]	&&
-			[self.protocol isEqualToString:[objectTypeCast protocol]] &&
-			[self.fingerprintString	isEqualToString:[objectTypeCast fingerprintString]]	&&
-			self.fingerprintIsTrusted == [objectTypeCast fingerprintIsTrusted]);
-}
-
+@interface OTRKitAutoExpandingTextField : NSTextField
 @end

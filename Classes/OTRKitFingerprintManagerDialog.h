@@ -30,10 +30,12 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol OTRKitFingerprintManagerDialogDelegate;
 
-@interface OTRKitFingerprintManagerDialog : NSObject <NSTableViewDataSource, NSTableViewDelegate>
-@property (nonatomic, weak) id <OTRKitFingerprintManagerDialogDelegate> delegate;
+@interface OTRKitFingerprintManagerDialog : NSObject
+@property (nonatomic, weak, nullable) id <OTRKitFingerprintManagerDialogDelegate> delegate;
 
 /**
  *  Bring the dialog forward
@@ -41,7 +43,7 @@
  *  Given hostWindow, the dialog attaches as a sheet instead of separate window.
  */
 - (void)open;
-- (void)open:(NSWindow *)hostWindow;
+- (void)open:(nullable NSWindow *)hostWindow;
 
 /**
  *  Close the dialog
@@ -56,3 +58,5 @@
 
 - (void)otrKitFingerprintManagerDialogDidClose:(OTRKitFingerprintManagerDialog *)otrkitFingerprintManager;
 @end
+
+NS_ASSUME_NONNULL_END

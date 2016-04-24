@@ -40,9 +40,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[[NSBundle bundleForClass:[self class]] loadNibNamed:@"OTRKitFingerprintManagerDialog" owner:self topLevelObjects:nil];
-
-		[self prepareInitialState];
+		[self _prepareInitialState];
 
 		return self;
 	}
@@ -52,19 +50,21 @@
 
 - (void)dealloc
 {
-	[self setDelegate:nil];
+	self.delegate = nil;
 }
 
-- (void)prepareInitialState
+- (void)_prepareInitialState
 {
-	[self populateFingerprintCache];
+	[CurrentBundle() loadNibNamed:@"OTRKitFingerprintManagerDialog" owner:self topLevelObjects:nil];
 
-	[self updateButtonsEnabledState];
+	[self _populateFingerprintCache];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:OTRKitPrepareForApplicationTerminationNotification object:nil];
+	[self _updateButtonsEnabledState];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitListOfFingerprintsDidChangeNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noteFingerprintsChanged:) name:OTRKitMessageStateDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_noteFingerprintsChanged:) name:OTRKitListOfFingerprintsDidChangeNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_noteFingerprintsChanged:) name:OTRKitMessageStateDidChangeNotification object:nil];
 }
 
 - (void)open
@@ -74,62 +74,72 @@
 
 - (void)open:(NSWindow *)hostWindow
 {
-	if ([self isStale]) {
-		NSAssert(NO, @"Cannot opent the dialog because it is marked as stale.");
+	if (self.isStale) {
+		return;
 	}
 
 	if (hostWindow) {
-		if ([[self fingerprintManagerWindow] isSheet] == NO) {
-			[NSApp beginSheet:[self fingerprintManagerWindow]
-			   modalForWindow:hostWindow
-				modalDelegate:self
-			   didEndSelector:@selector(didEndSheet:returnCode:contextInfo:)
-				  contextInfo:NULL];
+		/* Do not open as sheet if already open as a sheet */
+		if ([self.fingerprintManagerWindow isSheet]) {
+			return;
 		}
-	} else {
-		[[self fingerprintManagerWindow] makeKeyAndOrderFront:nil];
+
+		[NSApp beginSheet:self.fingerprintManagerWindow
+		   modalForWindow:hostWindow
+			modalDelegate:self
+		   didEndSelector:@selector(_fingerprintManagerWindowDidEndSheet:returnCode:contextInfo:)
+			  contextInfo:NULL];
+
+		return;
 	}
+
+	/* Bring window forward */
+	[self.fingerprintManagerWindow makeKeyAndOrderFront:nil];
 }
 
-- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)_fingerprintManagerWindowDidEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	[sheet close];
 
-	[self closeStepTwo];
+	[self _closeStepTwo];
 }
 
 - (void)close
 {
-	if ([self isStale] == NO) {
-		if ([[self fingerprintManagerWindow] isSheet]) {
-			[NSApp endSheet:[self fingerprintManagerWindow]];
-		} else {
-			if ([[self fingerprintManagerWindow] isVisible]) {
-				[[self fingerprintManagerWindow] close];
+	if (self.isStale) {
+		return;
+	}
 
-				[self closeStepTwo];
-			}
-		}
+	if ([self.fingerprintManagerWindow isSheet]) {
+		[NSApp endSheet:self.fingerprintManagerWindow];
+
+		return;
+	}
+
+	if ([self.fingerprintManagerWindow isVisible]) {
+		[self.fingerprintManagerWindow close];
+
+		[self _closeStepTwo];
 	}
 }
 
-- (void)closeStepTwo
+- (void)_closeStepTwo
 {
-	[self setIsStale:YES];
+	self.isStale = YES;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	if ( [self delegate]) {
-		[[self delegate] otrKitFingerprintManagerDialogDidClose:self];
+	if ( self.delegate) {
+		[self.delegate otrKitFingerprintManagerDialogDidClose:self];
 	}
 }
 
-- (IBAction)closeDialog:(id)sender
+- (IBAction)_closeDialog:(id)sender
 {
 	[self close];
 }
 
-- (void)applicationWillTerminateNotification:(NSNotification *)notification
+- (void)_applicationWillTerminateNotification:(NSNotification *)notification
 {
 	[self close];
 }
@@ -137,56 +147,55 @@
 #pragma mark -
 #pragma mark Table View
 
-- (void)noteFingerprintsChanged:(NSNotification *)notification
+- (void)_noteFingerprintsChanged:(NSNotification *)notification
 {
-	[self populateFingerprintCache];
+	[self _populateFingerprintCache];
 
-	[self reloadTable];
+	[self _reloadTable];
 }
 
-- (void)populateFingerprintCache
+- (void)_populateFingerprintCache
 {
 	NSArray *fingerprints = [[OTRKit sharedInstance] requestAllFingerprints];
 
-	if (fingerprints == nil) {
-		[self setCachedListOfFingerprints:@[]];
-	} else {
-		[self setCachedListOfFingerprints:fingerprints];
-	}
+	self.cachedListOfFingerprints = fingerprints;
 }
 
-- (void)reloadTable
+- (void)_reloadTable
 {
-	NSInteger currentSelection = [self tableViewSelectedRow];
+	NSInteger currentSelection = [self _tableViewSelectedRow];
 
-	[[self fingerprintListTable] reloadData];
+	[self.fingerprintListTable reloadData];
 
+	/* If there is a selection and its within bounds of the number
+	 of rows, then reselect it so the reload appears seamless */
 	if (currentSelection > (-1)) {
-		if ([[self fingerprintListTable] numberOfRows] > currentSelection) {
-			[[self fingerprintListTable] selectRowIndexes:[NSIndexSet indexSetWithIndex:currentSelection] byExtendingSelection:NO];
+		if ([self.fingerprintListTable numberOfRows] > currentSelection) {
+			NSIndexSet *newSelection = [NSIndexSet indexSetWithIndex:currentSelection];
+
+			[self.fingerprintListTable selectRowIndexes:newSelection byExtendingSelection:NO];
 		} else {
-			[self updateButtonsEnabledState];
+			[self _updateButtonsEnabledState];
 		}
 	}
 }
 
-- (NSInteger)tableViewSelectedRow
+- (NSInteger)_tableViewSelectedRow
 {
-	return [[self fingerprintListTable] selectedRow];
+	return [self.fingerprintListTable selectedRow];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return [[self cachedListOfFingerprints] count];
+	return [self.cachedListOfFingerprints count];
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	/* Make the view in which the data will be populated. */
 	OTRKitFingerprintManagerDialogTableCellView *madeView = (id)[tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
 
 	/* Begin populating individual data sections. */
-	OTRKitConcreteObject *rowEntryData = [[self cachedListOfFingerprints] objectAtIndex:row];
+	OTRKitConcreteObject *rowEntryData = [self.cachedListOfFingerprints objectAtIndex:row];
 
 	/* Populate username value */
 	if ([[tableColumn identifier] isEqual:@"username"]) {
@@ -206,12 +215,12 @@
 	/* Populate status value */
 	else if ([[tableColumn identifier] isEqual:@"status"])
 	{
-		BOOL isInUse = [self isFingerprintActiveForObject:rowEntryData];
+		BOOL isInUse = [self _isFingerprintActiveForObject:rowEntryData];
 
 		if (isInUse) {
-			[[madeView textField] setStringValue:[self localizedString:@"00001[2]"]];
+			[[madeView textField] setStringValue:_LocalizedString(@"00001[2]")];
 		} else {
-			[[madeView textField] setStringValue:[self localizedString:@"00001[1]"]];
+			[[madeView textField] setStringValue:_LocalizedString(@"00001[1]")];
 		}
 	}
 
@@ -240,46 +249,36 @@
 	return madeView;
 }
 
-- (NSString *)localizedString:(NSString *)original, ...
-{
-	va_list args;
-	va_start(args, original);
-
-	NSString *formattedString = [OTRKitFrameworkHelpers localizedString:original inTable:@"OTRKitFingerprintManagerDialog" arguments:args];
-
-	va_end(args);
-
-	return formattedString;
-}
-
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-	[self updateButtonsEnabledState];
+	[self _updateButtonsEnabledState];
 }
 
-- (void)updateButtonsEnabledState
+- (void)_updateButtonsEnabledState
 {
-	if ([self tableViewSelectedRow] == (-1))
-	{
-		[[self buttonFingerprintForget] setEnabled:NO];
+	NSInteger currentSelection = [self _tableViewSelectedRow];
 
-		[[self buttonFingerprintStopConversation] setHidden:YES];
+	if (currentSelection == (-1))
+	{
+		[self.buttonFingerprintForget setEnabled:NO];
+
+		[self.buttonFingerprintEndConversation setHidden:YES];
 	}
 	else
 	{
-		OTRKitConcreteObject *dataObject  = [[self cachedListOfFingerprints] objectAtIndex:[self tableViewSelectedRow]];
+		OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:currentSelection];
 
-		BOOL isFingerprintActive = [self isFingerprintActiveForObject:dataObject];
+		BOOL isFingerprintActive = [self _isFingerprintActiveForObject:dataObject];
 
 		BOOL buttonCondition = (isFingerprintActive == NO);
 
-		[[self buttonFingerprintForget] setEnabled:buttonCondition];
+		[self.buttonFingerprintForget setEnabled:buttonCondition];
 
-		[[self buttonFingerprintStopConversation] setHidden:buttonCondition];
+		[self.buttonFingerprintEndConversation setHidden:buttonCondition];
 	}
 }
 
-- (BOOL)isFingerprintActiveForObject:(OTRKitConcreteObject *)dataObject
+- (BOOL)_isFingerprintActiveForObject:(OTRKitConcreteObject *)dataObject
 {
 	NSString *activeFingerprint = [[OTRKit sharedInstance] activeFingerprintForUsername:[dataObject username]
 																			accountName:[dataObject accountName]
@@ -291,25 +290,25 @@
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)fingerprintStopConversation:(id)sender
+- (IBAction)_fingerprintEndConversation:(id)sender
 {
-	OTRKitConcreteObject *dataObject  = [[self cachedListOfFingerprints] objectAtIndex:[self tableViewSelectedRow]];
+	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
 
 	[[OTRKit sharedInstance] disableEncryptionWithUsername:[dataObject username]
 											   accountName:[dataObject accountName]
 												  protocol:[dataObject protocol]];
 }
 
-- (IBAction)fingerprintForget:(id)sender
+- (IBAction)_fingerprintForget:(id)sender
 {
-	OTRKitConcreteObject *dataObject  = [[self cachedListOfFingerprints] objectAtIndex:[self tableViewSelectedRow]];
+	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
 
 	[[OTRKit sharedInstance] deleteFingerprintWithConcreteObject:dataObject];
 }
 
-- (IBAction)fingerprintModifyTrust:(id)sender
+- (IBAction)_fingerprintModifyTrust:(id)sender
 {
-	OTRKitConcreteObject *dataObject  = [[self cachedListOfFingerprints] objectAtIndex:[sender tag]];
+	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
 
 	BOOL isVerified = ([sender state] == NSOnState);
 

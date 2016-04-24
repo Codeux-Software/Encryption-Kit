@@ -30,6 +30,23 @@
 
  *********************************************************************** */
 
+#define LocalizedString(_table_, _key_, ...)		\
+	[OTRKitFrameworkHelpers localizedString:(_key_) inTable:(_table_), ##__VA_ARGS__]
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^OTRKitAlertDialogCompletionBlock)(NSInteger buttonClicked, id __nullable contextInfo);
+
 @interface OTRKitFrameworkHelpers : NSObject
++ (void)presentAlertInWindow:(nullable NSWindow *)hostWindow
+				 messageText:(NSString *)messageText
+			 informativeText:(NSString *)informativeText
+					 buttons:(NSArray<NSString *> *)buttons
+				 contextInfo:(nullable id)contextInfo
+			 completionBlock:(nullable OTRKitAlertDialogCompletionBlock)completionBlock;
+
++ (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable, ...;
 + (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable arguments:(va_list)arguments;
 @end
+
+NS_ASSUME_NONNULL_END

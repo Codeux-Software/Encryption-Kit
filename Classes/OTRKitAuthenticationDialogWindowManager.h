@@ -30,12 +30,12 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class OTRKitAuthenticationDialog;
 
 @interface OTRKitAuthenticationDialogWindowManager : NSObject
 + (OTRKitAuthenticationDialogWindowManager *)sharedManager;
-
-@property (nonatomic, copy) NSArray *allDialogs;
 
 - (void)addDialog:(OTRKitAuthenticationDialog *)dialog;
 - (void)removeDialog:(OTRKitAuthenticationDialog *)dialog;
@@ -47,3 +47,5 @@
 									  accountName:(NSString *)accountName
 										 protocol:(NSString *)protocol;
 @end
+
+NS_ASSUME_NONNULL_END

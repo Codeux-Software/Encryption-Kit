@@ -32,122 +32,101 @@
 
 #import "OTRKitAuthenticationDialogPrivate.h"
 
-#include <objc/message.h>
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
+@implementation OTRKitAuthenticationDialog
 
 #pragma mark -
-#pragma mark OTRKitAuthenticationDialog Implementation
-
-@implementation OTRKitAuthenticationDialog
+#pragma mark Dialog Factory
 
 + (void)requestAuthenticationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	CheckParamaterForNilValue(username)
-	CheckParamaterForNilValue(accountName)
-	CheckParamaterForNilValue(protocol)
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
 
-	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
-																											 accountName:accountName
-																												protocol:protocol];
+	OTRKitAuthenticationDialog *openDialog =
+	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
+																   accountName:accountName
+																	  protocol:protocol];
 
-	if ( openDialogs) {
-		[openDialogs bringHostWindowForward];
+	if ( openDialog) {
+		[openDialog _bringHostWindowForward];
 	} else {
-		OTRKitAuthenticationDialogOutgoing *outgoingRequest = [OTRKitAuthenticationDialogOutgoing new];
+		openDialog = [OTRKitAuthenticationDialogOutgoing new];
 
-		[outgoingRequest setIsIncomingRequest:NO];
+		[openDialog setCachedUsername:username];
+		[openDialog setCachedAccountName:accountName];
 
-		[outgoingRequest setCachedUsername:username];
-		[outgoingRequest setCachedAccountName:accountName];
+		[openDialog setCachedProtocol:protocol];
 
-		[outgoingRequest setCachedProtocol:protocol];
+		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
 
-		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:outgoingRequest];
-
-		[outgoingRequest authenticateUser];
+		[(OTRKitAuthenticationDialogOutgoing *)openDialog _authenticateUser];
 	}
 }
 
 + (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	CheckParamaterForNilValue(username)
-	CheckParamaterForNilValue(accountName)
-	CheckParamaterForNilValue(protocol)
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
 
-	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
-																											 accountName:accountName
-																												protocol:protocol];
+	OTRKitAuthenticationDialog *openDialog =
+	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
+																   accountName:accountName
+																	  protocol:protocol];
 
 	if (event == OTRKitSMPEventAskForAnswer || event == OTRKitSMPEventAskForSecret) {
-		if (openDialogs) {
-			if ([openDialogs isIncomingRequest] == NO) {
+		if (openDialog) {
+			if ([openDialog isIncomingRequest] == NO) {
 				[[OTRKit sharedInstance] abortSMPForUsername:username
 												 accountName:accountName
 													protocol:protocol];
 			}
 
-			[openDialogs presentDialogAlreadyExistsErrorAlert];
+			[openDialog _presentAuthenticationRequestAlreadyExistsAlert];
 
 			return; // Do not further event...
-		} else {
-			 openDialogs = [OTRKitAuthenticationDialogIncoming new];
-
-			[openDialogs setIsIncomingRequest:YES];
-
-			[openDialogs setCachedUsername:username];
-			[openDialogs setCachedAccountName:accountName];
-
-			[openDialogs setCachedProtocol:protocol];
-
-			[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialogs];
 		}
 	}
 
-	[openDialogs handleEvent:event progress:progress question:question];
+	if (openDialog == nil) {
+		openDialog = [OTRKitAuthenticationDialogIncoming new];
+
+		[openDialog setCachedUsername:username];
+		[openDialog setCachedAccountName:accountName];
+
+		[openDialog setCachedProtocol:protocol];
+
+		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
+	}
+
+	[openDialog _handleEvent:event progress:progress question:question];
 }
 
 + (void)showFingerprintConfirmation:(NSWindow *)hostWindow username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	CheckParamaterForNilValue(username)
-	CheckParamaterForNilValue(accountName)
-	CheckParamaterForNilValue(protocol)
+	AssertParamaterNil(hostWindow)
 
-	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
-																											 accountName:accountName
-																												protocol:protocol];
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
 
-	if (openDialogs) {
-		LogToConsole(@"Tried to open a dialog when one was already open.");
-	} else {
-		OTRKitAuthenticationDialogOutgoing *incomingRequest = [OTRKitAuthenticationDialogOutgoing new];
-
-		[incomingRequest setIsIncomingRequest:NO];
-
-		[incomingRequest setCachedUsername:username];
-		[incomingRequest setCachedAccountName:accountName];
-
-		[incomingRequest setCachedProtocol:protocol];
-
-		[incomingRequest setApplicationHostWindow:hostWindow];
-
-		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:incomingRequest];
-
-		[incomingRequest showFingerprintConfirmationForTheirHash];
-	}
+	[OTRKitAuthenticationDialogOutgoing showFingerprintConfirmation:hostWindow username:username accountName:accountName protocol:protocol];
 }
 
 + (void)cancelRequestForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	CheckParamaterForNilValue(username)
-	CheckParamaterForNilValue(accountName)
-	CheckParamaterForNilValue(protocol)
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
 
-	OTRKitAuthenticationDialog *openDialogs = [[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username accountName:accountName protocol:protocol];
+	OTRKitAuthenticationDialog *openDialog =
+	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
+																   accountName:accountName
+																	  protocol:protocol];
 
-	if ( openDialogs) {
-		[openDialogs cancelRequest];
+	if ( openDialog) {
+		[openDialog _cancelRequest];
 	} else {
 		LogToConsole(@"Tried to cancel a request for a dialog that does not exist.");
 	}
@@ -159,7 +138,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[self prepareInitialState];
+		[self _prepareInitialState];
 
 		return self;
 	}
@@ -167,40 +146,50 @@
 	return nil;
 }
 
-- (void)prepareInitialState
+- (void)_prepareInitialState
 {
 	/* Observe notifications for when the application will terminate so that we can
 	 tear down the dialog gracefully instead of allowing OS X to shove its memory aside. */
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminateNotification:) name:OTRKitPrepareForApplicationTerminationNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationWillTerminateNotification:) name:NSApplicationWillTerminateNotification object:nil];
 }
 
-- (void)applicationWillTerminateNotification:(NSNotification *)notification
+- (void)_applicationWillTerminateNotification:(NSNotification *)notification
 {
 	/* Invoke -cancelRequest so that an abort signal can be sent if it must. */
-	[self cancelRequest];
+	[self _cancelRequest];
 }
 
-- (void)bringHostWindowForward
+- (void)_bringHostWindowForward
 {
-	[[self authenticationHostWindow] makeKeyAndOrderFront:nil];
+	[self.authenticationHostWindow makeKeyAndOrderFront:nil];
 }
 
-- (void)changeContentViewTo:(NSView *)contentView
+- (void)_changeContentViewTo:(NSView *)contentView
 {
 	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = [[self contentView] subviews];
+	NSArray *contentSubviews = [self.contentView subviews];
 
 	if ([contentSubviews count] > 0) {
 		[contentSubviews[0] removeFromSuperview];
 	}
 
 	/* Set constraints and add the new view. */
-	[[self contentViewHeightConstraint] setConstant:NSHeight([contentView frame])];
+	[self.contentView addSubview:contentView];
 
-	[[self contentView] addSubview:contentView];
+	[self.contentView addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[contentView]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(contentView)]];
+
+	[self.contentView addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[contentView]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(contentView)]];
 }
 
-- (void)formatTextField:(NSTextField *)textField withUsername:(NSString *)username
+- (void)_formatTextField:(NSTextField *)textField withUsername:(NSString *)username
 {
 	/* Many text fields contain a formatting character (%@) in the interface. This
 	 takes that text field value and formats it using the given username. Easier 
@@ -212,26 +201,27 @@
 	[textField setStringValue:formattedStringValue];
 }
 
-- (void)updateButtonEnabledState
+- (void)_updateButtonEnabledState
 {
 	/* Update the Ok and Cancel buttons of the host window depending on values. */
 	/* When sent, the values in the text field are not trimmed of whitespaces, but
 	 we do it below to try and check validity as best as possible. */
 	BOOL okButtonEnabled = YES;
 
-	if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer)
+	if (self.authenticationMethod == OTRKitSMPEventAskForAnswer)
 	{
-		NSString *question = [[self questionAndAnswerQuestionTextField] stringValue];
-		NSString *answer = [[self questionAndAnswerAnswerTextField] stringValue];
+		NSString *question = [self.questionAndAnswerQuestionTextField stringValue];
+		NSString *answer = [self.questionAndAnswerAnswerTextField stringValue];
 
 		NSString *trimmedQuestion = [question stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];;
 		NSString *trimmedAnswer = [answer stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-		okButtonEnabled = ([trimmedQuestion length] > 0 && [trimmedAnswer length] > 0);
+		okButtonEnabled = ([trimmedQuestion length] > 0 &&
+						   [trimmedAnswer length] > 0);
 	}
-	else if ([self authenticationMethod] == OTRKitSMPEventAskForSecret)
+	else if (self.authenticationMethod == OTRKitSMPEventAskForSecret)
 	{
-		NSString *secret = [[self sharedSecretAnswerTextField] stringValue];
+		NSString *secret = [self.sharedSecretAnswerTextField stringValue];
 
 		NSString *trimmedSecret = [secret stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
@@ -239,202 +229,150 @@
 	}
 
 	/* Update buttons with their status. */
-	[[self authenticationHostWindowAuthenticateButton] setEnabled:okButtonEnabled];
+	[self.authenticationHostWindowAuthenticateButton setEnabled:okButtonEnabled];
 
-	[[self authenticationHostWindowCancelButton] setEnabled:YES];
+	[self.authenticationHostWindowCancelButton setEnabled:YES];
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-	[self updateButtonEnabledState];
+	[self _updateButtonEnabledState];
 }
 
-- (NSString *)localizedString:(NSString *)original, ...
-{
-	va_list args;
-	va_start(args, original);
+#pragma mark -
+#pragma mark Dialog Actions 
 
-	NSString *formattedString = [OTRKitFrameworkHelpers localizedString:original inTable:@"OTRKitAuthenticationDialog" arguments:args];
-
-	va_end(args);
-
-	return formattedString;
-}
-
-- (NSWindow *)deepestSheetOfWindow:(NSWindow *)window
-{
-	/* Recursively scan all attached sheets until we find a window without one. */
-	NSWindow *attachedSheet = [window attachedSheet];
-
-	if (attachedSheet) {
-		return [self deepestSheetOfWindow:attachedSheet];
-	} else {
-		return window;
-	}
-}
-
-- (void)presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray *)buttons didEndSelector:(SEL)didEndSelector
-{
-	/* Construct alert */
-	NSAlert *errorAlert = [NSAlert new];
-
-	[errorAlert setAlertStyle:NSInformationalAlertStyle];
-
-	[errorAlert setMessageText:messageText];
-	[errorAlert setInformativeText:informativeText];
-
-	if (buttons == nil) {
-		[errorAlert addButtonWithTitle:[self localizedString:@"00012"]]; // "OK" label
-	} else {
-		for (NSString *button in buttons) {
-			[errorAlert addButtonWithTitle:button];
-		}
-	}
-
-	/* Attach the sheet to the highest window */
-	NSWindow *hostWindow = nil;
-
-	if ([[self authenticationHostWindow] isVisible]) {
-		hostWindow = [self deepestSheetOfWindow:[self authenticationHostWindow]];
-	} else if ([self applicationHostWindow]) {
-		hostWindow = [self deepestSheetOfWindow:[self applicationHostWindow]];
-	}
-
-	if (didEndSelector == NULL) {
-		didEndSelector = @selector(alertSheetDidEnd:returnCode:contextInfo:);
-	}
-
-	if (hostWindow) {
-		[errorAlert beginSheetModalForWindow:hostWindow
-							   modalDelegate:self
-							  didEndSelector:didEndSelector
-								 contextInfo:NULL];
-	} else {
-		NSModalResponse returnCode = [errorAlert runModal];
-
-		objc_msgSend(self, didEndSelector, errorAlert, returnCode, NULL);
-	}
-}
-
-- (void)alertSheetDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)_cancelAuthentication:(id)sender
 {
 	;
 }
 
-- (void)presentDialogAlreadyExistsErrorAlert
+- (void)_performAuthentication:(id)sender
+{
+	;
+}
+
+#pragma mark -
+#pragma mark Alert Construction
+
+- (void)_presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray *)buttons completionBlock:(OTRKitAlertDialogCompletionBlock)completionBlock
+{
+	if (buttons == nil || [buttons count] == 0) {
+		buttons = @[_LocalizedString(@"00012")]; // "OK" label
+	}
+
+	[OTRKitFrameworkHelpers presentAlertInWindow:self.authenticationHostWindow
+									 messageText:messageText
+								 informativeText:informativeText
+										 buttons:buttons
+									 contextInfo:nil
+								 completionBlock:completionBlock];
+}
+
+- (void)_presentPrivateConversationIsNotActiveAlert
+{
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
+
+	NSString *messageText = _LocalizedString(@"00013[1]", username);
+
+	NSString *descriptionText = _LocalizedString(@"00013[2]");
+
+	[self _presentAlert:messageText
+		informativeText:descriptionText
+				buttons:nil
+		completionBlock:nil];
+}
+
+- (void)_presentAuthenticationRequestAlreadyExistsAlert
 {
 	/* Do not show alert multiple times */
-	if ([self dialogAlreadyExistsErrorAlertIsVisible]) {
+	if (self.authenticationRequestAlreadyExistsAlertIsVisible == NO) {
+		self.authenticationRequestAlreadyExistsAlertIsVisible = YES;
+	} else {
 		return; // Cancel operation...
 	}
 
-	/* Get the visible portion of the remote user's name. */
-	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
 
-	/* Construct error messages */
-	NSString *messageText = [self localizedString:@"00010[1]"];
+	NSString *messageText = _LocalizedString(@"00010[1]", username);
 
-	NSString *descriptionText = [self localizedString:@"00010[2]", username];
+	NSString *descriptionText = _LocalizedString(@"00010[2]");
 
-	/* Construct and present alert */
-	[self setDialogAlreadyExistsErrorAlertIsVisible:YES];
-
-	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:NULL];
+	[self _presentAlert:messageText
+		informativeText:descriptionText
+				buttons:nil
+		completionBlock:nil];
 }
 
-- (void)presentRemoteUserAbortedRequestDialog
+- (void)_presentRemoteUserAbortedAuthenticationRequestAlert
 {
-	/* Get the visible portion of the remote user's name. */
-	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
 
-	/* Construct error messages */
-	NSString *messageText = [self localizedString:@"00011[1]"];
+	NSString *messageText = _LocalizedString(@"00011[1]", username);
 
-	NSString *descriptionText = [self localizedString:@"00011[2]", username];
+	NSString *descriptionText = _LocalizedString(@"00011[2]");
 
-	/* Mark the dialog as stale */
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] markDialogAsStale:self];
 
-	/* Construct and present alert */
-	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:@selector(presentRemoteUserAbortedRequestDialogAlertDidEnd:returnCode:contextInfo:)];
+	[self _presentAlert:messageText
+		informativeText:descriptionText
+				buttons:nil
+		completionBlock:^(NSInteger buttonClicked, id contextInfo) {
+		 if (buttonClicked == NSAlertFirstButtonReturn) {
+			 [self _teardownDialog];
+		 }
+	 }];
 }
 
-- (void)presentPrivateConversationIsNotActiveAlert
+#pragma mark -
+#pragma mark Dialog Helpers
+
+- (void)_markUserVerified:(BOOL)isVerified
 {
-	/* Get the visible portion of the remote user's name. */
-	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
-
-	/* Construct error messages */
-	NSString *messageText = [self localizedString:@"00013[1]"];
-
-	NSString *descriptionText = [self localizedString:@"00013[2]", username];
-
-	/* Construct and present alert */
-	[self presentAlert:messageText informativeText:descriptionText buttons:nil didEndSelector:NULL];
-}
-
-- (void)presentRemoteUserAbortedRequestDialogAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		if (returnCode == NSAlertFirstButtonReturn) {
-			[self teardownDialog];
-		}
-	});
+	[[OTRKit sharedInstance] setActiveFingerprintVerificationForUsername:self.cachedUsername
+															 accountName:self.cachedAccountName
+																protocol:self.cachedProtocol
+																verified:isVerified];
 }
 
 #pragma mark -
 #pragma mark Teardown Dialog
 
-- (void)maybeAbortOpenNegotations
+- (void)_maybeAbortOpenNegotations
 {
-	/* If a negotation is in progres, abort it. */
-	if ([self lastEvent] == OTRKitSMPEventInProgress ||
-		[self lastEvent] == OTRKitSMPEventAskForAnswer ||
-		[self lastEvent] == OTRKitSMPEventAskForSecret)
+	if (self.lastEvent == OTRKitSMPEventInProgress ||
+		self.lastEvent == OTRKitSMPEventAskForAnswer ||
+		self.lastEvent == OTRKitSMPEventAskForSecret)
 	{
-		[[OTRKit sharedInstance] abortSMPForUsername:[self cachedUsername]
-										 accountName:[self cachedAccountName]
-											protocol:[self cachedProtocol]];
+		[[OTRKit sharedInstance] abortSMPForUsername:self.cachedUsername
+										 accountName:self.cachedAccountName
+											protocol:self.cachedProtocol];
 	}
 }
 
-- (void)markUserVerified:(BOOL)isVerified
+- (void)_cancelRequest
 {
-	/* Inform OTRKit of the change. */
-	[[OTRKit sharedInstance] setActiveFingerprintVerificationForUsername:[self cachedUsername]
-															 accountName:[self cachedAccountName]
-																protocol:[self cachedProtocol]
-																verified:isVerified];
+	[self _maybeAbortOpenNegotations];
+
+	[self _teardownDialog];
 }
 
-- (void)cancelRequest
+- (void)_teardownDialog
 {
-	/* Cancel any open negotations. */
-	[self maybeAbortOpenNegotations];
-
-	/* Tear down the dialog. */
-	[self teardownDialog];
-}
-
-- (void)teardownDialog
-{
-	/* Remove any active notification observers */
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	/* Tear down windows */
-	[self endProgressIndicatorWindow];
+	[self _endProgressIndicatorWindow];
 
-	[self closeHostWindow];
+	[self _closeHostWindow];
 
-	/* Remove any reference to this dialog. */
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] removeDialog:self];
 }
 
-- (void)closeHostWindow
+- (void)_closeHostWindow
 {
 	/* Close the host window if visible. */
-	if ([[self authenticationHostWindow] isVisible]) {
-		[[self authenticationHostWindow] close];
+	if ([self.authenticationHostWindow isVisible]) {
+		[self.authenticationHostWindow close];
 	}
 }
 
@@ -447,8 +385,8 @@
 	if (_lastEvent != lastEvent) {
 		_lastEvent = lastEvent;
 
-		if ([[self authenticationProgressWindow] isVisible]) {
-			[self updateProgressIndicatorButtonsWithEvent:lastEvent];
+		if ([self _progressIndicatorWindowIsVisible]) {
+			[self _updateProgressIndicatorButtonsWithEvent:lastEvent];
 		}
 	}
 }
@@ -460,404 +398,159 @@
 		_authenticationMethod = authenticationMethod;
 
 		if (authenticationMethod == OTRKitSMPEventNone) {
-			[self changeContentViewTo:[self contentViewFingerprintAuthentication]];
+			[self _changeContentViewTo:self.contentViewFingerprintAuthentication];
 		} else if (authenticationMethod == OTRKitSMPEventAskForAnswer) {
-			[self changeContentViewTo:[self contentViewQuestionAndAnswerAuthentication]];
+			[self _changeContentViewTo:self.contentViewQuestionAndAnswerAuthentication];
 		} else if (authenticationMethod == OTRKitSMPEventAskForSecret) {
-			[self changeContentViewTo:[self contentViewSharedSecretAuthentication]];
+			[self _changeContentViewTo:self.contentViewSharedSecretAuthentication];
 		} else {
 			NSAssert(NO, @"Bad authenticationMethod value");
 		}
 	}
 }
 
-- (void)handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
+- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
 {
-	/* Update status information for event. */
-	[self setLastEvent:event];
+	self.lastEvent = event;
 
-	/* Update progress information based on event. */
-	if ([[self authenticationProgressWindow] isVisible]) {
-		[self updateProgressIndicatorPercentage:progress];
+	if ([self _progressIndicatorWindowIsVisible]) {
+		[self _updateProgressIndicatorPercentage:progress];
 	}
 }
 
-- (void)setupProgressIndicatorWindow
+- (BOOL)_progressIndicatorWindowIsVisible
 {
-	/* Get the visible portion of the remote user's name. */
-	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
-
-	/* Format the title of the progress window with the remote user's name. */
-	[self formatTextField:[self authenticationProgressTitleTextField] withUsername:username];
-
-	/* Zero out the current progress indicator. */
-	[[self authenticationProgressProgressIndicator] setDoubleValue:0.0];
-
-	/* Present the sheet. */
-	[NSApp beginSheet:[self authenticationProgressWindow]
-	   modalForWindow:[self authenticationHostWindow]
-		modalDelegate:self
-	   didEndSelector:@selector(didEndAuthenticationProgressWindowSheet:returnCode:contextInfo:)
-		  contextInfo:NULL];
-
-	/* Fake our last event so that -maybeAbortOpenNegotations will work. */
-	[self setLastEvent:OTRKitSMPEventInProgress];
+	return ([self.authenticationProgressWindow isSheet] &&
+			[self.authenticationProgressWindow isVisible]);
 }
 
-- (void)didEndAuthenticationProgressWindowSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)_setupProgressIndicatorWindow
+{
+	NSString *username = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
+
+	[self _formatTextField:self.authenticationProgressTitleTextField withUsername:username];
+
+	[self.authenticationProgressProgressIndicator setDoubleValue:0.0];
+
+	[NSApp beginSheet:self.authenticationProgressWindow
+	   modalForWindow:self.authenticationHostWindow
+		modalDelegate:self
+	   didEndSelector:@selector(_authenticationProgressWindowSheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+
+	self.lastEvent = OTRKitSMPEventInProgress;
+}
+
+- (void)_authenticationProgressWindowSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 	[sheet close];
 }
 
-- (void)updateProgressIndicatorStatusMessage:(NSString *)statusMessage
+- (void)_updateProgressIndicatorStatusMessage:(NSString *)statusMessage
 {
-	/* Set the status message of the current progress window. */
-	[[self authenticationProgressStatusTextField] setStringValue:statusMessage];
+	[self.authenticationProgressStatusTextField setStringValue:statusMessage];
 }
 
-- (void)updateProgressIndicatorPercentage:(double)progress
+- (void)_updateProgressIndicatorPercentage:(double)progress
 {
-	/* Set the progress of the current progress window. */
-	[[self authenticationProgressProgressIndicator] setDoubleValue:progress];
+	[self.authenticationProgressProgressIndicator setDoubleValue:progress];
 }
 
-- (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
+- (void)_updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
 {
 	/* Update progress status based on given event. */
 	BOOL enableOkButton = NO;
 	BOOL enableCancelButton = NO;
 
-	if (event == OTRKitSMPEventCheated || event == OTRKitSMPEventError) {
-		enableOkButton = YES;
+	switch (event) {
+		case OTRKitSMPEventCheated:
+		case OTRKitSMPEventError:
+		{
+			enableOkButton = YES;
 
-		[self updateProgressIndicatorStatusMessage:[self localizedString:@"00005"]];
-	} else if (event == OTRKitSMPEventInProgress) {
-		enableCancelButton = YES;
+			[self _updateProgressIndicatorStatusMessage:_LocalizedString(@"00005")];
 
-		[self updateProgressIndicatorStatusMessage:[self localizedString:@"00001"]];
-	} else if (event == OTRKitSMPEventFailure) {
-		enableOkButton = YES;
+			break;
+		}
+		case OTRKitSMPEventInProgress:
+		{
+			enableCancelButton = YES;
 
-		[self updateProgressIndicatorStatusMessage:[self localizedString:@"00003"]];
-	} else if (event == OTRKitSMPEventAbort) {
-		enableOkButton = YES;
+			[self _updateProgressIndicatorStatusMessage:_LocalizedString(@"00001")];
 
-		[self updateProgressIndicatorStatusMessage:[self localizedString:@"00004"]];
-	} else if (event == OTRKitSMPEventSuccess) {
-		enableOkButton = YES;
+			break;
+		}
+		case OTRKitSMPEventFailure:
+		{
+			enableOkButton = YES;
 
-		[self updateProgressIndicatorStatusMessage:[self localizedString:@"00002"]];
+			[self _updateProgressIndicatorStatusMessage:_LocalizedString(@"00003")];
+
+			break;
+		}
+		case OTRKitSMPEventAbort:
+		{
+			enableOkButton = YES;
+
+			[self _updateProgressIndicatorStatusMessage:_LocalizedString(@"00004")];
+
+			break;
+		}
+		case OTRKitSMPEventSuccess:
+		{
+			enableOkButton = YES;
+
+			[self _updateProgressIndicatorStatusMessage:_LocalizedString(@"00002")];
+
+			break;
+		}
+		default:
+		{
+			break;
+		}
 	}
 
-	/* Update buttons with their status. */
-	[[self authenticationProgressOkButton] setEnabled:enableOkButton];
-	[[self authenticationProgressCancelButton] setEnabled:enableCancelButton];
+	[self.authenticationProgressOkButton setEnabled:enableOkButton];
+	[self.authenticationProgressCancelButton setEnabled:enableCancelButton];
 }
 
-- (void)endProgressIndicatorWindow
+- (void)_endProgressIndicatorWindow
 {
 	/* Close the current progress window if open. */
-	if ([[self authenticationProgressWindow] isSheet]) {
-		[NSApp endSheet:[self authenticationProgressWindow]];
+	if ([self _progressIndicatorWindowIsVisible]) {
+		[NSApp endSheet:self.authenticationProgressWindow];
 	}
 }
 
-- (IBAction)authenticationProgressCancel:(id)sender
+- (IBAction)_authenticationProgressCancel:(id)sender
 {
 	/* Close negotation if it is open. */
-	[self maybeAbortOpenNegotations];
-	
-	/* We cannot incoming outgoing authentication, so tear down window. */
-	if ([self isIncomingRequest]) {
-		[self teardownDialog];
+	[self _maybeAbortOpenNegotations];
+
+	/* There is no way to resend failed requests for incoming. */
+	if (self.isIncomingRequest) {
+		[self _teardownDialog];
 	} else {
-		[self endProgressIndicatorWindow];
+		[self _endProgressIndicatorWindow];
 	}
 }
 
-- (IBAction)authenticationProgressOk:(id)sender
+- (IBAction)_authenticationProgressOk:(id)sender
 {
 	/* If the last event was successful, then we can tear down the entire
 	 dialog, not just the pgoress indicator, because we are done here. */
-	if ([self lastEvent] == OTRKitSMPEventSuccess) {
-		[self teardownDialog]; // Will close progress window for us...
+	if (self.lastEvent == OTRKitSMPEventSuccess) {
+		[self _teardownDialog]; // Will close progress window for us...
+
+		return;
+	}
+
+	/* There is no way to resend failed requests for incoming. */
+	if (self.isIncomingRequest) {
+		[self _teardownDialog];
 	} else {
-		/* There is no way to resend failed requests for incoming. */
-		if ([self isIncomingRequest]) {
-			[self teardownDialog];
-		} else {
-			[self endProgressIndicatorWindow];
-		}
+		[self _endProgressIndicatorWindow];
 	}
 }
 
 @end
-
-#pragma mark -
-#pragma mark OTRKitAuthenticationDialogIncoming Implementation
-
-@implementation OTRKitAuthenticationDialogIncoming
-
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[[NSBundle bundleForClass:[self class]] loadNibNamed:@"OTRKitAuthenticationDialogIncoming" owner:self topLevelObjects:nil];
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)cancelAuthentication:(id)sender
-{
-	[self cancelRequest];
-}
-
-- (void)performAuthentication:(id)sender
-{
-	/* Check the message state for this user. */
-	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:[self cachedUsername]
-																		   accountName:[self cachedAccountName]
-																			  protocol:[self cachedProtocol]];
-
-	if (messageState == OTRKitMessageStateFinished ||
-		messageState == OTRKitMessageStatePlaintext)
-	{
-		[self presentPrivateConversationIsNotActiveAlert];
-
-		return; // Cancel operation...
-	}
-
-	/* Start a negoation depending on which method was selected. */
-	NSString *secretAnswer = nil;
-
-	if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer) {
-		secretAnswer = [[self questionAndAnswerAnswerTextField] stringValue];
-	} else if ([self authenticationMethod] == OTRKitSMPEventAskForSecret) {
-		secretAnswer = [[self sharedSecretAnswerTextField] stringValue];
-	}
-
-	if (secretAnswer) {
-		[[OTRKit sharedInstance] respondToSMPForUsername:[self cachedUsername]
-											 accountName:[self cachedAccountName]
-												protocol:[self cachedProtocol]
-												  secret:secretAnswer];
-
-		[self setupProgressIndicatorWindow];
-	}
-}
-
-- (void)handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
-{
-	[super handleEvent:event progress:progress question:question];
-
-	if (event == OTRKitSMPEventAskForAnswer || event == OTRKitSMPEventAskForSecret) {
-		[self setAuthenticationMethod:event];
-
-		[self authenticateUserWithQuestion:question];
-	} else if (event == OTRKitSMPEventAbort) {
-		if ([[self authenticationProgressWindow] isVisible] == NO) {
-			[self presentRemoteUserAbortedRequestDialog];
-		}
-	}
-}
-
-- (void)authenticateUserWithQuestion:(NSString *)question
-{
-	/* Get the visible portion of the remote user's name. */
-	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
-
-	/* Format several text fields with the user's name. */
-	[self formatTextField:[self authenticationHostWindowTitleTextField] withUsername:remoteUsername];
-	[self formatTextField:[self authenticationHostWindowDescriptionTextField] withUsername:remoteUsername];
-
-	if ([self authenticationMethod] == OTRKitSMPEventAskForSecret) {
-		[self formatTextField:[self sharedSecretDescriptionTextField] withUsername:remoteUsername];
-	} else if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer) {
-		if (question) {
-			[self formatTextField:[self questionAndAnswerDescriptionTextField] withUsername:remoteUsername];
-		}
-
-		[[self questionAndAnswerQuestionTextField] setStringValue:question];
-	}
-
-	/* Bring the trust dialog forward. */
-	[self updateButtonEnabledState];
-
-	[self bringHostWindowForward];
-}
-
-@end
-
-#pragma mark -
-#pragma mark OTRKitAuthenticationDialogOutgoing Implementation
-
-@implementation OTRKitAuthenticationDialogOutgoing
-
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[[NSBundle bundleForClass:[self class]] loadNibNamed:@"OTRKitAuthenticationDialogOutgoing" owner:self topLevelObjects:nil];
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)cancelAuthentication:(id)sender
-{
-	[self teardownDialog];
-}
-
-- (void)performAuthentication:(id)sender
-{
-	/* Check the message state for this user. */
-	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:[self cachedUsername]
-																		   accountName:[self cachedAccountName]
-																			  protocol:[self cachedProtocol]];
-
-	if (messageState == OTRKitMessageStateFinished ||
-		messageState == OTRKitMessageStatePlaintext)
-	{
-		[self presentPrivateConversationIsNotActiveAlert];
-
-		return; // Cancel operation...
-	}
-
-	/* Start a negoation depending on which method was selected. */
-	if ([self authenticationMethod] == OTRKitSMPEventNone)
-	{
-		BOOL isVerified = ([[self fingerprintIsVerifiedUserCheck] state] == NSOnState);
-
-		[self markUserVerified:isVerified];
-
-		[self teardownDialog];
-	}
-	else if ([self authenticationMethod] == OTRKitSMPEventAskForAnswer)
-	{
-		NSString *question = [[self questionAndAnswerQuestionTextField] stringValue];
-		NSString *answer = [[self questionAndAnswerAnswerTextField] stringValue];
-
-		[[OTRKit sharedInstance] initiateSMPForUsername:[self cachedUsername]
-											accountName:[self cachedAccountName]
-											   protocol:[self cachedProtocol]
-											   question:question
-												 secret:answer];
-
-		[self setupProgressIndicatorWindow];
-	}
-	else if ([self authenticationMethod] == OTRKitSMPEventAskForSecret)
-	{
-		NSString *secret = [[self sharedSecretAnswerTextField] stringValue];
-
-		[[OTRKit sharedInstance] initiateSMPForUsername:[self cachedUsername]
-											accountName:[self cachedAccountName]
-											   protocol:[self cachedProtocol]
-												 secret:secret];
-
-		[self setupProgressIndicatorWindow];
-	}
-}
-
-- (void)authenticationMethodChanged:(id)sender
-{
-	/* Change to a different authentication method. */
-	NSInteger selectedItem = [[self authenticationMethodSelectionPopupButton] selectedTag];
-
-	if (selectedItem == 0) {
-		[self setAuthenticationMethod:OTRKitSMPEventAskForAnswer];
-	} else if (selectedItem == 1) {
-		[self setAuthenticationMethod:OTRKitSMPEventAskForSecret];
-	} else if (selectedItem == 2) {
-		[self setAuthenticationMethod:OTRKitSMPEventNone];
-	}
-
-	[self updateButtonEnabledState];
-}
-
-- (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
-{
-	[super updateProgressIndicatorButtonsWithEvent:event];
-
-	if (event == OTRKitSMPEventSuccess) {
-		[self markUserVerified:YES]; // Mark user as trusted.
-	} else if (event == OTRKitSMPEventFailure) {
-		[self markUserVerified:NO]; // Mark user as trusted.
-	}
-}
-
-- (void)showFingerprintConfirmationForTheirHash
-{
-	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
-
-	NSString *messageText = [self localizedString:@"00012[1]"];
-
-	NSString *descriptionText = [self localizedString:@"00012[2]", remoteUsername];
-
-	NSArray *alertButtons = @[[self localizedString:@"00012[3]"],
-							  [self localizedString:@"00012[4]"]];
-
-	[self presentAlert:messageText
-	   informativeText:descriptionText
-			   buttons:alertButtons
-		didEndSelector:@selector(showFingerprintConfirmationForHashAlertDidEnd:returnCode:contextInfo:)];
-}
-
-- (void)showFingerprintConfirmationForHashAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		if (returnCode == NSAlertFirstButtonReturn) {
-			[self authenticateUser];
-		} else if (returnCode == NSAlertSecondButtonReturn) {
-			[self teardownDialog];
-		}
-	});
-}
-
-- (void)authenticateUser
-{
-	/* Reset state just to be safe. */
-	[self setLastEvent:OTRKitSMPEventNone];
-
-	/* Set default content view which is Question & Answer */
-	[self setAuthenticationMethod:OTRKitSMPEventAskForAnswer];
-
-	/* Get the visible portion of the remote user's name. */
-	NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedUsername]];
-	NSString *localUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:[self cachedAccountName]];
-
-	/* Format several text fields with the user's name. */
-	[self formatTextField:[self fingerprintLocalUserLabelTextField] withUsername:localUsername];
-	[self formatTextField:[self fingerprintRemoteUserLabelTextField] withUsername:remoteUsername];
-
-	[self formatTextField:[self authenticationHostWindowTitleTextField] withUsername:remoteUsername];
-
-	/* Gather existing fingerprint information. */
- 	NSString *localFingerprint = [[OTRKit sharedInstance] fingerprintForAccountName:[self cachedAccountName]
-																		   protocol:[self cachedProtocol]];
-
-	NSString *remoteFingerprint = [[OTRKit sharedInstance] activeFingerprintForUsername:[self cachedUsername]
-																			accountName:[self cachedAccountName]
-																			   protocol:[self cachedProtocol]];
-
-	/* Determine whether the user's fingerprint is already trusted. */
-	BOOL remoteFingerprintTrusted = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:[self cachedUsername]
-																						accountName:[self cachedAccountName]
-																						   protocol:[self cachedProtocol]];
-
-	/* Populate default values. */
-	[[self fingerprintLocalUserValueTextField] setStringValue:localFingerprint];
-	[[self fingerprintRemoteUserValueTextField] setStringValue:remoteFingerprint];
-
-	[[self fingerprintIsVerifiedUserCheck] setState:remoteFingerprintTrusted];
-
-	/* Bring the trust dialog forward. */
-	[self updateButtonEnabledState];
-
-	[self bringHostWindowForward];
-}
-
-@end
-#pragma clang diagnostic pop

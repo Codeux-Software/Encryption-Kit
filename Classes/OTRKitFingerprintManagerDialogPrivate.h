@@ -35,19 +35,22 @@
 
 #import "OTRKitFrameworkHelpers.h"
 
+#define _LocalizedString(_key_, ...)				\
+	LocalizedString(@"OTRKitFingerprintManagerDialog", (_key_), ##__VA_ARGS__)
+
 @interface OTRKitFingerprintManagerDialog ()
 @property (nonatomic, assign) BOOL isStale;
 @property (nonatomic, copy) NSArray *cachedListOfFingerprints;
 @property (nonatomic, strong) IBOutlet NSWindow *fingerprintManagerWindow;
 @property (nonatomic, weak) IBOutlet NSTableView *fingerprintListTable;
 @property (nonatomic, weak) IBOutlet NSButton *buttonFingerprintForget;
-@property (nonatomic, weak) IBOutlet NSButton *buttonFingerprintStopConversation;
+@property (nonatomic, weak) IBOutlet NSButton *buttonFingerprintEndConversation;
 
-- (IBAction)closeDialog:(id)sender;
+- (IBAction)_closeDialog:(id)sender;
 
-- (IBAction)fingerprintForget:(id)sender;
-- (IBAction)fingerprintModifyTrust:(id)sender;
-- (IBAction)fingerprintStopConversation:(id)sender;
+- (IBAction)_fingerprintForget:(id)sender;
+- (IBAction)_fingerprintModifyTrust:(id)sender;
+- (IBAction)_fingerprintEndConversation:(id)sender;
 @end
 
 @interface OTRKitFingerprintManagerDialogTableCellView : NSTableCellView

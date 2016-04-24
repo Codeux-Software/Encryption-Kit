@@ -35,6 +35,11 @@
 
 #import "OTRKitFrameworkHelpers.h"
 
+#import "OTRKitAutoExpandingTextField.h"
+
+#define _LocalizedString(_key_, ...)				\
+	LocalizedString(@"OTRKitAuthenticationDialog", (_key_), ##__VA_ARGS__)
+
 #pragma mark -
 #pragma makr Headers
 
@@ -42,13 +47,11 @@
 @property (nonatomic, copy) NSString *cachedUsername;
 @property (nonatomic, copy) NSString *cachedAccountName;
 @property (nonatomic, copy) NSString *cachedProtocol;
-@property (nonatomic, assign) BOOL isIncomingRequest;
-@property (nonatomic, assign) BOOL dialogAlreadyExistsErrorAlertIsVisible;
+@property (readonly) BOOL isIncomingRequest;
+@property (nonatomic, assign) BOOL authenticationRequestAlreadyExistsAlertIsVisible;
 @property (nonatomic, assign) OTRKitSMPEvent lastEvent;
 @property (nonatomic, assign) OTRKitSMPEvent authenticationMethod; // none = fingerprint, question & answer, or shared secret
-@property (nonatomic, weak) NSWindow *applicationHostWindow;
 @property (nonatomic, weak) IBOutlet NSView *contentView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, strong) IBOutlet NSWindow *authenticationHostWindow;
 @property (nonatomic, strong) IBOutlet NSWindow *authenticationProgressWindow;
 @property (nonatomic, weak) IBOutlet NSTextField *authenticationProgressTitleTextField;
@@ -59,10 +62,10 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewFingerprintAuthentication;
 @property (nonatomic, strong) IBOutlet NSView *contentViewQuestionAndAnswerAuthentication;
 @property (nonatomic, strong) IBOutlet NSView *contentViewSharedSecretAuthentication;
-@property (nonatomic, weak) IBOutlet NSTextField *questionAndAnswerQuestionTextField;
-@property (nonatomic, weak) IBOutlet NSTextField *questionAndAnswerAnswerTextField;
+@property (nonatomic, weak) IBOutlet OTRKitAutoExpandingTextField *questionAndAnswerQuestionTextField;
+@property (nonatomic, weak) IBOutlet OTRKitAutoExpandingTextField *questionAndAnswerAnswerTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *questionAndAnswerDescriptionTextField;
-@property (nonatomic, weak) IBOutlet NSTextField *sharedSecretAnswerTextField;
+@property (nonatomic, weak) IBOutlet OTRKitAutoExpandingTextField *sharedSecretAnswerTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *sharedSecretDescriptionTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *fingerprintLocalUserLabelTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *fingerprintLocalUserValueTextField;
@@ -74,19 +77,33 @@
 @property (nonatomic, weak) IBOutlet NSTextField *authenticationHostWindowTitleTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *authenticationHostWindowDescriptionTextField;
 
-- (IBAction)cancelAuthentication:(id)sender;
-- (IBAction)performAuthentication:(id)sender;
+- (IBAction)_cancelAuthentication:(id)sender;
+- (IBAction)_performAuthentication:(id)sender;
 
-- (IBAction)authenticationProgressCancel:(id)sender;
-- (IBAction)authenticationProgressOk:(id)sender;
+- (IBAction)_authenticationProgressCancel:(id)sender;
+- (IBAction)_authenticationProgressOk:(id)sender;
 
-- (void)teardownDialog;
+- (void)_updateButtonEnabledState;
+- (void)_formatTextField:(NSTextField *)textField withUsername:(NSString *)username;
+- (void)_changeContentViewTo:(NSView *)contentView;
+- (void)_bringHostWindowForward;
 
-- (void)changeContentViewTo:(NSView *)contentView;
+- (void)_prepareInitialState;
 
-- (void)handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question;
+- (void)_markUserVerified:(BOOL)isVerified;
 
-- (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event;
+- (void)_presentPrivateConversationIsNotActiveAlert;
+- (void)_presentAuthenticationRequestAlreadyExistsAlert;
+- (void)_presentRemoteUserAbortedAuthenticationRequestAlert;
+
+- (void)_cancelRequest;
+- (void)_teardownDialog;
+
+- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question;
+
+- (void)_setupProgressIndicatorWindow;
+- (BOOL)_progressIndicatorWindowIsVisible;
+- (void)_updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event;
 @end
 
 #pragma mark -
@@ -100,9 +117,7 @@
 @property (nonatomic, weak) IBOutlet NSPopUpButton *authenticationMethodSelectionPopupButton;
 @property (nonatomic, weak) IBOutlet NSButton *fingerprintIsVerifiedUserCheck;
 
-- (void)authenticateUser;
+- (void)_authenticateUser;
 
-- (void)showFingerprintConfirmationForTheirHash;
-
-- (IBAction)authenticationMethodChanged:(id)sender;
+- (IBAction)_authenticationMethodChanged:(id)sender;
 @end

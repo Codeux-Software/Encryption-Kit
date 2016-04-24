@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OTRKitFingerprintManagerDialog">
             <connections>
+                <outlet property="buttonFingerprintEndConversation" destination="Mgt-Wc-hUQ" id="Eff-pJ-4Fb"/>
                 <outlet property="buttonFingerprintForget" destination="qbO-1o-g7c" id="uQu-LF-wWG"/>
-                <outlet property="buttonFingerprintStopConversation" destination="Mgt-Wc-hUQ" id="e9y-F4-nLF"/>
                 <outlet property="fingerprintListTable" destination="Dvk-3g-BdG" id="dyQ-J9-BqT"/>
                 <outlet property="fingerprintManagerWindow" destination="crw-au-ikh" id="Z25-g6-wWq"/>
             </connections>
@@ -25,13 +25,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="700" height="324"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C9U-G7-aie">
+                        <rect key="frame" x="611" y="3" width="75" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fZR-pm-FE4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="_closeDialog:" target="-2" id="yBd-vB-tTc"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qbO-1o-g7c">
+                        <rect key="frame" x="14" y="3" width="159" height="32"/>
+                        <buttonCell key="cell" type="push" title="Remove Fingerprint" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9bi-zw-6D3">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="_fingerprintForget:" target="-2" id="ncr-oi-Mn4"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgt-Wc-hUQ">
+                        <rect key="frame" x="173" y="3" width="147" height="32"/>
+                        <buttonCell key="cell" type="push" title="End Conversation" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8j4-w9-WVb">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="_fingerprintEndConversation:" target="-2" id="TG6-93-Smo"/>
+                        </connections>
+                    </button>
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BY1-po-8KZ">
-                        <rect key="frame" x="0.0" y="41" width="700" height="283"/>
+                        <rect key="frame" x="0.0" y="42" width="700" height="282"/>
                         <clipView key="contentView" drawsBackground="NO" id="XBK-f5-yar">
-                            <rect key="frame" x="1" y="17" width="238" height="117"/>
+                            <rect key="frame" x="1" y="0.0" width="698" height="281"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="B0w-cW-eY0" viewBased="YES" id="Dvk-3g-BdG">
+                                    <rect key="frame" x="0.0" y="0.0" width="698.5" height="258"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +156,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="fingerprint" id="VWP-gA-RV7" customClass="OTRKitFingerprintManagerDialogTableCellView">
-                                                    <rect key="frame" x="227" y="1" width="350" height="17"/>
+                                                    <rect key="frame" x="229" y="1" width="350" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gc1-ro-zxQ">
@@ -149,7 +180,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="status" width="68.51068115234375" minWidth="10" maxWidth="3.4028234663852886e+38" id="oTG-aB-GZC">
+                                        <tableColumn identifier="status" width="63.20745849609375" minWidth="10" maxWidth="3.4028234663852886e+38" id="oTG-aB-GZC">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Status">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -163,11 +194,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="status" id="IKw-UA-XzY" customClass="OTRKitFingerprintManagerDialogTableCellView">
-                                                    <rect key="frame" x="582" y="1" width="68.5" height="17"/>
+                                                    <rect key="frame" x="582" y="1" width="63" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jZR-gY-VIC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="68" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="63" height="17"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Unused" id="oL1-Fz-BAw">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -186,7 +217,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="trusted" width="42.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="DJ2-il-pPk">
+                                        <tableColumn identifier="trusted" width="48.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="DJ2-il-pPk">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Trusted">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -200,17 +231,17 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="trusted" id="AUY-xa-lH0" customClass="OTRKitFingerprintManagerDialogTableCellView">
-                                                    <rect key="frame" x="653.5" y="1" width="42" height="17"/>
+                                                    <rect key="frame" x="648" y="1" width="49" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="z65-00-FtE">
-                                                            <rect key="frame" x="10" y="0.0" width="22" height="18"/>
+                                                            <rect key="frame" x="13" y="0.0" width="22" height="18"/>
                                                             <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JWz-8v-wTt">
                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                 <font key="font" metaFont="system"/>
                                                             </buttonCell>
                                                             <connections>
-                                                                <action selector="fingerprintModifyTrust:" target="-2" id="Zae-86-IGU"/>
+                                                                <action selector="_fingerprintModifyTrust:" target="-2" id="ghw-AE-6uL"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -233,8 +264,8 @@
                             </subviews>
                             <nil key="backgroundColor"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="9Ob-XB-T8C">
-                            <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="9Ob-XB-T8C">
+                            <rect key="frame" x="1" y="265" width="698" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="PMn-kP-TVk">
@@ -242,52 +273,23 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" id="B0w-cW-eY0">
-                            <rect key="frame" x="0.0" y="0.0" width="10000" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="698.5" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C9U-G7-aie">
-                        <rect key="frame" x="610" y="3" width="76" height="32"/>
-                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fZR-pm-FE4">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="closeDialog:" target="-2" id="dtY-3O-GFZ"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qbO-1o-g7c">
-                        <rect key="frame" x="14" y="3" width="161" height="32"/>
-                        <buttonCell key="cell" type="push" title="Remove Fingerprint" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9bi-zw-6D3">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="fingerprintForget:" target="-2" id="loj-fe-yyg"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgt-Wc-hUQ">
-                        <rect key="frame" x="175" y="3" width="155" height="32"/>
-                        <buttonCell key="cell" type="push" title="Stop Conversation" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8j4-w9-WVb">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="fingerprintStopConversation:" target="-2" id="04V-i9-Es5"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="C9U-G7-aie" secondAttribute="trailing" constant="20" symbolic="YES" id="2Uh-C3-MBl"/>
-                    <constraint firstItem="BY1-po-8KZ" firstAttribute="centerX" secondItem="nNo-Cz-nE6" secondAttribute="centerX" id="4BJ-O9-ehm"/>
-                    <constraint firstAttribute="bottom" secondItem="qbO-1o-g7c" secondAttribute="bottom" constant="10" id="7Zz-0h-ojk"/>
-                    <constraint firstItem="Mgt-Wc-hUQ" firstAttribute="leading" secondItem="qbO-1o-g7c" secondAttribute="trailing" constant="12" symbolic="YES" id="BZE-Yu-Tee"/>
-                    <constraint firstItem="Mgt-Wc-hUQ" firstAttribute="baseline" secondItem="qbO-1o-g7c" secondAttribute="baseline" id="ICf-EX-bhq"/>
-                    <constraint firstItem="BY1-po-8KZ" firstAttribute="leading" secondItem="nNo-Cz-nE6" secondAttribute="leading" id="QaX-T7-LkF"/>
-                    <constraint firstItem="qbO-1o-g7c" firstAttribute="leading" secondItem="nNo-Cz-nE6" secondAttribute="leading" constant="20" symbolic="YES" id="Z0R-V4-sei"/>
-                    <constraint firstItem="BY1-po-8KZ" firstAttribute="top" secondItem="nNo-Cz-nE6" secondAttribute="top" id="bK4-pA-f2E"/>
-                    <constraint firstItem="qbO-1o-g7c" firstAttribute="baseline" secondItem="C9U-G7-aie" secondAttribute="baseline" id="md9-3G-MVj"/>
-                    <constraint firstItem="qbO-1o-g7c" firstAttribute="top" secondItem="BY1-po-8KZ" secondAttribute="bottom" constant="10" id="rUZ-ha-rya"/>
+                    <constraint firstAttribute="trailing" secondItem="BY1-po-8KZ" secondAttribute="trailing" id="3S8-39-jPo"/>
+                    <constraint firstItem="BY1-po-8KZ" firstAttribute="leading" secondItem="nNo-Cz-nE6" secondAttribute="leading" id="4vC-AT-Qq6"/>
+                    <constraint firstAttribute="bottom" secondItem="Mgt-Wc-hUQ" secondAttribute="bottom" constant="10" id="GCw-MC-X4H"/>
+                    <constraint firstItem="Mgt-Wc-hUQ" firstAttribute="leading" secondItem="qbO-1o-g7c" secondAttribute="trailing" constant="12" id="IiC-Ct-peq"/>
+                    <constraint firstItem="C9U-G7-aie" firstAttribute="top" secondItem="BY1-po-8KZ" secondAttribute="bottom" constant="11" id="Ik4-MT-qu8"/>
+                    <constraint firstAttribute="trailing" secondItem="C9U-G7-aie" secondAttribute="trailing" constant="20" id="SVv-CW-cNU"/>
+                    <constraint firstItem="qbO-1o-g7c" firstAttribute="top" secondItem="BY1-po-8KZ" secondAttribute="bottom" constant="11" id="TQz-Td-09m"/>
+                    <constraint firstAttribute="bottom" secondItem="C9U-G7-aie" secondAttribute="bottom" constant="10" id="W5m-p6-DC9"/>
+                    <constraint firstItem="qbO-1o-g7c" firstAttribute="leading" secondItem="nNo-Cz-nE6" secondAttribute="leading" constant="20" id="alf-Nx-ybe"/>
+                    <constraint firstItem="Mgt-Wc-hUQ" firstAttribute="baseline" secondItem="qbO-1o-g7c" secondAttribute="baseline" id="jYv-pZ-Bwj"/>
+                    <constraint firstItem="BY1-po-8KZ" firstAttribute="top" secondItem="nNo-Cz-nE6" secondAttribute="top" id="unJ-mK-bnJ"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="655" y="207"/>

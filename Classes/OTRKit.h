@@ -34,6 +34,8 @@
  *
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class OTRKit;
 @class OTRKitConcreteObject;
 
@@ -46,11 +48,11 @@ typedef NS_ENUM(NSUInteger, OTRKitMessageState) {
 };
 
 typedef NS_ENUM(NSUInteger, OTRKitPolicy) {
+	OTRKitPolicyDefault				= 0,
 	OTRKitPolicyNever,
 	OTRKitPolicyOpportunistic,
 	OTRKitPolicyManual,
 	OTRKitPolicyAlways,
-	OTRKitPolicyDefault
 };
 
 typedef NS_ENUM(NSUInteger, OTRKitOfferState) {
@@ -107,13 +109,6 @@ extern NSString * const OTRKitListOfFingerprintsDidChangeNotification;
  */
 extern NSString * const OTRKitMessageStateDidChangeNotification;
 
-/* 
- *  This is a notification that OTRKit observes, not fires. It is observed
- *  by OTRKitAuthenticationDialog and OTRKitFingerprintManagerDialog to allow 
- *  graceful closing of related dialogs. 
- */
-extern NSString * const OTRKitPrepareForApplicationTerminationNotification;
-
 @protocol OTRKitDelegate <NSObject>
 @required
 
@@ -134,7 +129,7 @@ extern NSString * const OTRKitPrepareForApplicationTerminationNotification;
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
 	   protocol:(NSString *)protocol
-			tag:(id)tag;
+			tag:(nullable id)tag;
 
 /**
  *  All outgoing messages should be sent to the OTRKit encodeMessage method before being
@@ -154,7 +149,7 @@ extern NSString * const OTRKitPrepareForApplicationTerminationNotification;
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
 	   protocol:(NSString *)protocol
-			tag:(id)tag
+			tag:(nullable id)tag
 		  error:(NSError *)error;
 
 /**
@@ -171,13 +166,13 @@ extern NSString * const OTRKitPrepareForApplicationTerminationNotification;
  *  @param tag optional		Tag to attach additional application-specific data to message. Only used locally.
  */
 - (void) otrKit:(OTRKit *)otrKit
- decodedMessage:(NSString *)decodedMessage
+ decodedMessage:(nullable NSString *)decodedMessage
    wasEncrypted:(BOOL)wasEncrypted
-		   tlvs:(NSArray *)tlvs
+		   tlvs:(NSArray<OTRTLV *> *)tlvs
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
 	   protocol:(NSString *)protocol
-			tag:(id)tag;
+			tag:(nullable id)tag;
 
 /**
  *  When the encryption status changes this method is called
@@ -203,7 +198,7 @@ updateMessageState:(OTRKitMessageState)messageState
  *  @param accountName	The account name of the local user
  *  @param protocol		The protocol of the exchange
  *
- *  @return online status of recipient
+ *  @return online status of username
  */
 - (BOOL)       otrKit:(OTRKit *)otrKit
    isUsernameLoggedIn:(NSString *)username
@@ -279,7 +274,7 @@ handleMessageEvent:(OTRKitMessageEvent)event
 		  username:(NSString *)username
 	   accountName:(NSString *)accountName
 		  protocol:(NSString *)protocol
-			   tag:(id)tag
+			   tag:(nullable id)tag
 			 error:(NSError *)error;
 
 /**
@@ -325,11 +320,16 @@ willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName
 - (void)                             otrKit:(OTRKit *)otrKit
 didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 								   protocol:(NSString *)protocol
-									  error:(NSError *)error;
+									  error:(nullable NSError *)error;
 @end
 
 @interface OTRKit : NSObject
-@property (nonatomic, weak) id<OTRKitDelegate> delegate;
+@property (nonatomic, weak, nullable) id<OTRKitDelegate> delegate;
+
+/**
+ *  Defaults to main queue. All delegate and block callbacks will be done on this queue.
+ */
+@property (nonatomic, strong, nullable) dispatch_queue_t delegateQueue;
 
 /**
  * By default uses `OTRKitPolicyDefault`
@@ -339,7 +339,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Path to where the OTR private keys and related data is stored.
  */
-@property (nonatomic, copy, readonly) NSString *dataPath;
+@property (nonatomic, copy, readonly, null_resettable) NSString *dataPath;
 
 /**
  *  Path to the OTR private keys file.
@@ -399,12 +399,12 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  * @param protocol		The protocol of the exchange
  * @param tag			Optional tag to attach additional application-specific data to message. Only used locally.
  */
-- (void)encodeMessage:(NSString *)messageToBeEncoded
-				 tlvs:(NSArray *)tlvs
+- (void)encodeMessage:(nullable NSString *)message
+				 tlvs:(NSArray<OTRTLV *> *)tlvs
 			 username:(NSString *)username
 		  accountName:(NSString *)accountName
 			 protocol:(NSString *)protocol
-				  tag:(id)tag;
+				  tag:(nullable id)tag;
 
 /**
  *  All messages should be sent through here before being processed by your program.
@@ -416,10 +416,10 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param tag				Optional tag to attach additional application-specific data to message. Only used locally.
  */
 - (void)decodeMessage:(NSString *)message
-			 username:(NSString *)sender
+			 username:(NSString *)username
 		  accountName:(NSString *)accountName
 			 protocol:(NSString *)protocol
-				  tag:(id)tag;
+				  tag:(nullable id)tag;
 
 /**
  *  You can use this method to determine whether or not OTRKit is 
@@ -552,7 +552,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 							  protocol:(NSString *)protocol
 								forUse:(NSUInteger)use
 							   useData:(NSData *)useData
-							completion:(void (^)(NSData *key, NSError *error))completion;
+							completion:(void (^ __nullable)(NSData * __nullable key, NSError * __nullable error))completion;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Fingerprint Verification
@@ -561,7 +561,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Returns an array of OTRKitConcreteObject objects
  */
-- (NSArray *)requestAllFingerprints;
+- (NSArray<OTRKitConcreteObject *> *)requestAllFingerprints;
 
 /**
  *  Delete a specified fingerprint.
@@ -571,7 +571,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  */
-- (void)deleteFingerprint:(NSString *)fingerprintString
+- (void)deleteFingerprint:(NSString *)fingerprint
 				 username:(NSString *)username
 			  accountName:(NSString *)accountName
 				 protocol:(NSString *)protocol;
@@ -663,3 +663,5 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  */
 - (NSString *)leftPortionOfAccountName:(NSString *)accountName;
 @end
+
+NS_ASSUME_NONNULL_END
