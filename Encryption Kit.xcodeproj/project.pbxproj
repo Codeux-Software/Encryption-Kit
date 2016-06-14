@@ -372,10 +372,14 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					4C0FC2FD1AC98F1A00881CE5 = {
 						CreatedOnToolsVersion = 6.2;
+					};
+					8DC2EF4F0486A6940098B216 = {
+						DevelopmentTeam = 8482Q6EPL6;
+						DevelopmentTeamName = "Codeux Software, LLC";
 					};
 				};
 			};

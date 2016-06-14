@@ -120,10 +120,8 @@
 		NSModalResponse returnCode = [errorAlert runModal];
 
 		if (contextObject) {
-			(void)objc_msgSend([OTRKitFrameworkHelpers class],
-							   @selector(_alertDialogDidEnd:contextObject:),
-							   returnCode,
-							   contextObject);
+			[OTRKitFrameworkHelpers _alertDialogDidEnd:returnCode
+										 contextObject:contextObject];
 		}
 	}
 }
