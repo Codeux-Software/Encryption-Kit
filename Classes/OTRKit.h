@@ -251,7 +251,7 @@ fingerprintIsVerifiedStateChangedForUsername:(NSString *)username
 - (void) otrKit:(OTRKit *)otrKit
  handleSMPEvent:(OTRKitSMPEvent)event
 	   progress:(double)progress
-	   question:(NSString *)question
+	   question:(nullable NSString *)question
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
 	   protocol:(NSString *)protocol;
@@ -589,8 +589,8 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  */
-- (NSString *)fingerprintForAccountName:(NSString *)accountName
-							   protocol:(NSString *)protocol;
+- (nullable NSString *)fingerprintForAccountName:(NSString *)accountName
+										protocol:(NSString *)protocol;
 
 /**
  *  For determining the fingerprint of a remote user.
@@ -599,9 +599,9 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param accountName The account name of the local user
  *  @param protocol    The protocol of the exchange
  */
-- (NSString *)activeFingerprintForUsername:(NSString *)username
-							   accountName:(NSString *)accountName
-								  protocol:(NSString *)protocol;
+- (nullable NSString *)activeFingerprintForUsername:(NSString *)username
+										accountName:(NSString *)accountName
+										   protocol:(NSString *)protocol;
 
 /**
  *  Whether or not the remote user's fingerprint is marked as verified.
@@ -656,12 +656,12 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Return right portion of accountName as dictated by -accountNameSeparator
  */
-- (NSString *)rightPortionOfAccountName:(NSString *)accountName;
+- (nullable NSString *)rightPortionOfAccountName:(NSString *)accountName;
 
 /**
  *  Return left portion of accountName as dictated by -accountNameSeparator
  */
-- (NSString *)leftPortionOfAccountName:(NSString *)accountName;
+- (nullable NSString *)leftPortionOfAccountName:(NSString *)accountName;
 @end
 
 NS_ASSUME_NONNULL_END
