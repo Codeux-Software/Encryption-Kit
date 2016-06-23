@@ -435,8 +435,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/Build Dependencies/buildDependencies.sh\"";
+			shellPath = /bin/bash;
+			shellScript = "env -i \"${PROJECT_DIR}/Build Dependencies/buildDependencies.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

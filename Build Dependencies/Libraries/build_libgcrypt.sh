@@ -12,13 +12,13 @@ mv "./libgcrypt-${LIBRARY_GCRYPT_VERSION}" "./libgcrypt-source"
 
 cd "./libgcrypt-source"
 
-./configure --disable-shared --enable-static --enable-threads=posix --host x86_64-apple-darwin \
+./configure \
+--enable-static \
+--disable-asm \
+--disable-dependency-tracking \
+--disable-silent-rules \
 --prefix="${SHARED_RESULT_ROOT_LOCATION}" \
---with-sysroot="${PLATFORM_BUILD_SDK_ROOT_LOCATION}" \
---with-libgpg-error-prefix="${SHARED_RESULT_ROOT_LOCATION}" \
-LDFLAGS="${LDFLAGS}" \
-CFLAGS="${CFLAGS}" \
-CPPLAGS="${CPPFLAGS}"
+--with-libgpg-error-prefix="${SHARED_RESULT_ROOT_LOCATION}"
 
 make
 make install

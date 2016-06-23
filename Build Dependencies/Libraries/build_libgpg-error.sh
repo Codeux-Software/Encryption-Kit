@@ -12,12 +12,11 @@ mv "./libgpg-error-${LIBRARY_GPG_ERROR_VERSION}" "./libgpg-error-source"
 
 cd "./libgpg-error-source"
 
-./configure --disable-shared --enable-static --enable-threads=posix --host x86_64-apple-darwin \
---prefix="${SHARED_RESULT_ROOT_LOCATION}" \
---with-sysroot="${PLATFORM_BUILD_SDK_ROOT_LOCATION}" \
-LDFLAGS="${LDFLAGS}" \
-CFLAGS="${CFLAGS}" \
-CPPLAGS="${CPPFLAGS}"
+./configure \
+--enable-static \
+--disable-dependency-tracking \
+--disable-silent-rules \
+--prefix="${SHARED_RESULT_ROOT_LOCATION}" 
 
 make
 make install
