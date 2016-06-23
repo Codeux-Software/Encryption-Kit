@@ -16,13 +16,14 @@ export ROOT_DIRECTORY="/private/tmp/com.codeux.frameworks.encryptionKit/"
 export SHARED_RESULT_ROOT_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/"
 export SHARED_RESULT_BINARY_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/bin"
 export SHARED_RESULT_LIBRARY_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/lib"
+export SHARED_RESULT_LIBRARY_STATIC_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/lib-static"
 export SHARED_RESULT_INCLUDE_LOCATION="${ROOT_DIRECTORY}Library-Build-Results/include"
 
 LIBRARIES_THAT_DONT_EXIST=()
 
 for LIBRARY_TO_BUILD in ${LIBRARIES_TO_BUILD[@]}
 do
-	if [ ! -f "${SHARED_RESULT_LIBRARY_LOCATION}/${LIBRARY_TO_BUILD}.a" ]; then
+	if [ ! -f "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}/${LIBRARY_TO_BUILD}.a" ]; then
 		LIBRARIES_THAT_DONT_EXIST+=("${LIBRARY_TO_BUILD}")
 	fi
 done
@@ -54,6 +55,7 @@ function deleteOldAndCreateDirectory {
 
 deleteOldAndCreateDirectory "${WORKING_DIRECTORY}"
 deleteOldAndCreateDirectory "${SHARED_RESULT_ROOT_LOCATION}"
+deleteOldAndCreateDirectory "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}"
 
 for LIBRARY_TO_BUILD in ${LIBRARIES_THAT_DONT_EXIST[@]}
 do
@@ -64,4 +66,6 @@ do
 	deleteOldAndCreateDirectory "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
 
 	"./Build Dependencies/Libraries/build_${LIBRARY_TO_BUILD}.sh"
+
+	mv "${SHARED_RESULT_LIBRARY_LOCATION}/${LIBRARY_TO_BUILD}.a" "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}"
 done

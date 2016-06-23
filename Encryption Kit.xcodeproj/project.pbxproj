@@ -72,9 +72,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgcrypt.a"; sourceTree = "<absolute>"; };
-		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libgpg-error.a"; sourceTree = "<absolute>"; };
-		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libotr.a"; sourceTree = "<absolute>"; };
+		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libgcrypt.a"; sourceTree = "<absolute>"; };
+		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libgpg-error.a"; sourceTree = "<absolute>"; };
+		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libotr.a"; sourceTree = "<absolute>"; };
 		4C006C5E1AB84E19004BE3C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4C006C601AB84E22004BE3C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
