@@ -121,7 +121,7 @@ static NSArray *_listOfOpenFingerprintConfirmationAlerts = nil;
 	[self _updateButtonEnabledState];
 }
 
-- (void)updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
+- (void)_updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
 {
 	[super _updateProgressIndicatorButtonsWithEvent:event];
 
