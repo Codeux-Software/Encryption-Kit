@@ -258,7 +258,7 @@
 {
 	NSInteger currentSelection = [self _tableViewSelectedRow];
 
-	if (currentSelection == (-1))
+	if (currentSelection == (-1) || [self.cachedListOfFingerprints count] == 0)
 	{
 		[self.buttonFingerprintForget setEnabled:NO];
 
