@@ -5,7 +5,7 @@ export LIBRARY_GPG_ERROR_VERSION="1.23"
 export LIBRARY_GCRYPT_VERSION="1.7.1"
 export LIBRARY_OTR_VERSION="4.1.1"
 
-if [ $1 == "build-libressl" ]; then
+if [ "$1" == "build-libressl" ]; then
 	export LIBRARIES_TO_BUILD="libressl"
 else 
 	export LIBRARIES_TO_BUILD="libgpg-error libgcrypt libotr"
