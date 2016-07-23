@@ -1,7 +1,7 @@
 
 #ifdef __OBJC__
 
-@import Cocoa;
+#import <Cocoa/Cocoa.h>
 
 #define LogToConsole(_format_, ...)				NSLog([@"%s [Line %d]: " stringByAppendingString:_format_], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #define LogToConsoleCurrentStackTrace			NSLog(@"Current Stack: %@", [NSThread callStackSymbols]);
