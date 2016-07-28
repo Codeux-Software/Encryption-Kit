@@ -801,7 +801,7 @@ static OtrlMessageAppOps ui_ops = {
 
 		OtrlTLV *otr_tlvs = [self _tlvChainForTLVs:tlvs];
 
-		otrError = otrl_message_sending(_userState,
+		otrError = otrl_message_sending(self.userState,
 									 &ui_ops,
 									 (__bridge void *)(tag),
 									 [accountName UTF8String],
@@ -1212,7 +1212,7 @@ static OtrlMessageAppOps ui_ops = {
 	[self _performSyncOperationOnInternalQueue:^{
 		NSMutableArray *fingerprintsArray = [NSMutableArray array];
 
-		ConnContext *otrContext = _userState->context_root;
+		ConnContext *otrContext = self.userState->context_root;
 
 		while (otrContext) {
 			Fingerprint *otrFingerprint = otrContext->fingerprint_root.next;
