@@ -791,8 +791,6 @@ static OtrlMessageAppOps ui_ops = {
 
 		char *otrEncodedMessage = NULL;
 
-		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
-
 		// Set nil messages to empty string if TLVs are present, otherwise libotr
 		// will silence the message, even though you may have meant to inject a TLV.
 		NSString *messageToEncode = message;
@@ -1021,6 +1019,34 @@ static OtrlMessageAppOps ui_ops = {
 #pragma mark -
 #pragma mark Message State Management
 
+- (OTRKitMessageState)_messageStateForContext:(ConnContext *)otrContext
+{
+	if (otrContext) {
+		switch (otrContext->msgstate) {
+			case OTRL_MSGSTATE_ENCRYPTED:
+			{
+				return OTRKitMessageStateEncrypted;
+
+				break;
+			}
+			case OTRL_MSGSTATE_FINISHED:
+			{
+				return OTRKitMessageStateFinished;
+
+				break;
+			}
+			case OTRL_MSGSTATE_PLAINTEXT:
+			{
+				return OTRKitMessageStatePlaintext;
+
+				break;
+			}
+		}
+	}
+
+	return OTRKitMessageStatePlaintext;
+}
+
 - (OTRKitMessageState)messageStateForUsername:(NSString *)username
 								  accountName:(NSString *)accountName
 									 protocol:(NSString *)protocol
@@ -1034,31 +1060,44 @@ static OtrlMessageAppOps ui_ops = {
 	[self _performSyncOperationOnInternalQueue:^{
 		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
 
-		if (otrContext) {
-			switch (otrContext->msgstate) {
-				case OTRL_MSGSTATE_ENCRYPTED:
-				{
-					messageState = OTRKitMessageStateEncrypted;
-
-					break;
-				}
-				case OTRL_MSGSTATE_FINISHED:
-				{
-					messageState = OTRKitMessageStateFinished;
-
-					break;
-				}
-				case OTRL_MSGSTATE_PLAINTEXT:
-				{
-					messageState = OTRKitMessageStatePlaintext;
-
-					break;
-				}
-			}
-		}
+		messageState = [self _messageStateForContext:otrContext];
 	}];
 
 	return messageState;
+}
+
+- (OTRKitOfferState)_offerStateForContext:(ConnContext *)otrContext
+{
+	if (otrContext) {
+		switch (otrContext->otr_offer) {
+			case OFFER_NOT:
+			{
+				return OTRKitOfferStateNone;
+
+				break;
+			}
+			case OFFER_ACCEPTED:
+			{
+				return OTRKitOfferStateAccepted;
+
+				break;
+			}
+			case OFFER_REJECTED:
+			{
+				return OTRKitOfferStateRejected;
+
+				break;
+			}
+			case OFFER_SENT:
+			{
+				return OTRKitOfferStateSent;
+
+				break;
+			}
+		}
+	}
+
+	return OTRKitOfferStateNone;
 }
 
 - (OTRKitOfferState)offerStateForUsername:(NSString *)username
@@ -1074,34 +1113,7 @@ static OtrlMessageAppOps ui_ops = {
 	[self _performSyncOperationOnInternalQueue:^{
 		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
 
-		if (otrContext) {
-			switch (otrContext->otr_offer) {
-				case OFFER_NOT:
-				{
-					offerState = OTRKitOfferStateNone;
-
-					break;
-				}
-				case OFFER_ACCEPTED:
-				{
-					offerState = OTRKitOfferStateAccepted;
-
-					break;
-				}
-				case OFFER_REJECTED:
-				{
-					offerState = OTRKitOfferStateRejected;
-
-					break;
-				}
-				case OFFER_SENT:
-				{
-					offerState = OTRKitOfferStateSent;
-
-					break;
-				}
-			}
-		}
+		offerState = [self _offerStateForContext:otrContext];
 	}];
 	
 	return offerState;
