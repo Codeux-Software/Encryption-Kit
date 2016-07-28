@@ -787,21 +787,77 @@ static OtrlMessageAppOps ui_ops = {
 	AssertParamaterLength(protocol)
 
 	[self _performAsyncOperationOnInternalQueue:^{
-		gcry_error_t otrError;
+		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
 
-		char *otrEncodedMessage = NULL;
+		/*
+		 * If our policy is not oppritunistic (automatic) and we are not in an encrypted,
+		 * then return unecnrypted message to delegate. This exception is made because when
+		 * OTRL_POLICY_MANUAL is set, OTR discards outgoing * messages altogther.
+		 *
+		 * If our policy is ppritunistic (automatic) and our OTR request was rejected,
+		 * then we will return unecnrypted message to delegate. OTR will refuse to do further
+		 * work when the state is rejected.
+		 */
+		if (/* 1 */ (self.otrPolicy == OTRKitPolicyManual ||
+					 self.otrPolicy == OTRKitPolicyNever) ||
+			/* 2 */ (self.otrPolicy == OTRKitPolicyOpportunistic &&
+					 [self _offerStateForContext:otrContext] == OTRKitOfferStateRejected))
+		{
+			OTRKitMessageState otrMessageState = [self _messageStateForContext:otrContext];
 
-		// Set nil messages to empty string if TLVs are present, otherwise libotr
-		// will silence the message, even though you may have meant to inject a TLV.
-		NSString *messageToEncode = message;
+			if (otrMessageState == OTRKitMessageStatePlaintext) {
+				[self _performAsyncOperationOnDelegateQueue:^{
+					[self.delegate otrKit:self
+						   encodedMessage:message
+							 wasEncrypted:NO
+								 username:username
+							  accountName:accountName
+								 protocol:protocol
+									  tag:tag
+									error:nil];
+				}];
 
-		if (message == nil && [tlvs count] > 0) {
-			messageToEncode = @"";
+				return;
+			}
 		}
 
-		OtrlTLV *otr_tlvs = [self _tlvChainForTLVs:tlvs];
+		[self _encodeMessage:message
+				   inContext:otrContext
+						tlvs:tlvs
+					username:username
+				 accountName:accountName
+					protocol:protocol
+						 tag:tag];
+	}];
+}
 
-		otrError = otrl_message_sending(self.userState,
+- (void)_encodeMessage:(NSString *)message
+			 inContext:(ConnContext *)otrContext
+				  tlvs:(NSArray *)tlvs
+			  username:(NSString *)username
+		   accountName:(NSString *)accountName
+			  protocol:(NSString *)protocol
+				   tag:(id)tag
+{
+	AssertParamaterLength(username)
+	AssertParamaterLength(accountName)
+	AssertParamaterLength(protocol)
+
+	gcry_error_t otrError;
+
+	char *otrEncodedMessage = NULL;
+
+	// Set nil messages to empty string if TLVs are present, otherwise libotr
+	// will silence the message, even though you may have meant to inject a TLV.
+	NSString *messageToEncode = message;
+
+	if (message == nil && [tlvs count] > 0) {
+		messageToEncode = @"";
+	}
+
+	OtrlTLV *otr_tlvs = [self _tlvChainForTLVs:tlvs];
+
+	otrError = otrl_message_sending(self.userState,
 									 &ui_ops,
 									 (__bridge void *)(tag),
 									 [accountName UTF8String],
@@ -816,40 +872,39 @@ static OtrlMessageAppOps ui_ops = {
 									 NULL,
 									 NULL);
 
-		if (otr_tlvs) {
-			otrl_tlv_free(otr_tlvs);
-		}
+	if (otr_tlvs) {
+		otrl_tlv_free(otr_tlvs);
+	}
 
-		BOOL wasEncrypted = NO;
+	BOOL wasEncrypted = NO;
 
-		NSString *encodedMessage = nil;
+	NSString *encodedMessage = nil;
 
-		if (otrEncodedMessage) {
-			encodedMessage = @(otrEncodedMessage);
+	if (otrEncodedMessage) {
+		encodedMessage = @(otrEncodedMessage);
 
-			otrl_message_free(otrEncodedMessage);
+		otrl_message_free(otrEncodedMessage);
 
-			wasEncrypted = [OTRKit stringStartsWithOTRPrefix:encodedMessage];
-		}
+		wasEncrypted = [OTRKit stringStartsWithOTRPrefix:encodedMessage];
+	}
 
-		NSError *errorString = nil;
+	NSError *errorString = nil;
 
-		if (otrError != 0) {
-			errorString = [self _errorForGPGError:otrError];
+	if (otrError != 0) {
+		errorString = [self _errorForGPGError:otrError];
 
-			encodedMessage = nil;
-		}
+		encodedMessage = nil;
+	}
 
-		[self _performAsyncOperationOnDelegateQueue:^{
-			[self.delegate otrKit:self
-				   encodedMessage:encodedMessage
-					 wasEncrypted:wasEncrypted
-						 username:username
-					  accountName:accountName
-						 protocol:protocol
-							  tag:tag
-							error:errorString];
-		}];
+	[self _performAsyncOperationOnDelegateQueue:^{
+		[self.delegate otrKit:self
+			   encodedMessage:encodedMessage
+				 wasEncrypted:wasEncrypted
+					 username:username
+				  accountName:accountName
+					 protocol:protocol
+						  tag:tag
+						error:errorString];
 	}];
 }
 
@@ -857,7 +912,9 @@ static OtrlMessageAppOps ui_ops = {
 						   accountName:(NSString *)accountName
 							  protocol:(NSString *)protocol
 {
-	[self encodeMessage:@"?OTR?" tlvs:nil username:username accountName:accountName protocol:protocol tag:nil];
+	ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
+
+	[self _encodeMessage:@"?OTR?" inContext:otrContext tlvs:nil username:username accountName:accountName protocol:protocol tag:nil];
 }
 
 - (void)disableEncryptionWithUsername:(NSString *)username
