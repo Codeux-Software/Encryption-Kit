@@ -695,6 +695,28 @@ static OtrlMessageAppOps ui_ops = {
 	AssertParamaterLength(accountName)
 	AssertParamaterLength(protocol)
 
+	OTRKitMessageType otrMessageType = [self typeOfMessage:message];
+
+	__block BOOL ignoreMessageSaysDelegate = NO;
+
+	[self _performSyncOperationOnDelegateQueue:^{
+		if ([self.delegate respondsToSelector:@selector(otrKit:ignoreMessage:messageType:username:accountName:protocol:)] == NO) {
+			return;
+		}
+
+		ignoreMessageSaysDelegate =
+		[self.delegate otrKit:self
+				ignoreMessage:message
+				  messageType:otrMessageType
+					 username:username
+				  accountName:accountName
+					 protocol:protocol];
+	}];
+
+	if (ignoreMessageSaysDelegate) {
+		return;
+	}
+
 	[self _performAsyncOperationOnInternalQueue:^{
 		char *otrDecodedMessage = NULL;
 

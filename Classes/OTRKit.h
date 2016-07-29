@@ -335,6 +335,25 @@ willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName
 didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 								   protocol:(NSString *)protocol
 									  error:(nullable NSError *)error;
+
+/**
+ *  Conditionally ignore an incoming message (message to decode)
+ *
+ *  @param otrKit		Reference to shared instance
+ *  @param message		The message to be decoded
+ *  @param messageType	The type of message
+ *  @param username		The account name of the remote user
+ *  @param accountName	The account name of the local user
+ *  @param protocol		The protocol of the exchange
+ *
+ * @return YES to ignore message
+ */
+- (BOOL)   otrKit:(OTRKit *)otrKit
+	ignoreMessage:(NSString *)message
+	  messageType:(OTRKitMessageType)messageType
+		 username:(NSString *)username
+	  accountName:(NSString *)accountName
+		 protocol:(NSString *)protocol;
 @end
 
 @interface OTRKit : NSObject
