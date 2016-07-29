@@ -729,7 +729,7 @@ static OtrlMessageAppOps ui_ops = {
 			}
 		}
 
-		BOOL wasEncrypted = [OTRKit stringStartsWithOTRPrefix:message];
+		BOOL wasEncrypted = (otrMessageType != OTRKitMessageTypeNotOTR);
 
 		if (ignoreMessage == 0)
 		{
@@ -885,7 +885,7 @@ static OtrlMessageAppOps ui_ops = {
 
 		otrl_message_free(otrEncodedMessage);
 
-		wasEncrypted = [OTRKit stringStartsWithOTRPrefix:encodedMessage];
+		wasEncrypted = ([self typeOfMessage:encodedMessage] != OTRKitMessageTypeNotOTR);
 	}
 
 	NSError *errorString = nil;
@@ -1174,6 +1174,88 @@ static OtrlMessageAppOps ui_ops = {
 	}];
 	
 	return offerState;
+}
+
+- (OTRKitMessageType)typeOfMessage:(NSString *)message
+{
+	AssertParamaterLength(message)
+
+	__block OTRKitMessageType messageType = OTRKitMessageTypeUnknown;
+
+	[self _performSyncOperationOnInternalQueue:^{
+		OtrlMessageType otrMessageType = otrl_proto_message_type([message UTF8String]);
+
+		switch (otrMessageType) {
+			case OTRL_MSGTYPE_NOTOTR:
+			{
+				messageType = OTRKitMessageTypeNotOTR;
+
+				break;
+			}
+			case OTRL_MSGTYPE_TAGGEDPLAINTEXT:
+			{
+				messageType = OTRKitMessageTypeTaggedPlainText;
+
+				break;
+			}
+			case OTRL_MSGTYPE_QUERY:
+			{
+				messageType = OTRKitMessageTypeQuery;
+
+				break;
+			}
+			case OTRL_MSGTYPE_DH_COMMIT:
+			{
+				messageType = OTRKitMessageTypeDHCommit;
+
+				break;
+			}
+			case OTRL_MSGTYPE_DH_KEY:
+			{
+				messageType = OTRKitMessageTypeDHKey;
+
+				break;
+			}
+			case OTRL_MSGTYPE_REVEALSIG:
+			{
+				messageType = OTRKitMessageTypeRevealSignature;
+
+				break;
+			}
+			case OTRL_MSGTYPE_SIGNATURE:
+			{
+				messageType = OTRKitMessageTypeSignature;
+
+				break;
+			}
+			case OTRL_MSGTYPE_V1_KEYEXCH:
+			{
+				messageType = OTRKitMessageTypeV1KeyExchange;
+
+				break;
+			}
+			case OTRL_MSGTYPE_DATA:
+			{
+				messageType = OTRKitMessageTypeData;
+
+				break;
+			}
+			case OTRL_MSGTYPE_ERROR:
+			{
+				messageType = OTRKitMessageTypeError;
+
+				break;
+			}
+			case OTRL_MSGTYPE_UNKNOWN:
+			{
+				messageType = OTRKitMessageTypeUnknown;
+				
+				break;
+			}
+		}
+	}];
+
+	return messageType;
 }
 
 #pragma mark -

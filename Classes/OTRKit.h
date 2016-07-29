@@ -93,6 +93,20 @@ typedef NS_ENUM(NSUInteger, OTRKitMessageEvent) {
 	OTRKitMessageEventReceivedMessageForOtherInstance
 };
 
+typedef NS_ENUM(NSUInteger, OTRKitMessageType) {
+	OTRKitMessageTypeNotOTR,
+	OTRKitMessageTypeTaggedPlainText,
+	OTRKitMessageTypeQuery,
+	OTRKitMessageTypeDHCommit,
+	OTRKitMessageTypeDHKey,
+	OTRKitMessageTypeRevealSignature,
+	OTRKitMessageTypeSignature,
+	OTRKitMessageTypeV1KeyExchange,
+	OTRKitMessageTypeData,
+	OTRKitMessageTypeError,
+	OTRKitMessageTypeUnknown
+};
+
 /** 
  *  Notification fired when a fingerprint and/or its attributes change. This 
  *  includes a new fingerprint arriving, one being deleted, or the trust of an 
@@ -475,6 +489,11 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 - (OTRKitOfferState)offerStateForUsername:(NSString *)username
 							  accountName:(NSString *)accountName
 								 protocol:(NSString *)protocol;
+
+/**
+ *  Return type of message.
+ */
+- (OTRKitMessageType)typeOfMessage:(NSString *)message;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Socialist's Millionaire Protocol
