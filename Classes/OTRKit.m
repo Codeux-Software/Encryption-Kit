@@ -837,6 +837,13 @@ static OtrlMessageAppOps ui_ops = {
 								 protocol:protocol
 									  tag:tag
 									error:nil];
+
+					[self.delegate otrKit:self
+							injectMessage:message
+								 username:username
+							  accountName:accountName
+								 protocol:protocol
+									  tag:tag];
 				}];
 
 				return;
