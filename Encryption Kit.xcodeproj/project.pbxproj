@@ -378,8 +378,6 @@
 						CreatedOnToolsVersion = 6.2;
 					};
 					8DC2EF4F0486A6940098B216 = {
-						DevelopmentTeam = 8482Q6EPL6;
-						DevelopmentTeamName = "Codeux Software, LLC";
 						ProvisioningStyle = Manual;
 					};
 				};
