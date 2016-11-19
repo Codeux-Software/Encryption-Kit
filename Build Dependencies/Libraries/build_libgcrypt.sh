@@ -6,7 +6,7 @@ pushd "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
 
 curl -LO "https://www.gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${LIBRARY_GCRYPT_VERSION}.tar.bz2"  --retry 5
 
-tar -xvzf "./libgcrypt-${LIBRARY_GCRYPT_VERSION}.tar.bz2"
+tar -xvf "./libgcrypt-${LIBRARY_GCRYPT_VERSION}.tar.bz2"
 
 mv "./libgcrypt-${LIBRARY_GCRYPT_VERSION}" "./libgcrypt-source"
 
