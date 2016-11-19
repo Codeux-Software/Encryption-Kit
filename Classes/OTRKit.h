@@ -364,6 +364,11 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  */
 @property (nonatomic, strong, nullable) dispatch_queue_t delegateQueue;
 
+/** 
+ *  Determines whether encoding/decoding occurs in the background, on an asynchronous queue. 
+ */
+@property (nonatomic) BOOL asynchronous;
+
 /**
  * By default uses `OTRKitPolicyDefault`
  */

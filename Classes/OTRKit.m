@@ -717,7 +717,7 @@ static OtrlMessageAppOps ui_ops = {
 		return;
 	}
 
-	[self _performAsyncOperationOnInternalQueue:^{
+	dispatch_block_t decodeBlock = ^{
 		char *otrDecodedMessage = NULL;
 
 		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
@@ -793,7 +793,13 @@ static OtrlMessageAppOps ui_ops = {
 		if (otr_tlvs) {
 			otrl_tlv_free(otr_tlvs);
 		}
-	}];
+	};
+
+	if (self.asynchronous) {
+		[self _performAsyncOperationOnInternalQueue:decodeBlock];
+	} else {
+		[self _performSyncOperationOnInternalQueue:decodeBlock];
+	}
 }
 
 - (void)encodeMessage:(NSString *)message
@@ -808,7 +814,7 @@ static OtrlMessageAppOps ui_ops = {
 	AssertParamaterLength(accountName)
 	AssertParamaterLength(protocol)
 
-	[self _performAsyncOperationOnInternalQueue:^{
+	dispatch_block_t encodeBlock = ^{
 		ConnContext *otrContext = [self _contextForUsername:username accountName:accountName protocol:protocol];
 
 		/*
@@ -857,7 +863,13 @@ static OtrlMessageAppOps ui_ops = {
 				 accountName:accountName
 					protocol:protocol
 						 tag:tag];
-	}];
+	};
+
+	if (self.asynchronous) {
+		[self _performAsyncOperationOnInternalQueue:encodeBlock];
+	} else {
+		[self _performSyncOperationOnInternalQueue:encodeBlock];
+	}
 }
 
 - (void)_encodeMessage:(NSString *)message
