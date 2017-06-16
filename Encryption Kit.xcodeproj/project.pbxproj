@@ -233,7 +233,8 @@
 				4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */,
 				4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */,
 			);
-			path = "Build Configuration";
+			name = "Build Configuration";
+			path = "Resources/Build Configuration";
 			sourceTree = "<group>";
 		};
 		4C69906B1A91017500FB41B9 /* Documents */ = {
@@ -372,7 +373,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					4C0FC2FD1AC98F1A00881CE5 = {
 						CreatedOnToolsVersion = 6.2;
