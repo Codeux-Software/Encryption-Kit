@@ -64,6 +64,4 @@ do
 	deleteOldAndCreateDirectory "${LIBRARY_WORKING_DIRECTORY_LOCATION}"
 
 	"./Build Dependencies/Libraries/build_${LIBRARY_TO_BUILD}.sh"
-
-	mv "${SHARED_RESULT_LIBRARY_LOCATION}/${LIBRARY_TO_BUILD}.a" "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}"
 done

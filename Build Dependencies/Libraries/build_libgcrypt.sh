@@ -23,4 +23,6 @@ cd "./libgcrypt-source"
 make
 make install
 
+mv "${SHARED_RESULT_LIBRARY_LOCATION}/libgcrypt.a" "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}"
+
 popd

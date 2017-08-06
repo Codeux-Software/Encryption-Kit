@@ -21,4 +21,6 @@ cd "./libgpg-error-source"
 make
 make install
 
+mv "${SHARED_RESULT_LIBRARY_LOCATION}/libgpg-error.a" "${SHARED_RESULT_LIBRARY_STATIC_LOCATION}"
+
 popd
