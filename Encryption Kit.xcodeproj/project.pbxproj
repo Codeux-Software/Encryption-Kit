@@ -6,20 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 4C0FC2FE1AC98F1A00881CE5 /* Build configuration list for PBXAggregateTarget "Build OSS Libraries" */;
-			buildPhases = (
-				4C0FC3001AC98F3000881CE5 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Build OSS Libraries";
-			productName = "Build OSS Libraries";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		4C006C5B1AB84DA2004BE3C6 /* libgcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C571AB84DA2004BE3C6 /* libgcrypt.a */; };
 		4C006C5C1AB84DA2004BE3C6 /* libgpg-error.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C006C581AB84DA2004BE3C6 /* libgpg-error.a */; };
@@ -61,20 +47,10 @@
 		4CF40F751AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F731AC1A65F00A26BE0 /* OTRKitFingerprintManagerDialog.strings */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4C0FC3011AC9908B00881CE5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C0FC2FD1AC98F1A00881CE5;
-			remoteInfo = "Build OSS Libraries";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libgcrypt.a"; sourceTree = "<absolute>"; };
-		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libgpg-error.a"; sourceTree = "<absolute>"; };
-		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib-static/libotr.a"; sourceTree = "<absolute>"; };
+		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libgcrypt.a"; sourceTree = "<absolute>"; };
+		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libgpg-error.a"; sourceTree = "<absolute>"; };
+		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libotr.a"; sourceTree = "<absolute>"; };
 		4C006C5E1AB84E19004BE3C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4C006C601AB84E22004BE3C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
@@ -359,7 +335,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C0FC3021AC9908B00881CE5 /* PBXTargetDependency */,
 			);
 			name = EncryptionKit;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -375,9 +350,6 @@
 			attributes = {
 				LastUpgradeCheck = 0900;
 				TargetAttributes = {
-					4C0FC2FD1AC98F1A00881CE5 = {
-						CreatedOnToolsVersion = 6.2;
-					};
 					8DC2EF4F0486A6940098B216 = {
 						ProvisioningStyle = Manual;
 					};
@@ -399,7 +371,6 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* EncryptionKit */,
-				4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */,
 			);
 		};
 /* End PBXProject section */
@@ -423,22 +394,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4C0FC3001AC98F3000881CE5 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "env -i \"${PROJECT_DIR}/Build Dependencies/buildDependencies.sh\"";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -458,14 +413,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4C0FC3021AC9908B00881CE5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C0FC2FD1AC98F1A00881CE5 /* Build OSS Libraries */;
-			targetProxy = 4C0FC3011AC9908B00881CE5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB91AF08733DA50010E9CD /* Release */ = {
@@ -488,14 +435,6 @@
 			};
 			name = Release;
 		};
-		4C0FC2FF1AC98F1A00881CE5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.encryptionKit;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -511,14 +450,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B308733DA50010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4C0FC2FE1AC98F1A00881CE5 /* Build configuration list for PBXAggregateTarget "Build OSS Libraries" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4C0FC2FF1AC98F1A00881CE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
