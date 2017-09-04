@@ -751,7 +751,8 @@ static OtrlMessageAppOps ui_ops = {
 			}
 		}
 
-		BOOL wasEncrypted = (otrMessageType != OTRKitMessageTypeNotOTR);
+		BOOL wasEncrypted = (otrMessageType != OTRKitMessageTypeNotOTR &&
+							 otrMessageType != OTRKitMessageTypeTaggedPlainText);
 
 		if (ignoreMessage == 0)
 		{
