@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Cancel all progress and close the dialog.
  *
- *  This method automatically aborts any open negotations on behalf of the caller.
+ *  This method automatically aborts any open negotiations on behalf of the caller.
  */
 + (void)cancelRequestForUsername:(NSString *)username
 					 accountName:(NSString *)accountName

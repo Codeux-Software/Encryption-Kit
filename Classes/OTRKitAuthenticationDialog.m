@@ -338,7 +338,7 @@
 #pragma mark -
 #pragma mark Teardown Dialog
 
-- (void)_maybeAbortOpenNegotations
+- (void)_maybeAbortOpenNegotiations
 {
 	if (self.lastEvent == OTRKitSMPEventInProgress ||
 		self.lastEvent == OTRKitSMPEventAskForAnswer ||
@@ -352,7 +352,7 @@
 
 - (void)_cancelRequest
 {
-	[self _maybeAbortOpenNegotations];
+	[self _maybeAbortOpenNegotiations];
 
 	[self _teardownDialog];
 }
@@ -525,7 +525,7 @@
 - (IBAction)_authenticationProgressCancel:(id)sender
 {
 	/* Close negotation if it is open. */
-	[self _maybeAbortOpenNegotations];
+	[self _maybeAbortOpenNegotiations];
 
 	/* There is no way to resend failed requests for incoming. */
 	if (self.isIncomingRequest) {
