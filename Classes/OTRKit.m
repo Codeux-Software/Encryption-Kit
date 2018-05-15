@@ -577,7 +577,7 @@ static OtrlMessageAppOps ui_ops = {
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		_sharedInstance = [OTRKit new];
+		_sharedInstance = [self new];
 	});
 
 	return _sharedInstance;

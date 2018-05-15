@@ -46,7 +46,7 @@
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		sharedSelf = [OTRKitAuthenticationDialogWindowManager new];
+		sharedSelf = [self new];
 	});
 
 	return sharedSelf;

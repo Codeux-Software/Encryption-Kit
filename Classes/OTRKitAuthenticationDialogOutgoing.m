@@ -166,7 +166,7 @@ static NSArray *_listOfOpenFingerprintConfirmationAlerts = nil;
 										 buttons:alertButtons
 									 contextInfo:concreteObject
 								 completionBlock:^(NSInteger buttonClicked, id contextInfo) {
-									 [OTRKitAuthenticationDialogOutgoing _showFingerprintConfirmationAlertDidEnd:buttonClicked contextInfo:contextInfo];
+									 [self _showFingerprintConfirmationAlertDidEnd:buttonClicked contextInfo:contextInfo];
 								 }];
 }
 

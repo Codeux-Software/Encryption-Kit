@@ -46,7 +46,7 @@
 	va_list arguments;
 	va_start(arguments, inTable);
 
-	NSString *formattedString = [OTRKitFrameworkHelpers localizedString:original inTable:inTable arguments:arguments];
+	NSString *formattedString = [self localizedString:original inTable:inTable arguments:arguments];
 
 	va_end(arguments);
 
@@ -70,7 +70,7 @@
 	NSWindow *attachedSheet = [window attachedSheet];
 
 	if (attachedSheet) {
-		return [OTRKitFrameworkHelpers _deepestSheetOfWindow:attachedSheet];
+		return [self _deepestSheetOfWindow:attachedSheet];
 	} else {
 		return window;
 	}
@@ -102,7 +102,7 @@
 	}
 
 	if (hostWindow) {
-		hostWindow = [OTRKitFrameworkHelpers _deepestSheetOfWindow:hostWindow];
+		hostWindow = [self _deepestSheetOfWindow:hostWindow];
 	}
 
 	if (hostWindow) {
@@ -113,15 +113,15 @@
 		}
 
 		[errorAlert beginSheetModalForWindow:hostWindow
-							   modalDelegate:[OTRKitFrameworkHelpers class]
+							   modalDelegate:[self class]
 							  didEndSelector:@selector(_alertDialogSheetDidEnd:returnCode:contextInfo:)
 								 contextInfo:contextObjectRef];
 	} else {
 		NSModalResponse returnCode = [errorAlert runModal];
 
 		if (contextObject) {
-			[OTRKitFrameworkHelpers _alertDialogDidEnd:returnCode
-										 contextObject:contextObject];
+			[self _alertDialogDidEnd:returnCode
+					   contextObject:contextObject];
 		}
 	}
 }
@@ -131,7 +131,7 @@
 	if (contextInfo) {
 		OTRKitAlertDialogContextObject *contextObject = (OTRKitAlertDialogContextObject *)CFBridgingRelease(contextInfo);
 
-		[OTRKitFrameworkHelpers _alertDialogDidEnd:returnCode contextObject:contextObject];
+		[self _alertDialogDidEnd:returnCode contextObject:contextObject];
 	}
 }
 
