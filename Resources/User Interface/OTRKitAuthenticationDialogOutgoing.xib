@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13178.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,6 +43,8 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="283" y="305" width="415" height="486"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <value key="maxSize" type="size" width="415" height="486"/>
+            <value key="maxFullScreenContentSize" type="size" width="415" height="486"/>
             <view key="contentView" id="Hi0-Ll-Z9M">
                 <rect key="frame" x="0.0" y="0.0" width="415" height="486"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -50,9 +52,9 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="eeN-Ug-oD5" userLabel="Fingerprint View">
                         <rect key="frame" x="0.0" y="61" width="415" height="260"/>
                     </customView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h6l-YW-WQk">
-                        <rect key="frame" x="40" y="370" width="335" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="How would you like to authenticate your chat partner?" id="S7b-pH-In4">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6l-YW-WQk">
+                        <rect key="frame" x="18" y="370" width="379" height="17"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="How would you like to authenticate your chat partner?" id="S7b-pH-In4">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -117,7 +119,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSh-WB-Re6">
-                        <rect key="frame" x="36" y="400" width="343" height="34"/>
+                        <rect key="frame" x="18" y="400" width="379" height="34"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Authenticating your chat partner helps ensure that the person you are talking to is who he or she claims to be." id="w7E-dS-d5n">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +127,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qhZ-qD-XGk">
-                        <rect key="frame" x="122" y="442" width="171" height="24"/>
+                        <rect key="frame" x="122" y="442" width="172" height="24"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Authenticate %@" id="cAe-JU-aM9">
                             <font key="font" metaFont="systemBold" size="20"/>
                             <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
@@ -136,29 +138,30 @@ Gw
                 <constraints>
                     <constraint firstItem="vSh-WB-Re6" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="1JC-cH-qEO"/>
                     <constraint firstItem="A7o-jx-MUA" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="4Ra-Z5-olW"/>
-                    <constraint firstItem="7V6-E8-3k9" firstAttribute="top" secondItem="G9B-mJ-WzG" secondAttribute="bottom" constant="20" id="65E-FE-spQ"/>
-                    <constraint firstItem="h6l-YW-WQk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="6Qh-if-5gc"/>
+                    <constraint firstItem="h6l-YW-WQk" firstAttribute="leading" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="6Qh-if-5gc"/>
                     <constraint firstItem="wNk-lK-61R" firstAttribute="top" secondItem="A7o-jx-MUA" secondAttribute="bottom" constant="20" id="85E-d7-xV5"/>
                     <constraint firstItem="1Ei-bM-9me" firstAttribute="baseline" secondItem="7V6-E8-3k9" secondAttribute="baseline" id="9y9-rw-aEf"/>
                     <constraint firstItem="eeN-Ug-oD5" firstAttribute="top" secondItem="wNk-lK-61R" secondAttribute="bottom" constant="-1" id="BZp-iE-w0P"/>
+                    <constraint firstItem="1Ei-bM-9me" firstAttribute="top" secondItem="G9B-mJ-WzG" secondAttribute="bottom" constant="20" id="EvZ-dw-Aa7"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qhZ-qD-XGk" secondAttribute="trailing" constant="20" id="IyS-2g-pyH"/>
                     <constraint firstAttribute="trailing" secondItem="eeN-Ug-oD5" secondAttribute="trailing" id="MBH-U0-h1G"/>
                     <constraint firstItem="h6l-YW-WQk" firstAttribute="top" secondItem="vSh-WB-Re6" secondAttribute="bottom" constant="13" id="P83-uc-kkr"/>
                     <constraint firstAttribute="bottom" secondItem="1Ei-bM-9me" secondAttribute="bottom" constant="20" id="QTa-fW-f4e"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="h6l-YW-WQk" secondAttribute="trailing" constant="20" id="TYl-9O-qm3"/>
+                    <constraint firstAttribute="trailing" secondItem="h6l-YW-WQk" secondAttribute="trailing" constant="20" id="TYl-9O-qm3"/>
                     <constraint firstAttribute="trailing" secondItem="1Ei-bM-9me" secondAttribute="trailing" constant="20" id="aII-l0-VCH"/>
+                    <constraint firstItem="7V6-E8-3k9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="anh-cy-lNs"/>
                     <constraint firstItem="qhZ-qD-XGk" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="cMh-qM-QbR"/>
                     <constraint firstItem="G9B-mJ-WzG" firstAttribute="top" secondItem="eeN-Ug-oD5" secondAttribute="bottom" constant="-1" id="dZe-WZ-M73"/>
                     <constraint firstItem="vSh-WB-Re6" firstAttribute="top" secondItem="qhZ-qD-XGk" secondAttribute="bottom" constant="8" id="e2V-OO-G9z"/>
                     <constraint firstItem="eeN-Ug-oD5" firstAttribute="leading" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" id="nLy-1G-cPO"/>
                     <constraint firstItem="A7o-jx-MUA" firstAttribute="top" secondItem="h6l-YW-WQk" secondAttribute="bottom" constant="8" id="pdE-O5-OTW"/>
                     <constraint firstItem="wNk-lK-61R" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="qLV-cQ-upb"/>
-                    <constraint firstItem="vSh-WB-Re6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="rRG-aj-0Ve"/>
+                    <constraint firstItem="vSh-WB-Re6" firstAttribute="leading" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="rRG-aj-0Ve"/>
                     <constraint firstItem="1Ei-bM-9me" firstAttribute="leading" secondItem="7V6-E8-3k9" secondAttribute="trailing" constant="12" id="rpK-uL-Fxn"/>
                     <constraint firstItem="qhZ-qD-XGk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hi0-Ll-Z9M" secondAttribute="leading" constant="20" id="u9Z-R1-Ahq"/>
                     <constraint firstItem="qhZ-qD-XGk" firstAttribute="top" secondItem="Hi0-Ll-Z9M" secondAttribute="top" constant="20" id="vRD-yO-8N9"/>
                     <constraint firstItem="G9B-mJ-WzG" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="wcx-3A-xUg"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vSh-WB-Re6" secondAttribute="trailing" constant="20" id="x4I-QP-J95"/>
+                    <constraint firstAttribute="trailing" secondItem="vSh-WB-Re6" secondAttribute="trailing" constant="20" id="x4I-QP-J95"/>
                     <constraint firstItem="h6l-YW-WQk" firstAttribute="centerX" secondItem="Hi0-Ll-Z9M" secondAttribute="centerX" id="xLy-Ma-hcE"/>
                 </constraints>
             </view>
@@ -185,13 +188,13 @@ Gw
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="TSU-fV-eDe">
                     <rect key="frame" x="96" y="18" width="224" height="18"/>
-                    <buttonCell key="cell" type="check" title="This is my chat partner's fingerprint" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="bje-mr-3K1">
+                    <buttonCell key="cell" type="check" title="This is my chat partner's fingerprint" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bje-mr-3K1">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GIU-IZ-nun">
-                    <rect key="frame" x="18" y="88" width="183" height="16"/>
+                    <rect key="frame" x="18" y="88" width="184" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Purported fingerprint for %@:" id="1fB-GN-QSJ">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -208,9 +211,6 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LAP-ud-XkG">
                     <rect key="frame" x="18" y="163" width="379" height="42"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="Wb3-8z-PcM"/>
-                    </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="tEP-wf-gbG">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">To verify the fingerprint of your chat partner, contact them using a telephone, a signed e-mail, or other form of secure communication. Compare the fingerprint visible below to that of your chat partner.</string>
@@ -223,8 +223,9 @@ Gw
                 <constraint firstItem="hjy-NL-Wbv" firstAttribute="top" secondItem="GIU-IZ-nun" secondAttribute="bottom" constant="2" id="5vo-rt-4LE"/>
                 <constraint firstItem="GIU-IZ-nun" firstAttribute="top" secondItem="icp-it-Guw" secondAttribute="bottom" constant="7" id="6kF-Dr-tP9"/>
                 <constraint firstItem="IqV-xc-Bq7" firstAttribute="top" secondItem="LAP-ud-XkG" secondAttribute="bottom" constant="16" id="BVb-bX-VIZ"/>
-                <constraint firstItem="GIU-IZ-nun" firstAttribute="leading" secondItem="IqV-xc-Bq7" secondAttribute="leading" id="Fyo-XX-kip"/>
+                <constraint firstItem="LAP-ud-XkG" firstAttribute="leading" secondItem="6Lk-f2-2tL" secondAttribute="leading" constant="20" id="D7I-XB-DJc"/>
                 <constraint firstItem="TSU-fV-eDe" firstAttribute="centerX" secondItem="6Lk-f2-2tL" secondAttribute="centerX" id="Gmq-Gu-1jq"/>
+                <constraint firstAttribute="width" constant="415" id="HPt-bh-q9W"/>
                 <constraint firstItem="LAP-ud-XkG" firstAttribute="top" secondItem="6Lk-f2-2tL" secondAttribute="top" constant="19" id="IJH-fY-Ogu"/>
                 <constraint firstItem="icp-it-Guw" firstAttribute="top" secondItem="IqV-xc-Bq7" secondAttribute="bottom" constant="2" id="JiY-lH-MdY"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hjy-NL-Wbv" secondAttribute="trailing" constant="20" id="Jw6-bK-ym0"/>
@@ -232,7 +233,8 @@ Gw
                 <constraint firstItem="IqV-xc-Bq7" firstAttribute="leading" secondItem="6Lk-f2-2tL" secondAttribute="leading" constant="20" id="ScQ-gu-mrl"/>
                 <constraint firstItem="TSU-fV-eDe" firstAttribute="top" secondItem="hjy-NL-Wbv" secondAttribute="bottom" constant="34" id="TTe-9d-JJT"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="icp-it-Guw" secondAttribute="trailing" constant="20" id="V86-jL-rrv"/>
-                <constraint firstItem="LAP-ud-XkG" firstAttribute="centerX" secondItem="6Lk-f2-2tL" secondAttribute="centerX" id="bkH-SX-5gP"/>
+                <constraint firstAttribute="trailing" secondItem="LAP-ud-XkG" secondAttribute="trailing" constant="20" id="VKM-Zg-dAI"/>
+                <constraint firstItem="GIU-IZ-nun" firstAttribute="leading" secondItem="6Lk-f2-2tL" secondAttribute="leading" constant="20" id="ZnN-Yx-zqh"/>
                 <constraint firstAttribute="bottom" secondItem="TSU-fV-eDe" secondAttribute="bottom" constant="20" id="eOw-ca-Jq6"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GIU-IZ-nun" secondAttribute="trailing" constant="20" id="ewV-SJ-ms1"/>
                 <constraint firstItem="icp-it-Guw" firstAttribute="leading" secondItem="IqV-xc-Bq7" secondAttribute="leading" constant="17" id="jii-IP-vqD"/>
@@ -245,9 +247,6 @@ Gw
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JoI-h9-mOU">
                     <rect key="frame" x="18" y="135" width="379" height="56"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="oqT-FQ-G3H"/>
-                    </constraints>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="tJG-qn-sgX">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Pick a question whose answer is known only to you and your chat partner. Enter this question and the answer, then wait for your chat partner to respond. You may be talking to an imposter if your chat partner's response does not match the answer defined below.</string>
@@ -255,9 +254,9 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w5j-sv-48d">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5j-sv-48d">
                     <rect key="frame" x="18" y="50" width="153" height="16"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Answer (case sensitive):" id="5Pc-PL-q22">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Answer (case sensitive):" id="5Pc-PL-q22">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -265,9 +264,6 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="375" translatesAutoresizingMaskIntoConstraints="NO" id="wrI-1E-ulk" customClass="OTRKitAutoExpandingTextField">
                     <rect key="frame" x="20" y="23" width="375" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="uIa-Pa-w4W"/>
-                    </constraints>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Blue" drawsBackground="YES" id="VZS-MC-L6r">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -277,9 +273,9 @@ Gw
                         <outlet property="delegate" destination="-2" id="1RE-QO-Z5e"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-sR-Ity">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-sR-Ity">
                     <rect key="frame" x="18" y="101" width="63" height="16"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Question:" id="7Eg-5d-StP">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Question:" id="7Eg-5d-StP">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -287,9 +283,6 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="375" translatesAutoresizingMaskIntoConstraints="NO" id="1Mp-nJ-n0s" customClass="OTRKitAutoExpandingTextField">
                     <rect key="frame" x="20" y="74" width="375" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="cdg-Fv-f61"/>
-                    </constraints>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="What is my favorite color?" drawsBackground="YES" id="ZRg-f4-a03">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -303,35 +296,35 @@ Gw
             <constraints>
                 <constraint firstItem="aMr-sR-Ity" firstAttribute="leading" secondItem="1Mp-nJ-n0s" secondAttribute="leading" id="70a-nr-7sw"/>
                 <constraint firstItem="JoI-h9-mOU" firstAttribute="top" secondItem="rqv-sO-4nT" secondAttribute="top" constant="19" id="FF5-bg-0mT"/>
+                <constraint firstAttribute="width" constant="415" id="Gfa-kH-6Sd"/>
+                <constraint firstItem="wrI-1E-ulk" firstAttribute="leading" secondItem="rqv-sO-4nT" secondAttribute="leading" constant="20" id="Jqp-3F-q4g"/>
                 <constraint firstAttribute="bottom" secondItem="wrI-1E-ulk" secondAttribute="bottom" constant="23" id="L2g-Yw-jnb"/>
-                <constraint firstItem="1Mp-nJ-n0s" firstAttribute="centerX" secondItem="rqv-sO-4nT" secondAttribute="centerX" id="RNs-bF-nmy"/>
+                <constraint firstAttribute="trailing" secondItem="1Mp-nJ-n0s" secondAttribute="trailing" constant="20" id="MgP-3j-qh0"/>
                 <constraint firstItem="w5j-sv-48d" firstAttribute="leading" secondItem="wrI-1E-ulk" secondAttribute="leading" id="UAq-Jt-n8c"/>
-                <constraint firstItem="wrI-1E-ulk" firstAttribute="centerX" secondItem="rqv-sO-4nT" secondAttribute="centerX" id="V8k-fE-3VP"/>
+                <constraint firstItem="1Mp-nJ-n0s" firstAttribute="leading" secondItem="rqv-sO-4nT" secondAttribute="leading" constant="20" id="V3T-P1-m1G"/>
                 <constraint firstItem="1Mp-nJ-n0s" firstAttribute="top" secondItem="aMr-sR-Ity" secondAttribute="bottom" constant="5" id="WSW-ux-Puk"/>
                 <constraint firstItem="w5j-sv-48d" firstAttribute="top" secondItem="1Mp-nJ-n0s" secondAttribute="bottom" constant="8" id="bc3-jB-Bhg"/>
+                <constraint firstAttribute="trailing" secondItem="JoI-h9-mOU" secondAttribute="trailing" constant="20" id="nSc-Mb-gIq"/>
                 <constraint firstItem="wrI-1E-ulk" firstAttribute="top" secondItem="w5j-sv-48d" secondAttribute="bottom" constant="5" id="oPa-7p-Yh6"/>
+                <constraint firstAttribute="trailing" secondItem="wrI-1E-ulk" secondAttribute="trailing" constant="20" id="rWO-1Q-zMY"/>
                 <constraint firstItem="aMr-sR-Ity" firstAttribute="top" secondItem="JoI-h9-mOU" secondAttribute="bottom" constant="18" id="s7Z-sm-tTR"/>
-                <constraint firstItem="JoI-h9-mOU" firstAttribute="centerX" secondItem="rqv-sO-4nT" secondAttribute="centerX" id="wpE-N1-xhB"/>
+                <constraint firstItem="JoI-h9-mOU" firstAttribute="leading" secondItem="rqv-sO-4nT" secondAttribute="leading" constant="20" id="vHj-fN-TzU"/>
             </constraints>
             <point key="canvasLocation" x="158.5" y="216"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="xK3-wL-2XQ" userLabel="Shared Secret View">
-            <rect key="frame" x="0.0" y="0.0" width="415" height="156"/>
+            <rect key="frame" x="0.0" y="0.0" width="415" height="155"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7ri-Bx-ATX">
-                    <rect key="frame" x="18" y="48" width="379" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="CFc-od-Z0Q"/>
-                        <constraint firstAttribute="height" constant="17" id="wfb-Jy-51Y"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="The shared secret:" id="gLq-gz-eIi">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ri-Bx-ATX">
+                    <rect key="frame" x="18" y="48" width="118" height="16"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The shared secret:" id="gLq-gz-eIi">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gyh-MA-97h">
-                    <rect key="frame" x="18" y="81" width="379" height="56"/>
+                    <rect key="frame" x="18" y="80" width="379" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="wWe-Ws-RQz">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Pick a secret that's known only to you and your chat partner. Enter this secret, then wait for your chat partner to respond. You may be talking to an imposter if your chat partner’s response does not match the secret defined below.</string>
@@ -341,9 +334,6 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="375" translatesAutoresizingMaskIntoConstraints="NO" id="dPn-tW-9lh" customClass="OTRKitAutoExpandingTextField">
                     <rect key="frame" x="20" y="21" width="375" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="375" id="wAi-Ah-Fkd"/>
-                    </constraints>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="We both like the color blue" drawsBackground="YES" id="g0z-Wu-WCu">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -356,32 +346,31 @@ Gw
             </subviews>
             <constraints>
                 <constraint firstItem="7ri-Bx-ATX" firstAttribute="top" secondItem="gyh-MA-97h" secondAttribute="bottom" constant="16" id="0A5-au-9Qg"/>
+                <constraint firstItem="7ri-Bx-ATX" firstAttribute="leading" secondItem="dPn-tW-9lh" secondAttribute="leading" id="4tG-qQ-Lm2"/>
                 <constraint firstItem="dPn-tW-9lh" firstAttribute="leading" secondItem="xK3-wL-2XQ" secondAttribute="leading" constant="20" id="Bdb-gi-eZo"/>
                 <constraint firstItem="gyh-MA-97h" firstAttribute="top" secondItem="xK3-wL-2XQ" secondAttribute="top" constant="19" id="Daf-eW-2G5"/>
                 <constraint firstItem="gyh-MA-97h" firstAttribute="leading" secondItem="xK3-wL-2XQ" secondAttribute="leading" constant="20" id="F31-yw-Fhw"/>
                 <constraint firstAttribute="trailing" secondItem="gyh-MA-97h" secondAttribute="trailing" constant="20" id="KsP-96-UdO"/>
                 <constraint firstAttribute="bottom" secondItem="dPn-tW-9lh" secondAttribute="bottom" constant="21" id="Ry7-b6-RMb"/>
                 <constraint firstAttribute="trailing" secondItem="dPn-tW-9lh" secondAttribute="trailing" constant="20" id="fa7-OV-WAM"/>
+                <constraint firstAttribute="width" constant="415" id="p4T-JQ-Fs3"/>
                 <constraint firstItem="dPn-tW-9lh" firstAttribute="top" secondItem="7ri-Bx-ATX" secondAttribute="bottom" constant="5" id="pbi-vG-CVo"/>
-                <constraint firstItem="7ri-Bx-ATX" firstAttribute="leading" secondItem="xK3-wL-2XQ" secondAttribute="leading" constant="20" id="wCb-6r-VbO"/>
-                <constraint firstAttribute="trailing" secondItem="7ri-Bx-ATX" secondAttribute="trailing" constant="20" id="xNa-NE-xnD"/>
             </constraints>
             <point key="canvasLocation" x="184.5" y="260.5"/>
         </customView>
         <window title="Progress Information" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="bEq-ZZ-Dh2">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="317" height="166"/>
+            <rect key="contentRect" x="283" y="305" width="350" height="166"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <value key="maxSize" type="size" width="400" height="166"/>
+            <value key="maxFullScreenContentSize" type="size" width="400" height="166"/>
             <view key="contentView" id="itP-ve-6xR">
-                <rect key="frame" x="0.0" y="0.0" width="317" height="166"/>
+                <rect key="frame" x="0.0" y="0.0" width="350" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <progressIndicator wantsLayer="YES" maxValue="100" doubleValue="25" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="P4K-zB-un5">
-                        <rect key="frame" x="20" y="102" width="278" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="278" id="l8x-vs-YWw"/>
-                        </constraints>
+                        <rect key="frame" x="20" y="102" width="311" height="20"/>
                     </progressIndicator>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e0u-3n-gq3">
                         <rect key="frame" x="18" y="129" width="127" height="17"/>
@@ -400,13 +389,10 @@ Gw
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="qD2-Ig-9vH">
-                        <rect key="frame" x="32" y="59" width="254" height="5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="254" id="rzU-hN-K3I"/>
-                        </constraints>
+                        <rect key="frame" x="30" y="59" width="290" height="5"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r71-pN-F6N">
-                        <rect key="frame" x="244" y="13" width="59" height="32"/>
+                        <rect key="frame" x="277" y="13" width="59" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5qb-gX-OxK">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -419,7 +405,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XM4-G6-5bg">
-                        <rect key="frame" x="162" y="13" width="82" height="32"/>
+                        <rect key="frame" x="195" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ozf-vL-9fV">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -434,23 +420,27 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="r71-pN-F6N" firstAttribute="leading" secondItem="XM4-G6-5bg" secondAttribute="trailing" constant="12" id="1LZ-er-MpT"/>
+                    <constraint firstItem="P4K-zB-un5" firstAttribute="leading" secondItem="itP-ve-6xR" secondAttribute="leading" constant="20" id="1Sy-8l-6Ca"/>
                     <constraint firstItem="P4K-zB-un5" firstAttribute="top" secondItem="e0u-3n-gq3" secondAttribute="bottom" constant="8" id="1ww-Ec-DIQ"/>
-                    <constraint firstItem="P4K-zB-un5" firstAttribute="centerX" secondItem="itP-ve-6xR" secondAttribute="centerX" id="2eF-Ju-po7"/>
+                    <constraint firstItem="Qfi-L8-XHQ" firstAttribute="leading" secondItem="itP-ve-6xR" secondAttribute="leading" constant="20" id="200-Fb-BIl"/>
                     <constraint firstItem="XM4-G6-5bg" firstAttribute="top" secondItem="qD2-Ig-9vH" secondAttribute="bottom" constant="20" id="5cU-Mv-tPP"/>
+                    <constraint firstItem="XM4-G6-5bg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="itP-ve-6xR" secondAttribute="leading" constant="20" id="7FX-pK-7hL"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qfi-L8-XHQ" secondAttribute="trailing" constant="20" id="D1c-8H-bP3"/>
                     <constraint firstItem="qD2-Ig-9vH" firstAttribute="centerX" secondItem="itP-ve-6xR" secondAttribute="centerX" id="F5C-IN-quT"/>
                     <constraint firstItem="e0u-3n-gq3" firstAttribute="top" secondItem="itP-ve-6xR" secondAttribute="top" constant="20" id="KzW-xf-oew"/>
                     <constraint firstAttribute="trailing" secondItem="r71-pN-F6N" secondAttribute="trailing" constant="20" id="QHy-2Q-YGg"/>
                     <constraint firstItem="Qfi-L8-XHQ" firstAttribute="top" secondItem="P4K-zB-un5" secondAttribute="bottom" constant="6" id="dyc-0O-f6J"/>
-                    <constraint firstItem="Qfi-L8-XHQ" firstAttribute="leading" secondItem="e0u-3n-gq3" secondAttribute="leading" id="gOf-h5-bGn"/>
+                    <constraint firstItem="qD2-Ig-9vH" firstAttribute="leading" secondItem="itP-ve-6xR" secondAttribute="leading" constant="30" id="eCe-dc-w2b"/>
+                    <constraint firstAttribute="trailing" secondItem="P4K-zB-un5" secondAttribute="trailing" constant="19" id="h6h-y3-Cr4"/>
                     <constraint firstItem="e0u-3n-gq3" firstAttribute="leading" secondItem="itP-ve-6xR" secondAttribute="leading" constant="20" id="r1j-SB-Lvy"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="e0u-3n-gq3" secondAttribute="trailing" constant="20" id="scP-8n-gSc"/>
+                    <constraint firstAttribute="trailing" secondItem="qD2-Ig-9vH" secondAttribute="trailing" constant="30" id="t9v-xE-SJ1"/>
                     <constraint firstItem="r71-pN-F6N" firstAttribute="baseline" secondItem="XM4-G6-5bg" secondAttribute="baseline" id="tWF-Fu-mQZ"/>
                     <constraint firstAttribute="bottom" secondItem="r71-pN-F6N" secondAttribute="bottom" constant="20" id="wD7-yB-wRa"/>
                     <constraint firstItem="qD2-Ig-9vH" firstAttribute="top" secondItem="Qfi-L8-XHQ" secondAttribute="bottom" constant="18" id="xd7-by-1gU"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="135.5" y="303"/>
+            <point key="canvasLocation" x="20" y="304"/>
         </window>
     </objects>
 </document>
