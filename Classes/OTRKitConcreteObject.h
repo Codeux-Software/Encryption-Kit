@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitConcreteObject : NSObject
 @property (readonly, copy) NSString *username;
 @property (readonly, copy) NSString *accountName;
@@ -37,3 +39,5 @@
 @property (readonly, copy) NSString *fingerprintString;
 @property (readonly) BOOL fingerprintIsTrusted;
 @end
+
+NS_ASSUME_NONNULL_END

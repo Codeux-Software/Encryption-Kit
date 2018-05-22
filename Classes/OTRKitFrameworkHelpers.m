@@ -34,8 +34,10 @@
 
 #include <objc/message.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitAlertDialogContextObject : NSObject
-@property (nonatomic, strong) id contextInfo;
+@property (nonatomic, strong, nullable) id contextInfo;
 @property (nonatomic, copy) OTRKitAlertDialogCompletionBlock completionBlock;
 @end
 
@@ -43,6 +45,9 @@
 
 + (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable, ...
 {
+	NSParameterAssert(original != nil);
+	NSParameterAssert(inTable != nil);
+
 	va_list arguments;
 	va_start(arguments, inTable);
 
@@ -55,7 +60,10 @@
 
 + (NSString *)localizedString:(NSString *)original inTable:(NSString *)inTable arguments:(va_list)arguments
 {
-	NSBundle *selfBundle = CurrentBundle();
+	NSParameterAssert(original != nil);
+	NSParameterAssert(inTable != nil);
+
+	NSBundle *selfBundle = [NSBundle bundleForClass:[self class]];
 
 	NSString *localeString = [selfBundle localizedStringForKey:original value:original table:inTable];
 
@@ -66,25 +74,36 @@
 
 + (NSWindow *)_deepestSheetOfWindow:(NSWindow *)window
 {
+	NSParameterAssert(window != nil);
+
 	/* Recursively scan all attached sheets until we find a window without one. */
-	NSWindow *attachedSheet = [window attachedSheet];
+	NSWindow *attachedSheet = window.attachedSheet;
 
 	if (attachedSheet) {
 		return [self _deepestSheetOfWindow:attachedSheet];
-	} else {
-		return window;
 	}
+
+	return window;
 }
 
-+ (void)presentAlertInWindow:(NSWindow *)hostWindow messageText:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray<NSString *> *)buttons contextInfo:(id)contextInfo completionBlock:(OTRKitAlertDialogCompletionBlock)completionBlock
++ (void)presentAlertInWindow:(nullable NSWindow *)hostWindow
+				 messageText:(NSString *)messageText
+			 informativeText:(NSString *)informativeText
+					 buttons:(NSArray<NSString *> *)buttons
+				 contextInfo:(nullable id)contextInfo
+			 completionBlock:(nullable OTRKitAlertDialogCompletionBlock)completionBlock;
 {
+	NSParameterAssert(messageText != nil);
+	NSParameterAssert(informativeText != nil);
+	NSParameterAssert(buttons != nil);
+
 	/* Construct alert */
 	NSAlert *errorAlert = [NSAlert new];
 
-	[errorAlert setAlertStyle:NSInformationalAlertStyle];
+	errorAlert.alertStyle = NSInformationalAlertStyle;
 
-	[errorAlert setMessageText:messageText];
-	[errorAlert setInformativeText:informativeText];
+	errorAlert.messageText = messageText;
+	errorAlert.informativeText = informativeText;
 
 	for (NSString *button in buttons) {
 		[errorAlert addButtonWithTitle:button];
@@ -96,9 +115,9 @@
 	if (contextInfo || completionBlock) {
 		contextObject = [OTRKitAlertDialogContextObject new];
 
-		[contextObject setContextInfo:contextInfo];
+		contextObject.contextInfo = contextInfo;
 
-		[contextObject setCompletionBlock:completionBlock];
+		contextObject.completionBlock = completionBlock;
 	}
 
 	if (hostWindow) {
@@ -137,9 +156,9 @@
 
 + (void)_alertDialogDidEnd:(NSInteger)returnCode contextObject:(OTRKitAlertDialogContextObject *)contextObject
 {
-	id contextInfo = [contextObject contextInfo];
+	id contextInfo = contextObject.contextInfo;
 
-	OTRKitAlertDialogCompletionBlock completionBlock = [contextObject completionBlock];
+	OTRKitAlertDialogCompletionBlock completionBlock = contextObject.completionBlock;
 
 	if (completionBlock) {
 		completionBlock(returnCode, contextInfo);
@@ -148,5 +167,9 @@
 
 @end
 
+#pragma mark -
+
 @implementation OTRKitAlertDialogContextObject
 @end
+
+NS_ASSUME_NONNULL_END

@@ -37,6 +37,8 @@
 
 #import "OTRKitAutoExpandingTextField.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define _LocalizedString(_key_, ...)				\
 	LocalizedString(@"OTRKitAuthenticationDialog", (_key_), ##__VA_ARGS__)
 
@@ -59,7 +61,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *authenticationProgressOkButton;
 @property (nonatomic, weak) IBOutlet NSButton *authenticationProgressCancelButton;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *authenticationProgressProgressIndicator;
-@property (nonatomic, strong) IBOutlet NSView *contentViewFingerprintAuthentication;
+@property (nonatomic, strong, nullable) IBOutlet NSView *contentViewFingerprintAuthentication;
 @property (nonatomic, strong) IBOutlet NSView *contentViewQuestionAndAnswerAuthentication;
 @property (nonatomic, strong) IBOutlet NSView *contentViewSharedSecretAuthentication;
 @property (nonatomic, weak) IBOutlet OTRKitAutoExpandingTextField *questionAndAnswerQuestionTextField;
@@ -121,3 +123,5 @@
 
 - (IBAction)_authenticationMethodChanged:(id)sender;
 @end
+
+NS_ASSUME_NONNULL_END

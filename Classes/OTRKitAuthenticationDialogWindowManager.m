@@ -33,6 +33,8 @@
 #import "OTRKitAuthenticationDialogWindowManager.h"
 #import "OTRKitAuthenticationDialogPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitAuthenticationDialogWindowManager ()
 @property (nonatomic, strong) NSMutableDictionary *openDialogs;
 @end
@@ -65,11 +67,11 @@
 
 - (void)addDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	AssertParamaterNil(dialog)
+	NSParameterAssert(dialog != nil);
 
-	NSString *dictKey = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
-												  accountName:[dialog cachedAccountName]
-													 protocol:[dialog cachedProtocol]
+	NSString *dictKey = [self storageDictionaryKeyForUsername:dialog.cachedUsername
+												  accountName:dialog.cachedAccountName
+													 protocol:dialog.cachedProtocol
 													  isStale:NO];
 
 	@synchronized (self.openDialogs) {
@@ -79,7 +81,7 @@
 
 - (void)removeDialog:(OTRKitAuthenticationDialog *)dialog
 {
-	AssertParamaterNil(dialog)
+	NSParameterAssert(dialog != nil);
 
 	@synchronized (self.openDialogs) {
 		NSSet *dictKeys = [self.openDialogs keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
@@ -92,7 +94,7 @@
 			}
 		}];
 
-		id dictKey = [dictKeys anyObject];
+		id dictKey = dictKeys.anyObject;
 
 		if (dictKey) {
 			[self.openDialogs removeObjectForKey:dictKey];
@@ -102,19 +104,19 @@
 
 - (void)markDialogAsStale:(OTRKitAuthenticationDialog *)dialog
 {
-	AssertParamaterNil(dialog)
+	NSParameterAssert(dialog != nil);
 
 	@synchronized (self.openDialogs) {
-		NSString *dictKeyNotStale = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
-															  accountName:[dialog cachedAccountName]
-																 protocol:[dialog cachedProtocol]
+		NSString *dictKeyNotStale = [self storageDictionaryKeyForUsername:dialog.cachedUsername
+															  accountName:dialog.cachedAccountName
+																 protocol:dialog.cachedProtocol
 																  isStale:NO];
 
 		[self.openDialogs removeObjectForKey:dictKeyNotStale];
 
-		NSString *dictKeyIsStale = [self storageDictionaryKeyForUsername:[dialog cachedUsername]
-															 accountName:[dialog cachedAccountName]
-																protocol:[dialog cachedProtocol]
+		NSString *dictKeyIsStale = [self storageDictionaryKeyForUsername:dialog.cachedUsername
+															 accountName:dialog.cachedAccountName
+																protocol:dialog.cachedProtocol
 																 isStale:YES];
 
 		self.openDialogs[dictKeyIsStale] = dialog;
@@ -123,9 +125,9 @@
 
 - (OTRKitAuthenticationDialog *)dialogForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	AssertParamaterLength(username)
-	AssertParamaterLength(accountName)
-	AssertParamaterLength(protocol)
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
 
 	NSString *dictKey = [self storageDictionaryKeyForUsername:username
 												  accountName:accountName
@@ -139,6 +141,10 @@
 
 - (NSString *)storageDictionaryKeyForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol isStale:(BOOL)isStale
 {
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
+
 	/* Stale dialogs are those that are still kept a reference to, but will not be returned
 	 if looked up for. Stale dialogs are stored with a random key. We are able to remove them
 	 by enumerating all open dialogs when it is time. */
@@ -152,3 +158,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

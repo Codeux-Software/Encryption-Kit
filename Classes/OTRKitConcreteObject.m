@@ -32,6 +32,8 @@
 
 #import "OTRKitConcreteObjectPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OTRKitConcreteObject
 
 - (BOOL)isEqual:(id)object
@@ -48,13 +50,24 @@
 		return YES;
 	}
 
-	OTRKitConcreteObject *objectTypeCast = (OTRKitConcreteObject *)object;
+	OTRKitConcreteObject *objectCast = (OTRKitConcreteObject *)object;
 
-	return ([self.username isEqualToString:[objectTypeCast username]] &&
-			[self.accountName isEqualToString:[objectTypeCast accountName]]	&&
-			[self.protocol isEqualToString:[objectTypeCast protocol]] &&
-			[self.fingerprintString	isEqualToString:[objectTypeCast fingerprintString]]	&&
-			self.fingerprintIsTrusted == [objectTypeCast fingerprintIsTrusted]);
+	return (
+			((self.username == nil && objectCast.username == nil) ||
+			 [self.username isEqualToString:objectCast.username]) &&
+
+			((self.accountName == nil && objectCast.accountName == nil) ||
+			 [self.accountName isEqualToString:objectCast.accountName]) &&
+
+			((self.protocol == nil && objectCast.protocol == nil) ||
+			 [self.protocol isEqualToString:objectCast.protocol]) &&
+
+			((self.fingerprintString == nil && objectCast.fingerprintString == nil) ||
+			 [self.fingerprintString isEqualToString:objectCast.fingerprintString]) &&
+
+			self.fingerprintIsTrusted == objectCast.fingerprintIsTrusted);
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

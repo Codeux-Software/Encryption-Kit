@@ -34,6 +34,8 @@
 
 #import "libotr/proto.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitConcreteObject ()
 @property (nonatomic, readwrite, copy) NSString *username;
 @property (nonatomic, readwrite, copy) NSString *accountName;
@@ -42,3 +44,5 @@
 @property (readwrite, assign) BOOL fingerprintIsTrusted;
 @property (nonatomic, assign) Fingerprint *fingerprint;
 @end
+
+NS_ASSUME_NONNULL_END

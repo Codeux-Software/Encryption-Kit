@@ -32,6 +32,8 @@
 
 #import "OTRKitFingerprintManagerDialogPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OTRKitFingerprintManagerDialog
 
 #pragma mark -
@@ -55,7 +57,7 @@
 
 - (void)_prepareInitialState
 {
-	[CurrentBundle() loadNibNamed:@"OTRKitFingerprintManagerDialog" owner:self topLevelObjects:nil];
+	[[NSBundle bundleForClass:self.class] loadNibNamed:@"OTRKitFingerprintManagerDialog" owner:self topLevelObjects:nil];
 
 	[self _populateFingerprintCache];
 
@@ -72,7 +74,7 @@
 	[self open:nil];
 }
 
-- (void)open:(NSWindow *)hostWindow
+- (void)open:(nullable NSWindow *)hostWindow
 {
 	if (self.isStale) {
 		return;
@@ -80,7 +82,7 @@
 
 	if (hostWindow) {
 		/* Do not open as sheet if already open as a sheet */
-		if ([self.fingerprintManagerWindow isSheet]) {
+		if (self.fingerprintManagerWindow.sheet) {
 			return;
 		}
 
@@ -110,13 +112,13 @@
 		return;
 	}
 
-	if ([self.fingerprintManagerWindow isSheet]) {
+	if (self.fingerprintManagerWindow.sheet) {
 		[NSApp endSheet:self.fingerprintManagerWindow];
 
 		return;
 	}
 
-	if ([self.fingerprintManagerWindow isVisible]) {
+	if (self.fingerprintManagerWindow.visible) {
 		[self.fingerprintManagerWindow close];
 
 		[self _closeStepTwo];
@@ -169,8 +171,8 @@
 
 	/* If there is a selection and its within bounds of the number
 	 of rows, then reselect it so the reload appears seamless */
-	if (currentSelection > (-1)) {
-		if ([self.fingerprintListTable numberOfRows] > currentSelection) {
+	if (currentSelection >= 0) {
+		if (self.fingerprintListTable.numberOfRows > currentSelection) {
 			NSIndexSet *newSelection = [NSIndexSet indexSetWithIndex:currentSelection];
 
 			[self.fingerprintListTable selectRowIndexes:newSelection byExtendingSelection:NO];
@@ -182,68 +184,68 @@
 
 - (NSInteger)_tableViewSelectedRow
 {
-	return [self.fingerprintListTable selectedRow];
+	return self.fingerprintListTable.selectedRow;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return [self.cachedListOfFingerprints count];
+	return self.cachedListOfFingerprints.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	OTRKitFingerprintManagerDialogTableCellView *madeView = (id)[tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	OTRKitFingerprintManagerDialogTableCellView *madeView = (id)[tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
 	/* Begin populating individual data sections. */
-	OTRKitConcreteObject *rowEntryData = [self.cachedListOfFingerprints objectAtIndex:row];
+	OTRKitConcreteObject *rowEntryData = self.cachedListOfFingerprints[row];
 
 	/* Populate username value */
-	if ([[tableColumn identifier] isEqual:@"username"]) {
-		NSString *newValue = [[OTRKit sharedInstance] leftPortionOfAccountName:[rowEntryData username]];
+	if ([tableColumn.identifier isEqual:@"username"]) {
+		NSString *newValue = [[OTRKit sharedInstance] leftPortionOfAccountName:rowEntryData.username];
 
-		[[madeView textField] setStringValue:newValue];
+		madeView.textField.stringValue = newValue;
 	}
 
 	/* Populate account name value */
-	else if ([[tableColumn identifier] isEqual:@"accountName"])
+	else if ([tableColumn.identifier isEqual:@"accountName"])
 	{
-		NSString *newValue = [[OTRKit sharedInstance] leftPortionOfAccountName:[rowEntryData accountName]];
+		NSString *newValue = [[OTRKit sharedInstance] leftPortionOfAccountName:rowEntryData.accountName];
 
-		[[madeView textField] setStringValue:newValue];
+		madeView.textField.stringValue = newValue;
 	}
 
 	/* Populate status value */
-	else if ([[tableColumn identifier] isEqual:@"status"])
+	else if ([tableColumn.identifier isEqual:@"status"])
 	{
 		BOOL isInUse = [self _isFingerprintActiveForObject:rowEntryData];
 
 		if (isInUse) {
-			[[madeView textField] setStringValue:_LocalizedString(@"00001[2]")];
+			[madeView.textField setStringValue:_LocalizedString(@"00001[2]")];
 		} else {
-			[[madeView textField] setStringValue:_LocalizedString(@"00001[1]")];
+			[madeView.textField setStringValue:_LocalizedString(@"00001[1]")];
 		}
 	}
 
 	/* Populate trust value */
-	else if ([[tableColumn identifier] isEqual:@"trusted"])
+	else if ([tableColumn.identifier isEqual:@"trusted"])
 	{
-		BOOL isTrusted = [rowEntryData fingerprintIsTrusted];
+		BOOL isTrusted = rowEntryData.fingerprintIsTrusted;
 
 		if (isTrusted) {
-			[[madeView viewCheckbox] setState:NSOnState];
+			madeView.viewCheckbox.state = NSOnState;
 		} else {
-			[[madeView viewCheckbox] setState:NSOffState];
+			madeView.viewCheckbox.state = NSOffState;
 		}
 
-		[[madeView viewCheckbox] setTag:row];
+		madeView.viewCheckbox.tag = row;
 	}
 
 	/* Populate fingerprint value */
-	else if ([[tableColumn identifier] isEqual:@"fingerprint"])
+	else if ([tableColumn.identifier isEqual:@"fingerprint"])
 	{
-		NSString *newValue = [rowEntryData fingerprintString];
+		NSString *newValue = rowEntryData.fingerprintString;
 
-		[[madeView textField] setStringValue:newValue];
+		madeView.textField.stringValue = newValue;
 	}
 
 	return madeView;
@@ -258,33 +260,33 @@
 {
 	NSInteger currentSelection = [self _tableViewSelectedRow];
 
-	if (currentSelection == (-1) || [self.cachedListOfFingerprints count] == 0)
+	if (currentSelection < 0 || self.cachedListOfFingerprints.count == 0)
 	{
-		[self.buttonFingerprintForget setEnabled:NO];
+		self.buttonFingerprintForget.enabled = NO;
 
-		[self.buttonFingerprintEndConversation setHidden:YES];
+		self.buttonFingerprintEndConversation.hidden = YES;
 	}
 	else
 	{
-		OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:currentSelection];
+		OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[currentSelection];
 
 		BOOL isFingerprintActive = [self _isFingerprintActiveForObject:dataObject];
 
 		BOOL buttonCondition = (isFingerprintActive == NO);
 
-		[self.buttonFingerprintForget setEnabled:buttonCondition];
+		self.buttonFingerprintForget.enabled = buttonCondition;
 
-		[self.buttonFingerprintEndConversation setHidden:buttonCondition];
+		self.buttonFingerprintEndConversation.hidden = buttonCondition;
 	}
 }
 
 - (BOOL)_isFingerprintActiveForObject:(OTRKitConcreteObject *)dataObject
 {
-	NSString *activeFingerprint = [[OTRKit sharedInstance] activeFingerprintForUsername:[dataObject username]
-																			accountName:[dataObject accountName]
-																			   protocol:[dataObject protocol]];
+	NSString *activeFingerprint = [[OTRKit sharedInstance] activeFingerprintForUsername:dataObject.username
+																			accountName:dataObject.accountName
+																			   protocol:dataObject.protocol];
 
-	return ([[dataObject fingerprintString] isEqual:activeFingerprint]);
+	return ([dataObject.fingerprintString isEqual:activeFingerprint]);
 }
 
 #pragma mark -
@@ -292,23 +294,23 @@
 
 - (IBAction)_fingerprintEndConversation:(id)sender
 {
-	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
+	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[sender tag]];
 
-	[[OTRKit sharedInstance] disableEncryptionWithUsername:[dataObject username]
-											   accountName:[dataObject accountName]
-												  protocol:[dataObject protocol]];
+	[[OTRKit sharedInstance] disableEncryptionWithUsername:dataObject.username
+											   accountName:dataObject.accountName
+												  protocol:dataObject.protocol];
 }
 
 - (IBAction)_fingerprintForget:(id)sender
 {
-	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
+	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[sender tag]];
 
 	[[OTRKit sharedInstance] deleteFingerprintWithConcreteObject:dataObject];
 }
 
 - (IBAction)_fingerprintModifyTrust:(id)sender
 {
-	OTRKitConcreteObject *dataObject = [self.cachedListOfFingerprints objectAtIndex:[sender tag]];
+	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[sender tag]];
 
 	BOOL isVerified = ([sender state] == NSOnState);
 
@@ -323,3 +325,5 @@
 
 @implementation OTRKitFingerprintManagerDialogTableCellView
 @end
+
+NS_ASSUME_NONNULL_END

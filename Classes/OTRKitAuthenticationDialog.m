@@ -32,6 +32,8 @@
 
 #import "OTRKitAuthenticationDialogPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OTRKitAuthenticationDialog
 
 #pragma mark -
@@ -39,9 +41,9 @@
 
 + (void)requestAuthenticationForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	AssertParamaterLength(username)
-	AssertParamaterLength(accountName)
-	AssertParamaterLength(protocol)
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
 
 	OTRKitAuthenticationDialog *openDialog =
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
@@ -53,10 +55,9 @@
 	} else {
 		openDialog = [OTRKitAuthenticationDialogOutgoing new];
 
-		[openDialog setCachedUsername:username];
-		[openDialog setCachedAccountName:accountName];
-
-		[openDialog setCachedProtocol:protocol];
+		openDialog.cachedUsername = username;
+		openDialog.cachedAccountName = accountName;
+		openDialog.cachedProtocol = protocol;
 
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
 
@@ -66,9 +67,9 @@
 
 + (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	AssertParamaterLength(username)
-	AssertParamaterLength(accountName)
-	AssertParamaterLength(protocol)
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
 
 	OTRKitAuthenticationDialog *openDialog =
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
@@ -77,7 +78,7 @@
 
 	if (event == OTRKitSMPEventAskForAnswer || event == OTRKitSMPEventAskForSecret) {
 		if (openDialog) {
-			if ([openDialog isIncomingRequest] == NO) {
+			if (openDialog.isIncomingRequest == NO) {
 				[[OTRKit sharedInstance] abortSMPForUsername:username
 												 accountName:accountName
 													protocol:protocol];
@@ -92,10 +93,9 @@
 	if (openDialog == nil) {
 		openDialog = [OTRKitAuthenticationDialogIncoming new];
 
-		[openDialog setCachedUsername:username];
-		[openDialog setCachedAccountName:accountName];
-
-		[openDialog setCachedProtocol:protocol];
+		openDialog.cachedUsername = username;
+		openDialog.cachedAccountName = accountName;
+		openDialog.cachedProtocol = protocol;
 
 		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
 	}
@@ -105,20 +105,19 @@
 
 + (void)showFingerprintConfirmation:(NSWindow *)hostWindow username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	AssertParamaterNil(hostWindow)
-
-	AssertParamaterLength(username)
-	AssertParamaterLength(accountName)
-	AssertParamaterLength(protocol)
+	NSParameterAssert(hostWindow != nil);
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
 
 	[OTRKitAuthenticationDialogOutgoing showFingerprintConfirmation:hostWindow username:username accountName:accountName protocol:protocol];
 }
 
 + (void)cancelRequestForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	AssertParamaterLength(username)
-	AssertParamaterLength(accountName)
-	AssertParamaterLength(protocol)
+	NSParameterAssert(username != nil);
+	NSParameterAssert(accountName != nil);
+	NSParameterAssert(protocol != nil);
 
 	OTRKitAuthenticationDialog *openDialog =
 	[[OTRKitAuthenticationDialogWindowManager sharedManager] dialogForUsername:username
@@ -166,10 +165,12 @@
 
 - (void)_changeContentViewTo:(NSView *)contentView
 {
-	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = [self.contentView subviews];
+	NSParameterAssert(contentView != nil);
 
-	if ([contentSubviews count] > 0) {
+	/* Remove any views that may already be in place. */
+	NSArray *contentSubviews = self.contentView.subviews;
+
+	if (contentSubviews.count > 0) {
 		[contentSubviews[0] removeFromSuperview];
 	}
 
@@ -191,14 +192,17 @@
 
 - (void)_formatTextField:(NSTextField *)textField withUsername:(NSString *)username
 {
+	NSParameterAssert(textField != nil);
+	NSParameterAssert(username != nil);
+
 	/* Many text fields contain a formatting character (%@) in the interface. This
 	 takes that text field value and formats it using the given username. Easier 
 	 doing it this way than maining a strings file. */
-	NSString *currentTextFieldValue = [textField stringValue];
+	NSString *currentTextFieldValue = textField.stringValue;
 
 	NSString *formattedStringValue = [NSString stringWithFormat:currentTextFieldValue, username];
 
-	[textField setStringValue:formattedStringValue];
+	textField.stringValue = formattedStringValue;
 }
 
 - (void)_updateButtonEnabledState
@@ -210,31 +214,31 @@
 
 	if (self.authenticationMethod == OTRKitSMPEventAskForAnswer)
 	{
-		NSString *question = [self.questionAndAnswerQuestionTextField stringValue];
-		NSString *answer = [self.questionAndAnswerAnswerTextField stringValue];
+		NSString *question = self.questionAndAnswerQuestionTextField.stringValue;
+		NSString *answer = self.questionAndAnswerAnswerTextField.stringValue;
 
 		NSString *trimmedQuestion = [question stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];;
 		NSString *trimmedAnswer = [answer stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-		okButtonEnabled = ([trimmedQuestion length] > 0 &&
-						   [trimmedAnswer length] > 0);
+		okButtonEnabled = (trimmedQuestion.length > 0 &&
+						   trimmedAnswer.length > 0);
 	}
 	else if (self.authenticationMethod == OTRKitSMPEventAskForSecret)
 	{
-		NSString *secret = [self.sharedSecretAnswerTextField stringValue];
+		NSString *secret = self.sharedSecretAnswerTextField.stringValue;
 
 		NSString *trimmedSecret = [secret stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
-		okButtonEnabled = ([trimmedSecret length] > 0);
+		okButtonEnabled = (trimmedSecret.length > 0);
 	}
 
 	/* Update buttons with their status. */
-	[self.authenticationHostWindowAuthenticateButton setEnabled:okButtonEnabled];
+	self.authenticationHostWindowAuthenticateButton.enabled = okButtonEnabled;
 
-	[self.authenticationHostWindowCancelButton setEnabled:YES];
+	self.authenticationHostWindowCancelButton.enabled = YES;
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
+- (void)controlTextDidChange:(NSNotification *)notification
 {
 	[self _updateButtonEnabledState];
 }
@@ -255,9 +259,12 @@
 #pragma mark -
 #pragma mark Alert Construction
 
-- (void)_presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(NSArray *)buttons completionBlock:(OTRKitAlertDialogCompletionBlock)completionBlock
+- (void)_presentAlert:(NSString *)messageText informativeText:(NSString *)informativeText buttons:(nullable NSArray *)buttons completionBlock:(nullable OTRKitAlertDialogCompletionBlock)completionBlock
 {
-	if (buttons == nil || [buttons count] == 0) {
+	NSParameterAssert(messageText != nil);
+	NSParameterAssert(informativeText != nil);
+
+	if (buttons == nil || buttons.count == 0) {
 		buttons = @[_LocalizedString(@"00012")]; // "OK" label
 	}
 
@@ -371,7 +378,7 @@
 - (void)_closeHostWindow
 {
 	/* Close the host window if visible. */
-	if ([self.authenticationHostWindow isVisible]) {
+	if (self.authenticationHostWindow.visible) {
 		[self.authenticationHostWindow close];
 	}
 }
@@ -382,8 +389,8 @@
 - (void)setLastEvent:(OTRKitSMPEvent)lastEvent
 {
 	/* Update last event and possibly progress information. */
-	if (_lastEvent != lastEvent) {
-		_lastEvent = lastEvent;
+	if (self->_lastEvent != lastEvent) {
+		self->_lastEvent = lastEvent;
 
 		if ([self _progressIndicatorWindowIsVisible]) {
 			[self _updateProgressIndicatorButtonsWithEvent:lastEvent];
@@ -394,8 +401,8 @@
 - (void)setAuthenticationMethod:(OTRKitSMPEvent)authenticationMethod
 {
 	/* Switch views when authentication method changes. */
-	if (_authenticationMethod != authenticationMethod) {
-		_authenticationMethod = authenticationMethod;
+	if (self->_authenticationMethod != authenticationMethod) {
+		self->_authenticationMethod = authenticationMethod;
 
 		if (authenticationMethod == OTRKitSMPEventNone) {
 			[self _changeContentViewTo:self.contentViewFingerprintAuthentication];
@@ -411,6 +418,8 @@
 
 - (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
 {
+	NSParameterAssert(question != nil);
+
 	self.lastEvent = event;
 
 	if ([self _progressIndicatorWindowIsVisible]) {
@@ -420,8 +429,8 @@
 
 - (BOOL)_progressIndicatorWindowIsVisible
 {
-	return ([self.authenticationProgressWindow isSheet] &&
-			[self.authenticationProgressWindow isVisible]);
+	return (self.authenticationProgressWindow.sheet &&
+			self.authenticationProgressWindow.visible);
 }
 
 - (void)_setupProgressIndicatorWindow
@@ -430,7 +439,7 @@
 
 	[self _formatTextField:self.authenticationProgressTitleTextField withUsername:username];
 
-	[self.authenticationProgressProgressIndicator setDoubleValue:0.0];
+	self.authenticationProgressProgressIndicator.doubleValue = 0.0;
 
 	[NSApp beginSheet:self.authenticationProgressWindow
 	   modalForWindow:self.authenticationHostWindow
@@ -448,12 +457,12 @@
 
 - (void)_updateProgressIndicatorStatusMessage:(NSString *)statusMessage
 {
-	[self.authenticationProgressStatusTextField setStringValue:statusMessage];
+	self.authenticationProgressStatusTextField.stringValue = statusMessage;
 }
 
 - (void)_updateProgressIndicatorPercentage:(double)progress
 {
-	[self.authenticationProgressProgressIndicator setDoubleValue:progress];
+	self.authenticationProgressProgressIndicator.doubleValue = progress;
 }
 
 - (void)_updateProgressIndicatorButtonsWithEvent:(OTRKitSMPEvent)event
@@ -510,8 +519,8 @@
 		}
 	}
 
-	[self.authenticationProgressOkButton setEnabled:enableOkButton];
-	[self.authenticationProgressCancelButton setEnabled:enableCancelButton];
+	self.authenticationProgressOkButton.enabled = enableOkButton;
+	self.authenticationProgressCancelButton.enabled = enableCancelButton;
 }
 
 - (void)_endProgressIndicatorWindow
@@ -554,3 +563,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

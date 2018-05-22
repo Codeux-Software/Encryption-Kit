@@ -8,18 +8,28 @@
 
 #import "OTRTLV.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OTRTLV
 
-- (instancetype)initWithType:(OTRTLVType)type data:(NSData *)data
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+- (instancetype)init
 {
-	if (data == nil || [data length] > UINT16_MAX) {
+	return nil;
+}
+#pragma clang diagnostic pop
+
+- (nullable instancetype)initWithType:(OTRTLVType)type data:(NSData *)data
+{
+	if (data == nil || data.length > UINT16_MAX) {
 		return nil;
 	}
 
     if ((self = [super init])) {
-		[self setType:type];
+		self.type = type;
 
-		[self setData:data];
+		self.data = data;
     }
 
     return self;
@@ -27,7 +37,7 @@
 
 - (BOOL)isValidLength
 {
-    if (_data == nil || [_data length] > UINT16_MAX) {
+    if (self.data == nil || self.data.length > UINT16_MAX) {
         return NO;
 	} else {
 		return YES;
@@ -35,3 +45,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

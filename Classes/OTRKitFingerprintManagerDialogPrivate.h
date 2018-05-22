@@ -38,6 +38,8 @@
 #define _LocalizedString(_key_, ...)				\
 	LocalizedString(@"OTRKitFingerprintManagerDialog", (_key_), ##__VA_ARGS__)
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OTRKitFingerprintManagerDialog ()
 @property (nonatomic, assign) BOOL isStale;
 @property (nonatomic, copy) NSArray *cachedListOfFingerprints;
@@ -56,3 +58,5 @@
 @interface OTRKitFingerprintManagerDialogTableCellView : NSTableCellView
 @property (nonatomic, weak) IBOutlet NSButton *viewCheckbox;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -10,7 +10,4 @@
 #define AssertParamaterNull(param)				NSParameterAssert((param) != NULL);
 #define AssertParamaterLength(param)			NSParameterAssert((param) != nil && [(param) length] > 0);
 #define AssertParamaterCount(param)				NSParameterAssert((param) != nil && [(param) count] > 0);
-
-#define CurrentBundle()							[NSBundle bundleForClass:[self class]]
-
 #endif
