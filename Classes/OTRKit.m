@@ -1462,7 +1462,7 @@ static OtrlMessageAppOps ui_ops = {
 	return [self.dataPath stringByAppendingPathComponent:kOTRKitInstanceTagsFileName];
 }
 
-#pragma mark
+#pragma mark -
 #pragma mark Fingerprint Management
 
 - (nullable Fingerprint *)_fingerprintForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
@@ -1865,7 +1865,7 @@ static OtrlMessageAppOps ui_ops = {
 	[self _postMessageStateDidChangeNotification];
 }
 
-#pragma mark
+#pragma mark -
 #pragma mark Symmetric Key
 
 - (void)requestSymmetricKeyForUsername:(NSString *)username
@@ -1908,7 +1908,7 @@ static OtrlMessageAppOps ui_ops = {
 	}];
 }
 
-#pragma mark
+#pragma mark -
 #pragma mark Socialist Millionaire Problem
 
 - (void) initiateSMPForUsername:(NSString *)username
