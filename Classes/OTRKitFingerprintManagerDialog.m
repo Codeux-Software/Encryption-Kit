@@ -294,7 +294,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)_fingerprintEndConversation:(id)sender
 {
-	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[sender tag]];
+	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[self _tableViewSelectedRow]];
 
 	[[OTRKit sharedInstance] disableEncryptionWithUsername:dataObject.username
 											   accountName:dataObject.accountName
@@ -303,7 +303,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)_fingerprintForget:(id)sender
 {
-	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[sender tag]];
+	OTRKitConcreteObject *dataObject = self.cachedListOfFingerprints[[self _tableViewSelectedRow]];
 
 	[[OTRKit sharedInstance] deleteFingerprintWithConcreteObject:dataObject];
 }
