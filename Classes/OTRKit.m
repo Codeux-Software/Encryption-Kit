@@ -1024,6 +1024,25 @@ static OtrlMessageAppOps ui_ops = {
 	}];
 }
 
+- (void)_disableEncryptionForAll
+{
+	[self _performAsyncOperationOnInternalQueue:^{
+		ConnContext *otrContext = self.userState->context_root;
+
+		while (otrContext) {
+			OTRKitMessageState messageState = [self _messageStateForContext:otrContext];
+
+			if (messageState == OTRKitMessageStateEncrypted) {
+				otrl_message_disconnect_all_instances(self.userState, &ui_ops, NULL, otrContext->accountname, otrContext->protocol, otrContext->username);
+
+				[self _updateEncryptionStatusWithContext:otrContext];
+			}
+
+			otrContext = otrContext->next;
+		}
+	}];
+}
+
 #pragma mark -
 #pragma mark Helpers
 
@@ -1368,6 +1387,17 @@ static OtrlMessageAppOps ui_ops = {
 
 #pragma mark -
 #pragma mark Properties
+
+- (void)setOtrPolicy:(OTRKitPolicy)otrPolicy
+{
+	if (self->_otrPolicy != otrPolicy) {
+		self->_otrPolicy = otrPolicy;
+
+		if (otrPolicy == OTRKitPolicyNever) {
+			[self _disableEncryptionForAll];
+		}
+	}
+}
 
 - (OtrlPolicy)_otrlPolicy
 {
