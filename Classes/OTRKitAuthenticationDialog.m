@@ -135,8 +135,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ( openDialog) {
 		[openDialog _cancelRequest];
-	} else {
-		LogToConsole(@"Tried to cancel a request for a dialog that does not exist.");
 	}
 }
 
