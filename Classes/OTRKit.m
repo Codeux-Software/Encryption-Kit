@@ -271,6 +271,14 @@ static void handle_smp_event_cb(void *opdata, OtrlSMPEvent smp_event, ConnContex
 		return;
 	}
 
+	NSError *error = nil;
+
+	NSString *questionString = nil;
+
+	if (question) {
+		questionString = @(question);
+	}
+
 	BOOL abortSMP = NO;
 
 	switch (smp_event)
@@ -290,6 +298,16 @@ static void handle_smp_event_cb(void *opdata, OtrlSMPEvent smp_event, ConnContex
 		case OTRL_SMPEVENT_ASK_FOR_ANSWER:
 		{
 			event = OTRKitSMPEventAskForAnswer;
+
+			if (questionString == nil) {
+				event = OTRKitSMPEventError;
+
+				error = [NSError errorWithDomain:kOTRKitErrorDomain
+											code:1001
+										userInfo:@{NSLocalizedDescriptionKey : @"Question value for SMP is nil"}];
+
+				abortSMP = YES;
+			}
 
 			break;
 		}
@@ -339,19 +357,13 @@ static void handle_smp_event_cb(void *opdata, OtrlSMPEvent smp_event, ConnContex
 		otrl_message_abort_smp(otrKit.userState, &ui_ops, opdata, context);
 	}
 
-	NSString *questionString = nil;
-
-	if (question) {
-		questionString = @(question);
-	}
-
 	NSString *usernameString = @(context->username);
 	NSString *accountNameString = @(context->accountname);
 
 	NSString *protocolString = @(context->protocol);
 
 	[otrKit _performAsyncOperationOnDelegateQueue:^{
-		[otrKit.delegate otrKit:otrKit handleSMPEvent:event progress:progress_percent question:questionString username:usernameString accountName:accountNameString protocol:protocolString];
+		[otrKit.delegate otrKit:otrKit handleSMPEvent:event progress:progress_percent question:questionString username:usernameString accountName:accountNameString protocol:protocolString error:error];
 	}];
 }
 

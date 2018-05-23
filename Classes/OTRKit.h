@@ -262,6 +262,7 @@ fingerprintIsVerifiedStateChangedForUsername:(NSString *)username
  *  @param username     The account name of the remote user
  *  @param accountName  The account name of the local user
  *  @param protocol     The protocol of the exchange
+ *  @param error		Error describing the problem
  */
 - (void) otrKit:(OTRKit *)otrKit
  handleSMPEvent:(OTRKitSMPEvent)event
@@ -269,7 +270,8 @@ fingerprintIsVerifiedStateChangedForUsername:(NSString *)username
 	   question:(nullable NSString *)question
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
-	   protocol:(NSString *)protocol;
+	   protocol:(NSString *)protocol
+		  error:(nullable NSError *)error;
 
 /**
  *  Implement this delegate method to handle message events.
