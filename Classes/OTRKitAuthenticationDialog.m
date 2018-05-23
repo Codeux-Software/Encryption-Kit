@@ -99,13 +99,15 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	openDialog = [OTRKitAuthenticationDialogIncoming new];
+	if (openDialog == nil) {
+		openDialog = [OTRKitAuthenticationDialogIncoming new];
 
-	openDialog.cachedUsername = username;
-	openDialog.cachedAccountName = accountName;
-	openDialog.cachedProtocol = protocol;
+		openDialog.cachedUsername = username;
+		openDialog.cachedAccountName = accountName;
+		openDialog.cachedProtocol = protocol;
 
-	[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
+		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
+	}
 
 	[openDialog _handleEvent:event progress:progress question:question];
 
