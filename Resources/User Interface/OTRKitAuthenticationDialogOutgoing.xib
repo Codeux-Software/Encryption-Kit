@@ -256,7 +256,7 @@ Gw
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w5j-sv-48d">
                     <rect key="frame" x="18" y="50" width="153" height="16"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Answer (case sensitive):" id="5Pc-PL-q22">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Answer (case sensitive):" id="5Pc-PL-q22">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -275,7 +275,7 @@ Gw
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aMr-sR-Ity">
                     <rect key="frame" x="18" y="101" width="63" height="16"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Question:" id="7Eg-5d-StP">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Question:" id="7Eg-5d-StP">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -317,7 +317,7 @@ Gw
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ri-Bx-ATX">
                     <rect key="frame" x="18" y="48" width="118" height="16"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="The shared secret:" id="gLq-gz-eIi">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="The shared secret:" id="gLq-gz-eIi">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
