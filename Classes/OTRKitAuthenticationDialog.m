@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-+ (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
++ (BOOL)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	NSParameterAssert(username != nil);
 	NSParameterAssert(accountName != nil);
@@ -86,21 +86,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 			[openDialog _presentAuthenticationRequestAlreadyExistsAlert];
 
-			return; // Do not further event...
+			return NO; // Do not further event...
+		}
+	} else {
+		/* All other events */
+		/* If we have no open dialog already and receive an event that isn't
+		 asking us a question or for a secret, then we have no reason to
+		 respond to it. We will pretend like it was a mistake. */
+
+		if (openDialog == nil) {
+			return NO;
 		}
 	}
 
-	if (openDialog == nil) {
-		openDialog = [OTRKitAuthenticationDialogIncoming new];
+	openDialog = [OTRKitAuthenticationDialogIncoming new];
 
-		openDialog.cachedUsername = username;
-		openDialog.cachedAccountName = accountName;
-		openDialog.cachedProtocol = protocol;
+	openDialog.cachedUsername = username;
+	openDialog.cachedAccountName = accountName;
+	openDialog.cachedProtocol = protocol;
 
-		[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
-	}
+	[[OTRKitAuthenticationDialogWindowManager sharedManager] addDialog:openDialog];
 
 	[openDialog _handleEvent:event progress:progress question:question];
+
+	return YES;
 }
 
 + (void)showFingerprintConfirmation:(NSWindow *)hostWindow username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol

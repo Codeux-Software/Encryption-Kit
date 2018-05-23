@@ -57,9 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param accountName  The account name of the local user
  *  @param protocol     The protocol of the exchange
  *  
- *  The callback block only
+ *  @return YES on successfully handling event
  */
-+ (void)handleAuthenticationRequest:(OTRKitSMPEvent)event
++ (BOOL)handleAuthenticationRequest:(OTRKitSMPEvent)event
 						   progress:(double)progress
 						   question:(nullable NSString *)question
 						   username:(NSString *)username
