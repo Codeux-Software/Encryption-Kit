@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
+- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question
 {
     [super _handleEvent:event progress:progress question:question];
 
@@ -107,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_authenticateUserWithQuestion:(NSString *)question
 {
+	NSParameterAssert(question != nil);
+
     /* Get the visible portion of the remote user's name. */
     NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
 

@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)handleAuthenticationRequest:(OTRKitSMPEvent)event
 						   progress:(double)progress
-						   question:(NSString *)question
+						   question:(nullable NSString *)question
 						   username:(NSString *)username
 						accountName:(NSString *)accountName
 						   protocol:(NSString *)protocol;

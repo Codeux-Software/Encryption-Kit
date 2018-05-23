@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)_cancelRequest;
 - (void)_teardownDialog;
 
-- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question;
+- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question;
 
 - (void)_setupProgressIndicatorWindow;
 - (BOOL)_progressIndicatorWindowIsVisible;

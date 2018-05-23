@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-+ (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
++ (void)handleAuthenticationRequest:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	NSParameterAssert(username != nil);
 	NSParameterAssert(accountName != nil);
@@ -416,10 +416,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question
+- (void)_handleEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question
 {
-	NSParameterAssert(question != nil);
-
 	self.lastEvent = event;
 
 	if ([self _progressIndicatorWindowIsVisible]) {
