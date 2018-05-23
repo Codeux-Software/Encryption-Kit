@@ -107,8 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_authenticateUserWithQuestion:(NSString *)question
 {
-	NSParameterAssert(question != nil);
-
     /* Get the visible portion of the remote user's name. */
     NSString *remoteUsername = [[OTRKit sharedInstance] leftPortionOfAccountName:self.cachedUsername];
 
@@ -119,6 +117,8 @@ NS_ASSUME_NONNULL_BEGIN
     if (self.authenticationMethod == OTRKitSMPEventAskForSecret) {
         [self _formatTextField:self.sharedSecretDescriptionTextField withUsername:remoteUsername];
     } else if (self.authenticationMethod == OTRKitSMPEventAskForAnswer) {
+		NSParameterAssert(question != nil);
+
         [self _formatTextField:self.questionAndAnswerDescriptionTextField withUsername:remoteUsername];
 
         self.questionAndAnswerQuestionTextField.stringValue = question;
