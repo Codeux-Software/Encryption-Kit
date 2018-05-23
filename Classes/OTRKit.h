@@ -155,16 +155,17 @@ extern NSString * const OTRKitMessageStateDidChangeNotification;
  *  @param username			The account name of the remote user
  *  @param accountName		The account name of the local user
  *  @param protocol			The protocol of the exchange
- *  @param tag optional		Tag to attach additional application-specific data to message. Only used locally.
+ *  @param tag				Optional tag to attached to message. Only used locally.
+ *  @param error			Error describing why encodedMessage is nil
  */
 - (void) otrKit:(OTRKit *)otrKit
- encodedMessage:(NSString *)encodedMessage
+ encodedMessage:(nullable NSString *)encodedMessage
    wasEncrypted:(BOOL)wasEncrypted
 	   username:(NSString *)username
 	accountName:(NSString *)accountName
 	   protocol:(NSString *)protocol
 			tag:(nullable id)tag
-		  error:(NSError *)error;
+		  error:(nullable NSError *)error;
 
 /**
  *  All incoming messages should be sent to the OTRKit decodeMessage method before being
@@ -177,7 +178,7 @@ extern NSString * const OTRKitMessageStateDidChangeNotification;
  *  @param username			The account name of the remote user
  *  @param accountName		The account name of the local user
  *  @param protocol			The protocol of the exchange
- *  @param tag optional		Tag to attach additional application-specific data to message. Only used locally.
+ *  @param tag				Optional tag to attached to message. Only used locally.
  */
 - (void) otrKit:(OTRKit *)otrKit
  decodedMessage:(nullable NSString *)decodedMessage
@@ -289,7 +290,7 @@ handleMessageEvent:(OTRKitMessageEvent)event
 	   accountName:(NSString *)accountName
 		  protocol:(NSString *)protocol
 			   tag:(nullable id)tag
-			 error:(NSError *)error;
+			 error:(nullable NSError *)error;
 
 /**
  *  When a remote user requests a shared symmetric key, this will be called.
@@ -364,11 +365,6 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  */
 @property (nonatomic, strong, nullable) dispatch_queue_t delegateQueue;
 
-/** 
- *  Determines whether encoding/decoding occurs in the background, on an asynchronous queue. 
- */
-@property (nonatomic) BOOL asynchronous;
-
 /**
  * By default uses `OTRKitPolicyDefault`
  */
@@ -377,7 +373,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Path to where the OTR private keys and related data is stored.
  */
-@property (nonatomic, copy, readonly, null_resettable) NSString *dataPath;
+@property (nonatomic, copy, readonly) NSString *dataPath;
 
 /**
  *  Path to the OTR private keys file.
@@ -416,7 +412,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *
  * @param dataPath This is a path to a folder where private keys, fingerprints, and instance tags will be stored. If this is nil a default path will be chosen for you.
  */
-- (void)setupWithDataPath:(NSString *)dataPath;
+- (void)setupWithDataPath:(nullable NSString *)dataPath;
 
 /**
  *  For specifying fragmentation for a protocol.
@@ -435,13 +431,15 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  * @param username		The account name of the remote user
  * @param accountName	The account name of the local user
  * @param protocol		The protocol of the exchange
+ * @param asynchronously	Whether the operation is performed asynchronously
  * @param tag			Optional tag to attach additional application-specific data to message. Only used locally.
  */
 - (void)encodeMessage:(nullable NSString *)message
-				 tlvs:(NSArray<OTRTLV *> *)tlvs
+				 tlvs:(nullable NSArray<OTRTLV *> *)tlvs
 			 username:(NSString *)username
 		  accountName:(NSString *)accountName
 			 protocol:(NSString *)protocol
+	   asynchronously:(BOOL)asynchronously
 				  tag:(nullable id)tag;
 
 /**
@@ -451,12 +449,14 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param username			The account name of the remote user
  *  @param accountName		The account name of the local user
  *  @param protocol			The protocol of the exchange
+ *  @param asynchronously	Whether the operation is performed asynchronously
  *  @param tag				Optional tag to attach additional application-specific data to message. Only used locally.
  */
 - (void)decodeMessage:(NSString *)message
 			 username:(NSString *)username
 		  accountName:(NSString *)accountName
 			 protocol:(NSString *)protocol
+	   asynchronously:(BOOL)asynchronously
 				  tag:(nullable id)tag;
 
 /**
@@ -475,10 +475,12 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
  *  @param username			The account name of the remote user
  *  @param accountName		The account name of the local user
  *  @param protocol			The protocol of the exchange
+ *  @param asynchronously	Whether the operation is performed asynchronously
  */
 - (void)initiateEncryptionWithUsername:(NSString *)username
 						   accountName:(NSString *)accountName
-							  protocol:(NSString *)protocol;
+							  protocol:(NSString *)protocol
+						asynchronously:(BOOL)asynchronously;
 
 /**
  *  Disable encryption and inform remote user you no longer wish to 
@@ -595,7 +597,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 							  protocol:(NSString *)protocol
 								forUse:(NSUInteger)use
 							   useData:(NSData *)useData
-							completion:(void (^ __nullable)(NSData * __nullable key, NSError * __nullable error))completion;
+							completion:(void (^)(NSData * __nullable key, NSError * __nullable error))completion;
 
 //////////////////////////////////////////////////////////////////////
 /// @name Fingerprint Verification
@@ -604,7 +606,7 @@ didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName
 /**
  *  Returns an array of OTRKitConcreteObject objects
  */
-- (NSArray<OTRKitConcreteObject *> *)requestAllFingerprints;
+@property (nonatomic, readonly, copy) NSArray<OTRKitConcreteObject *> *requestAllFingerprints;
 
 /**
  *  Delete a specified fingerprint.
