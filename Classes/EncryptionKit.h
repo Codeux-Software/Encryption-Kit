@@ -30,9 +30,13 @@
  *
  *********************************************************************** */
 
+#ifdef __OBJC__
+@import Cocoa;
+
 #import <EncryptionKit/OTRKit.h>
 #import <EncryptionKit/OTRKitConcreteObject.h>
 #import <EncryptionKit/OTRKitAuthenticationDialog.h>
 #import <EncryptionKit/OTRKitFingerprintManagerDialog.h>
 
 #import <EncryptionKit/OTRTLV.h>
+#endif
