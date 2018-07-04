@@ -31,7 +31,7 @@
  *********************************************************************** */
 
 #ifdef __OBJC__
-@import Cocoa;
+#import <Cocoa/Cocoa.h>
 
 #import <EncryptionKit/OTRKit.h>
 #import <EncryptionKit/OTRKitConcreteObject.h>
