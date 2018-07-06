@@ -542,8 +542,12 @@
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = Classes/EncryptionKit_Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.encryptionKit;
+				PRODUCT_NAME = EncryptionKit;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -551,11 +555,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = Classes/EncryptionKit_Prefix.pch;
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = EncryptionKit;
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
