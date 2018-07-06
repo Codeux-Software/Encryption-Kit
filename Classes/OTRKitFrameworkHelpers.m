@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 informativeText:(NSString *)informativeText
 					 buttons:(NSArray<NSString *> *)buttons
 				 contextInfo:(nullable id)contextInfo
-			 completionBlock:(nullable OTRKitAlertDialogCompletionBlock)completionBlock;
+			 completionBlock:(nullable OTRKitAlertDialogCompletionBlock)completionBlock
 {
 	NSParameterAssert(messageText != nil);
 	NSParameterAssert(informativeText != nil);
