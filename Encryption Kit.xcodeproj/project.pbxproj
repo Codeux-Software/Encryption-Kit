@@ -445,9 +445,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* EncryptionKit */ = {
+		8DC2EF4F0486A6940098B216 /* EncryptionKit.framework */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EncryptionKit" */;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EncryptionKit.framework" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF540486A6940098B216 /* Sources */,
@@ -462,7 +462,7 @@
 			);
 			dependencies = (
 			);
-			name = EncryptionKit;
+			name = EncryptionKit.framework;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = BlowfishEncryption;
 			productReference = 8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */;
@@ -496,7 +496,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* EncryptionKit */,
+				8DC2EF4F0486A6940098B216 /* EncryptionKit.framework */,
 			);
 		};
 /* End PBXProject section */
@@ -561,7 +561,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EncryptionKit" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "EncryptionKit.framework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AF08733DA50010E9CD /* Release */,
