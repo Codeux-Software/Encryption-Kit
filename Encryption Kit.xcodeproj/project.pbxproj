@@ -168,7 +168,6 @@
 		4CB9983F1ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OTRKitFrameworkHelpers.h; path = Classes/OTRKitFrameworkHelpers.h; sourceTree = "<group>"; };
 		4CB998401ABD1FD000BE7ADD /* OTRKitFrameworkHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRKitFrameworkHelpers.m; path = Classes/OTRKitFrameworkHelpers.m; sourceTree = "<group>"; };
 		4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Build Configuration.xcconfig"; path = "Resources/Build Configuration/Build Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Resources/Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		8DC2EF5B0486A6940098B216 /* EncryptionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EncryptionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -332,7 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				4CF40F771AC1A6D300A26BE0 /* Build Configuration.xcconfig */,
-				4CF40F781AC1A6D300A26BE0 /* Entitlements.entitlements */,
 			);
 			name = "Build Configuration";
 			sourceTree = "<group>";
