@@ -20,6 +20,11 @@
 		4C3645071ABD08A6002A63AA /* OTRKitFingerprintManagerDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3645051ABD08A6002A63AA /* OTRKitFingerprintManagerDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3645081ABD08A6002A63AA /* OTRKitFingerprintManagerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3645061ABD08A6002A63AA /* OTRKitFingerprintManagerDialog.m */; };
 		4C36450A1ABD0CE3002A63AA /* OTRKitFingerprintManagerDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3645091ABD0CE3002A63AA /* OTRKitFingerprintManagerDialogPrivate.h */; };
+		4C3DA4D422E1989100F83359 /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C779C9B22A8F2E1006D780C /* OTRKitAuthenticationDialog.strings */; };
+		4C3DA4D522E1989100F83359 /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C779C9922A8F2E1006D780C /* OTRKitFingerprintManagerDialog.strings */; };
+		4C3DA4D622E1989100F83359 /* OTRKitAuthenticationDialogIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97D00220F2855100656EB0 /* OTRKitAuthenticationDialogIncoming.xib */; };
+		4C3DA4D722E1989100F83359 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97CFFE20F2855100656EB0 /* OTRKitAuthenticationDialogOutgoing.xib */; };
+		4C3DA4D822E1989100F83359 /* OTRKitFingerprintManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97D00020F2855100656EB0 /* OTRKitFingerprintManagerDialog.xib */; };
 		4C4AC33F1CCC040D00FA336E /* OTRKitAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C4AC33D1CCC040D00FA336E /* OTRKitAutoExpandingTextField.h */; };
 		4C4AC3401CCC040D00FA336E /* OTRKitAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AC33E1CCC040D00FA336E /* OTRKitAutoExpandingTextField.m */; };
 		4C4AC3431CCC395C00FA336E /* OTRKitAuthenticationDialogIncoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4AC3411CCC395C00FA336E /* OTRKitAuthenticationDialogIncoming.m */; };
@@ -34,12 +39,7 @@
 		4C5229E71AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5229E51AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.h */; };
 		4C5229E81AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5229E61AB7E2A100731463 /* OTRKitAuthenticationDialogWindowManager.m */; };
 		4C6990611A91010B00FB41B9 /* EncryptionKit_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C6990601A91010B00FB41B9 /* EncryptionKit_Prefix.pch */; };
-		4C779C9D22A8F2E1006D780C /* OTRKitFingerprintManagerDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C779C9922A8F2E1006D780C /* OTRKitFingerprintManagerDialog.strings */; };
-		4C779C9E22A8F2E1006D780C /* OTRKitAuthenticationDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C779C9B22A8F2E1006D780C /* OTRKitAuthenticationDialog.strings */; };
 		4C7A18071ABE43E800EB304A /* EncryptionKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A18061ABE43E800EB304A /* EncryptionKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C97D00420F2855100656EB0 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97CFFE20F2855100656EB0 /* OTRKitAuthenticationDialogOutgoing.xib */; };
-		4C97D00520F2855100656EB0 /* OTRKitFingerprintManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97D00020F2855100656EB0 /* OTRKitFingerprintManagerDialog.xib */; };
-		4C97D00620F2855100656EB0 /* OTRKitAuthenticationDialogIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C97D00220F2855100656EB0 /* OTRKitAuthenticationDialogIncoming.xib */; };
 		4C9A21AC1AB68A750057677D /* OTRKitAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9A21AA1AB68A750057677D /* OTRKitAuthenticationDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9A21AD1AB68A750057677D /* OTRKitAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A21AB1AB68A750057677D /* OTRKitAuthenticationDialog.m */; };
 		4CB8782B1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB8782A1AB794E30033282C /* OTRKitAuthenticationDialogPrivate.h */; };
@@ -502,13 +502,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C97D00420F2855100656EB0 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
-				4C97D00620F2855100656EB0 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
-				4C779C9D22A8F2E1006D780C /* OTRKitFingerprintManagerDialog.strings in Resources */,
-				4C779C9E22A8F2E1006D780C /* OTRKitAuthenticationDialog.strings in Resources */,
 				4C050D7D1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt in Resources */,
 				4CCA0AE31F37AF79009BF01C /* LICENSE.txt in Resources */,
-				4C97D00520F2855100656EB0 /* OTRKitFingerprintManagerDialog.xib in Resources */,
+				4C3DA4D422E1989100F83359 /* OTRKitAuthenticationDialog.strings in Resources */,
+				4C3DA4D522E1989100F83359 /* OTRKitFingerprintManagerDialog.strings in Resources */,
+				4C3DA4D622E1989100F83359 /* OTRKitAuthenticationDialogIncoming.xib in Resources */,
+				4C3DA4D722E1989100F83359 /* OTRKitAuthenticationDialogOutgoing.xib in Resources */,
+				4C3DA4D822E1989100F83359 /* OTRKitFingerprintManagerDialog.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
