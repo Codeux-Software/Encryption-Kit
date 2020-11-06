@@ -671,9 +671,11 @@ static OtrlMessageAppOps ui_ops = {
 
 - (void)setupWithDataPath:(nullable NSString *)dataPath
 {
-	[self _performAsyncOperationOnInternalQueue:^{
+	[self _performSyncOperationOnInternalQueue:^{
 		[self _setupWithDataPath:dataPath];
 	}];
+
+	[self _readLibotrConfiguration];
 }
 
 - (void)_setupWithDataPath:(nullable NSString *)dataPath
@@ -698,8 +700,6 @@ static OtrlMessageAppOps ui_ops = {
 		  @"Tried to create data path but failed doing so: '%@'",
 		  createDirectoryError.localizedDescription);
 	}
-
-	[self _readLibotrConfiguration];
 }
 
 - (void)_readLibotrConfiguration
