@@ -115,9 +115,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libgcrypt.a"; sourceTree = "<absolute>"; };
-		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libgpg-error.a"; sourceTree = "<absolute>"; };
-		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = "/Users/michael/Projects/Textual/Frameworks/Encryption Kit/Libraries/Libraries/libotr.a"; sourceTree = "<absolute>"; };
+		4C006C571AB84DA2004BE3C6 /* libgcrypt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgcrypt.a; path = Libraries/Libraries/libgcrypt.a; sourceTree = SOURCE_ROOT; };
+		4C006C581AB84DA2004BE3C6 /* libgpg-error.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgpg-error.a"; path = "Libraries/Libraries/libgpg-error.a"; sourceTree = SOURCE_ROOT; };
+		4C006C591AB84DA2004BE3C6 /* libotr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libotr.a; path = Libraries/Libraries/libotr.a; sourceTree = SOURCE_ROOT; };
 		4C006C5E1AB84E19004BE3C6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		4C006C601AB84E22004BE3C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C050D7C1AB919CA00A75CBC /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
